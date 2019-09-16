@@ -8,8 +8,9 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of FunFreedom.'
+  s.version          = '1.0.0'
+  s.summary          = 'FunFreedom is a requestKit'
+  s.swift_version    = '4.2'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -30,7 +31,8 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'FunFreedom/Classes/**/*'
+  # s.source_files = 'FunFreedom/Classes/**/*'
+  s.source_files = 'Source/*.swift'
   
   # s.resource_bundles = {
   #   'FunFreedom' => ['FunFreedom/Assets/*.png']
@@ -39,4 +41,6 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'Alamofire'
+  s.dependency 'HandyJSON'
 end
