@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'FunFreedom_Example' do
+  pod 'FunFreedom', :path => '../'
+
+  target 'FunFreedom_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
