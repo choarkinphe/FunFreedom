@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'FunFreedom is a requestKit'
   s.swift_version    = '4.2'
 
