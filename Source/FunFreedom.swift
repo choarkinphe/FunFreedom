@@ -45,6 +45,8 @@ open class FunFreedom {
         
         public var isCache: Bool = false
         
+        public var cacheTimeOut: TimeInterval = FunFreedomManager.manager.cacheTimeOut
+        
         public var sender: UIControl?
         
         public var completion: ((Bool,Data?)->Void)?
@@ -101,6 +103,11 @@ open class FunFreedom {
         return self
     }
     
+    public func cacheTimeOut(_ cacheTimeOut: TimeInterval) -> Self {
+        config.cacheTimeOut = cacheTimeOut
+        return self
+    }
+    
     public func params(_ params: [String: Any]?) -> Self {
         config.params = params
         return self
@@ -111,7 +118,7 @@ open class FunFreedom {
         return self
     }
     
-    public func sender(_ sender: UIControl) -> Self {
+    public func sender(_ sender: UIControl?) -> Self {
         config.sender = sender
         return self
     }

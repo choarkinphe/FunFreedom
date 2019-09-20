@@ -25,7 +25,7 @@ class ViewController: UIViewController {
     
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.default.urlString("t/service/cms/getTeachHomePage").request_handy_completion(TESTModel.self) { (testModel) in
+        FunFreedom.default.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
             print(testModel?.description ?? "error")
         }
         

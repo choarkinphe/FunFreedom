@@ -16,7 +16,7 @@ class ResponseCache {
         
     }
     
-    private var cachePool = [String: Any]()
+    private var cachePool = [String: CacheData]()
     
     static var shared: ResponseCache {
         
@@ -27,15 +27,22 @@ class ResponseCache {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
     
+    public struct CacheData {
+        var data: Any?
+        var cache_time: TimeInterval?
+    }
+    
     static func cache(key: String?, data: Any?) {
         guard let key = key else { return }
         guard let data = data else { return }
         
-        shared.cachePool[key] = data
+        let cacheData = CacheData.init(data: data, cache_time: Date().timeIntervalSince1970)
+        
+        shared.cachePool[key] = cacheData
         
     }
     
-    static func loadCache(key: String?) -> Any? {
+    static func loadCache(key: String?) -> CacheData? {
         guard let key = key else { return nil }
         if let data = shared.cachePool[key] {
             return data

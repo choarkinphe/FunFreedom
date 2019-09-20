@@ -43,15 +43,19 @@ private extension ResponseCache {
     }
     
     static func load_request(config: FunFreedom.RequestConfig) -> Data? {
-        guard let key_str = format_key(config: config) else { return nil}
-        
-        if let data = loadCache(key: key_str) as? Data {
-            
-            debugPrint("load_request=",config.urlString ?? "")
-            
-            return data
+        guard let key_str = format_key(config: config),
+            let cache_data = loadCache(key: key_str),
+            let cache_time = cache_data.cache_time
+            else { return nil}
+        let load_time = Date().timeIntervalSince1970
+        if (load_time - cache_time) > config.cacheTimeOut {
+            debugPrint("cache_timeOut=",config.urlString ?? "")
+            removeCache(key: key_str)
+            return nil
         }
-        return nil
+        debugPrint("load_request=",config.urlString ?? "")
+        
+        return cache_data.data as? Data
     }
     
     private static func format_key(config: FunFreedom.RequestConfig) -> String? {
