@@ -21,21 +21,20 @@ extension FunFreedom {
     public func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
         
         request { (success, data) in
+            var model = T()
             
-            if success {
-                if let data = data, var model = T.deserialize(from: String(data: data, encoding: .utf8)) {
-                    model.success = success
-                    completion(model)
-                }
-            } else {
-                
-                var model = T()
-                model.success = success
-                if let data = data, let message = String(data: data, encoding: .utf8) {
+            if let data = data {
+                if let message = String(data: data, encoding: .utf8) {
                     model.message = message
                 }
+                if let a_model = T.deserialize(from: String(data: data, encoding: .utf8)) {
+                    model = a_model
+                }
             }
+            
+            model.success = success
 
+            completion(model)
         }
     }
     
