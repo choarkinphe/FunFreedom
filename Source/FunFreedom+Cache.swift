@@ -17,10 +17,15 @@ public extension FunFreedom {
     func remove_request(config: FunFreedom.RequestConfig) {
         ResponseCache.remove_request(config: config)
     }
+
+    func remove_request(identifier: String?) {
+        ResponseCache.remove_request(identifier: identifier)
+    }
     
     func load_request(config: FunFreedom.RequestConfig) -> Data? {
         return ResponseCache.load_request(config: config)
     }
+    
     
 }
 
@@ -42,6 +47,14 @@ private extension ResponseCache {
         debugPrint("remove_request=",config.urlString ?? "")
     }
     
+    static func remove_request(identifier: String?) {
+        guard let key_str = identifier else { return }
+        
+        removeCache(key: key_str)
+        
+        debugPrint("remove_request=",identifier ?? "")
+    }
+    
     static func load_request(config: FunFreedom.RequestConfig) -> Data? {
         guard let key_str = format_key(config: config),
             let cache_data = loadCache(key: key_str),
@@ -59,6 +72,10 @@ private extension ResponseCache {
     }
     
     private static func format_key(config: FunFreedom.RequestConfig) -> String? {
+        
+        if let identifier = config.identifier {
+            return identifier
+        }
         guard let url = config.urlString else { return nil}
         var key = url
         

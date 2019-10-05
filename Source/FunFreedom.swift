@@ -43,6 +43,8 @@ open class FunFreedom {
         public var downloadClosure: ((Progress) -> Void)?
         public var downloadComplete: ((URL?) -> Void)?
         
+        public var identifier: String?
+        
         public var isCache: Bool = false
         
         public var cacheTimeOut: TimeInterval = FunFreedomManager.manager.cacheTimeOut
@@ -95,6 +97,12 @@ open class FunFreedom {
         }
         
         
+        return self
+    }
+    
+    public func identifier(_ identifier: String?) -> Self {
+        config.identifier = identifier
+
         return self
     }
     
@@ -184,9 +192,10 @@ open class FunFreedom {
     
     
     
-    public func uploade() {
+    public func upload() {
         if let URLString = config.urlString {
             request_start()
+            
             Alamofire.SessionManager.sharedSessionManager.upload(multipartFormData: { (multipartFormData) in
                 debugPrint("upload_url = " + URLString)
                 
@@ -240,6 +249,7 @@ open class FunFreedom {
                 
             }
         }
+        
     }
     
     public func download() {
