@@ -28,7 +28,7 @@ public struct ResponseModel<T>: ResponseDecodable {
     
 }
 
-extension FunFreedom {
+extension NetworkKit {
     
     enum ResponseCode: Int {
         case success = 0

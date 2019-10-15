@@ -8,21 +8,10 @@
 
 import Foundation
 
-class ResponseCache {
-    
-    private struct Static {
-        
-        static var instance: ResponseCache = ResponseCache()
-        
-    }
-    
+public class FunCache {
+
     private var cachePool = [String: CacheData]()
-    
-    static var shared: ResponseCache {
-        
-        return Static.instance
-    }
-    
+
     init() {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
     }
@@ -32,29 +21,29 @@ class ResponseCache {
         var cache_time: TimeInterval?
     }
     
-    static func cache(key: String?, data: Any?) {
+    public func cache(key: String?, data: Any?) {
         guard let key = key else { return }
         guard let data = data else { return }
         
         let cacheData = CacheData.init(data: data, cache_time: Date().timeIntervalSince1970)
         
-        shared.cachePool[key] = cacheData
+        cachePool[key] = cacheData
         
     }
     
-    static func loadCache(key: String?) -> CacheData? {
+    public func loadCache(key: String?) -> CacheData? {
         guard let key = key else { return nil }
-        if let data = shared.cachePool[key] {
+        if let data = cachePool[key] {
             return data
         }
         
         return nil
     }
     
-    static func removeCache(key: String?) {
+    public func removeCache(key: String?) {
         guard let key = key else { return }
         
-        shared.cachePool.removeValue(forKey: key)
+        cachePool.removeValue(forKey: key)
     }
     
     @objc private func didReceiveMemoryWarning() {

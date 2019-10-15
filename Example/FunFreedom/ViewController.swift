@@ -16,16 +16,23 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        FunFreedomManager.manager.baseUrl = "https://api.61park.cn/"
+        FunFreedom.networkManager.baseUrl = "https://api.61park.cn/"
         //        if let model = ResponseModel<[ModuleModel]>.deserialize(from: str) {
         //
         //            print(model)
         //        }
     }
     
+    @IBAction func sheet(_ sender: Any) {
+        
+        FunFreedom.sheet.addActions(titles: ["A","B","C"]).handler({ (action) in
+            print(action.title)
+        }).present()
+        
+    }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.default.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
+        FunFreedom.netwokKit.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
             print(testModel?.description ?? "error")
         }
         

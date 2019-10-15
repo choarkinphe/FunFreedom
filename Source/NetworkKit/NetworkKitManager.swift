@@ -9,17 +9,7 @@
 import Foundation
 import Alamofire
 
-public class FunFreedomManager {
-    
-    private struct Static {
-        
-        static var instance: FunFreedomManager = FunFreedomManager()
-        
-    }
-    
-    public static var manager: FunFreedomManager {
-        return Static.instance
-    }
+public class NetworkKitManager {
     
     public var baseUrl: String?
     public var headers: HTTPHeaders?
