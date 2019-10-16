@@ -16,7 +16,7 @@ public protocol ResponseDecodable: HandyJSON {
     var data: JSONType? {get set}
 }
 
-extension NetworkKit {
+extension FunNetworkKit {
     
     public func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
         

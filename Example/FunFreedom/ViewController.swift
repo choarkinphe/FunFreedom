@@ -11,7 +11,7 @@ import FunFreedom
 import HandyJSON
 
 class ViewController: UIViewController {
-    
+    var actions = [FunActionSheet]()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -25,8 +25,8 @@ class ViewController: UIViewController {
     
     @IBAction func sheet(_ sender: Any) {
         
-        FunFreedom.sheet.addActions(titles: ["A","B","C"]).handler({ (action) in
-            print(action.title)
+        FunFreedom.sheet.addActions(titles: ["A","B","C","E","F","G"]).resultActions(actions).selectType(.multi).multiHandler({ (actions) in
+            self.actions = actions
         }).present()
         
     }

@@ -13,9 +13,18 @@ public struct FunActionSheetConfig {
         case center
         
     }
+    
+    public enum SelectType: Int {
+        case single
+        case multi
+    }
     public var contentInsets: UIEdgeInsets = .zero
     public var cornerRadius: CGFloat?
     public var position: FunActionSheetConfig.Position = .default
+    public var selectType: FunActionSheetConfig.SelectType = .single
+    public var tintColor: UIColor?
+    public var selectImage: UIImage?
+    public var normalImage: UIImage?
 }
 
 
@@ -23,11 +32,20 @@ open class FunActionSheetController: UIViewController {
     open lazy var config = FunActionSheetConfig()
     
     open var handler: FunActionSheetHandler?
+    open var multiHandler: FunActionSheetMultiHandler?
+    
+    public lazy var result = [FunActionSheet]()
     
     convenience init(handler a_handler: FunActionSheetHandler?) {
         self.init(nibName: nil, bundle: nil)
         
         handler = a_handler
+    }
+    
+    convenience init(multiHandler a_multiHandler: FunActionSheetMultiHandler?) {
+        self.init(nibName: nil, bundle: nil)
+        
+        multiHandler = a_multiHandler
     }
     
     public required init?(coder aDecoder: NSCoder) {
@@ -46,12 +64,26 @@ open class FunActionSheetController: UIViewController {
     lazy var toolBar: FunActionSheetToolBar = {
         let _toolBar = FunActionSheetToolBar.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
         
+        weak var weakSelf = self
+        
         _toolBar.doneHandler {
-            
+            if let actions = weakSelf?.actions {
+            for action in actions {
+                if action.isSelected {
+                    weakSelf?.result.append(action)
+                }
+                
+            }
+                if let handler = weakSelf?.multiHandler, let result = weakSelf?.result, result.count > 0 {
+                    handler(result)
+                }
+            }
+
+            weakSelf?.dismiss(animated: true, completion: nil)
         }
         
         _toolBar.cancelHandler {
-            self.dismiss(animated: true, completion: nil)
+            weakSelf?.dismiss(animated: true, completion: nil)
         }
         
         return _toolBar
@@ -202,7 +234,25 @@ extension FunActionSheetController: UIGestureRecognizerDelegate {
 extension FunActionSheetController :UITableViewDelegate,UITableViewDataSource {
     // MARK: - DataSource
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return actions?.count ?? 0
+//        if config.selectType == .multi {
+//            tableView.allowsMultipleSelectionDuringEditing = true
+//            tableView.setEditing(true, animated: true)
+//        }
+        if let actions = actions {
+            if result.count > 0 {
+                for action in actions {
+                    for result_action in result {
+                        if result_action.title == action.title, result_action.value == action.value {
+                            action.isSelected = true
+                        }
+                    }
+                }
+                result.removeAll()
+            }
+            
+            return actions.count
+        }
+        return 0
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -210,26 +260,70 @@ extension FunActionSheetController :UITableViewDelegate,UITableViewDataSource {
         if let action = actions?[indexPath.row] {
             
             cell.title = action.title
+            
+            if config.selectType == .multi {
+                cell.selectionStyle = .none
+            }
+            
+            if let color = config.tintColor {
+                cell.selectedBackgroundView?.backgroundColor = color
+                cell.tintColor = color
+            }
+            
+            cell.img_normal = config.normalImage
+            cell.img_selected = config.selectImage
+            cell.accessoryType = action.isSelected ? .checkmark : .none
+            
         }
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let action = actions?[indexPath.row] {
-            
-            action.index = indexPath.row
-            
-            if let actionHandler = handler {
+        if config.selectType == .single {
+            if let action = actions?[indexPath.row] {
                 
-                actionHandler(action)
+                action.index = indexPath.row
+                
+                if let actionHandler = handler {
+                    
+                    actionHandler(action)
+                }
+                
             }
             
+            dismiss(animated: true, completion: nil)
+        } else if config.selectType == .multi {
+            
+            if let action = actions?[indexPath.row] {
+                
+                action.isSelected = !action.isSelected
+            }
+            
+//            if let cell = tableView.cellForRow(at: indexPath) {
+//                cell.accessoryType = .checkmark
+//            }
+            
+            tableView.reloadData()
         }
         
-        dismiss(animated: true, completion: nil)
-        
     }
+    
+//    public func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+//        if let action = actions?[indexPath.row] {
+//
+//            action.isSelected = false
+//        }
+//
+//        if let cell = tableView.cellForRow(at: indexPath) {
+//            cell.accessoryType = .none
+//        }
+//
+//        tableView.reloadData()
+//        print("Deselect")
+//    }
+    
+    
 
 }
 
@@ -244,15 +338,63 @@ private class FunActionSheetCell: UITableViewCell {
             
         }
     }
-
+    
+    var img_selected: UIImage?
+    var img_normal: UIImage?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-        
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = .clear
         textLabel?.textColor = UIColor.darkText
         textLabel?.font = UIFont.systemFont(ofSize: 15)
         textLabel?.numberOfLines = 0
 
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        selectedBackgroundView?.frame = frame
+        
+//        for control in subviews {
+//
+//            if let class_name = NSClassFromString("UITableViewCellEditControl"), control.isMember(of: class_name) {
+//                for v in control.subviews {
+//                    if v.isKind(of: UIImageView.self), let imageV = v as? UIImageView {
+//
+//
+//                        if isSelected {
+//                            if let image = self.img_selected {
+//                                imageV.image = image
+//                            }
+//
+//                        } else {
+//                            if let image = self.img_normal {
+//                                imageV.image = image
+//                            }
+//                        }
+//
+//                        imageV.frame = CGRect.init(x: frame.size.width - imageV.bounds.size.width - 30, y: imageV.frame.origin.y, width: imageV.bounds.size.width, height: imageV.bounds.size.height)
+//                        contentView.frame = bounds
+//
+//                    }
+//                }
+//            }
+//
+//        }
+    }
+    
+//    override func setEditing(_ editing: Bool, animated: Bool) {
+//        super.setEditing(editing, animated: animated)
+        
+//        setSelectImage()
+//    }
+    
+//    private func setSelectImage() {
+//
+//
+//    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

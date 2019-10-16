@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import HandyJSON
 
-open class NetworkKit {
+open class FunNetworkKit {
     public struct RequestConfig {
         public struct UploadFile {
             public var name: String?
@@ -342,6 +342,7 @@ open class NetworkKit {
     }
     
 }
+
     
 
 

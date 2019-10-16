@@ -7,6 +7,7 @@
 
 import Foundation
 public typealias FunActionSheetHandler = (FunActionSheet) -> Void
+public typealias FunActionSheetMultiHandler = ([FunActionSheet]) -> Void
 
 public class FunActionSheet: NSObject {
     
@@ -18,19 +19,21 @@ public class FunActionSheet: NSObject {
         case destructive
     }
 
-    open var detail: String?
+    open var value: String?
     
     open var title: String?
+    
+    open var isSelected: Bool = false
     
     open var style: FunActionSheet.Style = .default
 
     open var index: Int = 0
     
-    public init(title a_title: String?, detail a_detail: String? = nil, style a_style: FunActionSheet.Style) {
+    public init(title a_title: String?, value a_value: String? = nil, style a_style: FunActionSheet.Style) {
         super.init()
         
         self.title = a_title
-        self.detail = a_detail
+        self.value = a_value
         self.style = a_style
 
     }
@@ -48,23 +51,30 @@ public class FunSheet {
     }
     
     
-    public func addAction(title: String, detail: String? = nil) -> Self {
+    public func addAction(title: String, value: String? = nil) -> Self {
 
-        return addActions(FunActionSheet.init(title: title, detail: detail, style: .default))
+        return addActions(FunActionSheet.init(title: title, value: value, style: .default))
     }
     
-    public func addActions(titles: [String], details: [String]? = nil) -> Self {
+    public func addActions(titles: [String], values: [String]? = nil) -> Self {
         
         for (index,title) in titles.enumerated() {
             let action = FunActionSheet.init(title: title, style: .default)
 
-            if let a_details = details {
-                if index < a_details.count {
-                    action.detail = a_details[index]
+            if let a_values = values {
+                if index < a_values.count {
+                    action.value = a_values[index]
                 }
             }
             _actions.append(action)
         }
+        
+        return self
+    }
+    
+    public func resultActions(_ actions: [FunActionSheet]) -> Self {
+        
+        sheetController.result = actions
         
         return self
     }
@@ -101,6 +111,11 @@ public class FunSheet {
         return self
     }
     
+    public func multiHandler(_ multiHandler: @escaping FunActionSheetMultiHandler) -> Self {
+        sheetController.multiHandler = multiHandler
+        return self
+    }
+    
     public func contentInsets(_ contentInsets: UIEdgeInsets) -> Self {
         sheetController.config.contentInsets = contentInsets
         return self
@@ -109,6 +124,34 @@ public class FunSheet {
     public func cornerRadius(_ cornerRadius: CGFloat) -> Self {
         
         sheetController.config.cornerRadius = cornerRadius
+        
+        return self
+    }
+    
+    public func selectType(_ selectType: FunActionSheetConfig.SelectType) -> Self {
+        
+        sheetController.config.selectType = selectType
+        
+        return self
+    }
+    
+    public func tintColor(_ tintColor: UIColor) -> Self {
+        
+        sheetController.config.tintColor = tintColor
+        
+        return self
+    }
+    
+    public func selectImage(_ selectImage: UIImage) -> Self {
+        
+        sheetController.config.selectImage = selectImage
+        
+        return self
+    }
+    
+    public func normalImage(_ normalImage: UIImage) -> Self {
+        
+        sheetController.config.normalImage = normalImage
         
         return self
     }

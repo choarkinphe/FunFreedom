@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-public class NetworkKitManager {
+public class FunNetworkKitManager {
     
     public var baseUrl: String?
     public var headers: HTTPHeaders?

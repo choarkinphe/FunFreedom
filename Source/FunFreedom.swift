@@ -10,15 +10,15 @@ open class FunFreedom {
     
     private struct Static {
         
-        static var instance_networkManager: NetworkKitManager = NetworkKitManager()
+        static var instance_networkManager: FunNetworkKitManager = FunNetworkKitManager()
         
         static var instance_cache: FunCache = FunCache()
         
     }
     
-    public static var netwokKit: NetworkKit {
+    public static var netwokKit: FunNetworkKit {
         
-        let _kit = NetworkKit()
+        let _kit = FunNetworkKit()
         
         return _kit
     }
@@ -30,7 +30,7 @@ open class FunFreedom {
         return _sheet
     }
     
-    public static var networkManager: NetworkKitManager {
+    public static var networkManager: FunNetworkKitManager {
         return Static.instance_networkManager
     }
     

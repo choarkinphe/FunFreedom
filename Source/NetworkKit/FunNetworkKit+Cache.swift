@@ -8,13 +8,13 @@
 
 import Foundation
 
-public extension NetworkKit {
+public extension FunNetworkKit {
     
-    func cache_request(config: NetworkKit.RequestConfig, response: Data?) {
+    func cache_request(config: FunNetworkKit.RequestConfig, response: Data?) {
         FunFreedom.cache.cache_request(config: config, response: response)
     }
     
-    func remove_request(config: NetworkKit.RequestConfig) {
+    func remove_request(config: FunNetworkKit.RequestConfig) {
         FunFreedom.cache.remove_request(config: config)
     }
 
@@ -22,7 +22,7 @@ public extension NetworkKit {
         FunFreedom.cache.remove_request(identifier: identifier)
     }
     
-    func load_request(config: NetworkKit.RequestConfig) -> Data? {
+    func load_request(config: FunNetworkKit.RequestConfig) -> Data? {
         return FunFreedom.cache.load_request(config: config)
     }
     
@@ -31,7 +31,7 @@ public extension NetworkKit {
 
 private extension FunCache {
     
-    func cache_request(config: NetworkKit.RequestConfig, response: Data?) {
+    func cache_request(config: FunNetworkKit.RequestConfig, response: Data?) {
         guard let key_str = format_key(config: config) else { return }
         
         cache(key: key_str, data: response)
@@ -39,7 +39,7 @@ private extension FunCache {
         debugPrint("cache_request=",config.urlString ?? "")
     }
     
-    func remove_request(config: NetworkKit.RequestConfig) {
+    func remove_request(config: FunNetworkKit.RequestConfig) {
         guard let key_str = format_key(config: config) else { return }
         
         removeCache(key: key_str)
@@ -55,7 +55,7 @@ private extension FunCache {
         debugPrint("remove_request=",identifier ?? "")
     }
     
-    func load_request(config: NetworkKit.RequestConfig) -> Data? {
+    func load_request(config: FunNetworkKit.RequestConfig) -> Data? {
         guard let key_str = format_key(config: config),
             let cache_data = loadCache(key: key_str),
             let cache_time = cache_data.cache_time
@@ -71,7 +71,7 @@ private extension FunCache {
         return cache_data.data as? Data
     }
     
-    private func format_key(config: NetworkKit.RequestConfig) -> String? {
+    private func format_key(config: FunNetworkKit.RequestConfig) -> String? {
         
         if let identifier = config.identifier {
             return identifier
