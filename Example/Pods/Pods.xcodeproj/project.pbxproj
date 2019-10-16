@@ -29,15 +29,15 @@
 		466EBE5EA51C20D461148B0DD93FA869 /* FunFreedom-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 615863FE43A69333C46F63AB591DC196 /* FunFreedom-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4767E59F59E25BF00F2555D090FEE0A3 /* Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52D05F5CBE4648ACFAEB6BDF4D48B6D /* Metadata.swift */; };
 		4815CE72371770D36D7AF73EB197E265 /* CBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC4B3DB319F8E1AD485B4CF2769E6C /* CBridge.swift */; };
-		497D5480235605AD00F37E3E /* FunSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D547F235605AC00F37E3E /* FunSheetView.swift */; };
 		499426292355FC650069AA74 /* FunFreedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426282355FC650069AA74 /* FunFreedom.swift */; };
-		499426392355FF640069AA74 /* FunCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426322355FF640069AA74 /* FunCache.swift */; };
-		4994263A2355FF640069AA74 /* FunNetworkKit+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426342355FF640069AA74 /* FunNetworkKit+Cache.swift */; };
-		4994263B2355FF640069AA74 /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426352355FF640069AA74 /* FunNetworkKitNetworkKit+HandyJSON.swift */; };
-		4994263C2355FF640069AA74 /* FunNetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426362355FF640069AA74 /* FunNetworkKit.swift */; };
-		4994263D2355FF640069AA74 /* FunNetworkKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426372355FF640069AA74 /* FunNetworkKitManager.swift */; };
-		49942641235600860069AA74 /* FunSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49942640235600860069AA74 /* FunSheetController.swift */; };
-		499426432356030A0069AA74 /* FunSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426422356030A0069AA74 /* FunSheet.swift */; };
+		4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */; };
+		4AF4B2D72356E46600F33EFB /* FunSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D42356E46600F33EFB /* FunSheet.swift */; };
+		4AF4B2D82356E46600F33EFB /* FunSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D52356E46600F33EFB /* FunSheetController.swift */; };
+		4AF4B2D92356E46600F33EFB /* FunSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D62356E46600F33EFB /* FunSheetView.swift */; };
+		4AF4B2DE2356E47100F33EFB /* FunNetworkKit+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2DA2356E47100F33EFB /* FunNetworkKit+Cache.swift */; };
+		4AF4B2DF2356E47100F33EFB /* FunNetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2DB2356E47100F33EFB /* FunNetworkKit.swift */; };
+		4AF4B2E02356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2DC2356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift */; };
+		4AF4B2E12356E47100F33EFB /* FunNetworkKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2DD2356E47100F33EFB /* FunNetworkKitManager.swift */; };
 		4F51FFF3E6B55DD8F5EC974F168EB0F8 /* ContextDescriptorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96629ECDFF792CB2F2BD420DFD4432C6 /* ContextDescriptorType.swift */; };
 		53791F5E5F07400F92CFDFC89A432305 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3075E694812890E4ACE0B4967F1BA9A5 /* Validation.swift */; };
 		559DB0171DC67BEE3EEF28DA73845BA4 /* HandyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9390029D61212FF21A462D2730F7E57 /* HandyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -166,16 +166,16 @@
 		41E824E19065CCACCB6ED51192AC8B80 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Source/Configuration.swift; sourceTree = "<group>"; };
 		428CA2BA013478532D8D5F1C20F6DD1E /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		494AA0FA3CF25E576515114711473BAE /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
-		497D547F235605AC00F37E3E /* FunSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunSheetView.swift; sourceTree = "<group>"; };
 		499426282355FC650069AA74 /* FunFreedom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunFreedom.swift; path = Source/FunFreedom.swift; sourceTree = "<group>"; };
-		499426322355FF640069AA74 /* FunCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunCache.swift; sourceTree = "<group>"; };
-		499426342355FF640069AA74 /* FunNetworkKit+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FunNetworkKit+Cache.swift"; sourceTree = "<group>"; };
-		499426352355FF640069AA74 /* FunNetworkKitNetworkKit+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FunNetworkKitNetworkKit+HandyJSON.swift"; sourceTree = "<group>"; };
-		499426362355FF640069AA74 /* FunNetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunNetworkKit.swift; sourceTree = "<group>"; };
-		499426372355FF640069AA74 /* FunNetworkKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunNetworkKitManager.swift; sourceTree = "<group>"; };
-		49942640235600860069AA74 /* FunSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunSheetController.swift; sourceTree = "<group>"; };
-		499426422356030A0069AA74 /* FunSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunSheet.swift; sourceTree = "<group>"; };
 		49C75C9481A61828B26D66447E655C6C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
+		4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunCache.swift; path = Source/FunCache.swift; sourceTree = "<group>"; };
+		4AF4B2D42356E46600F33EFB /* FunSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunSheet.swift; path = Source/FunSheet.swift; sourceTree = "<group>"; };
+		4AF4B2D52356E46600F33EFB /* FunSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunSheetController.swift; path = Source/FunSheetController.swift; sourceTree = "<group>"; };
+		4AF4B2D62356E46600F33EFB /* FunSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunSheetView.swift; path = Source/FunSheetView.swift; sourceTree = "<group>"; };
+		4AF4B2DA2356E47100F33EFB /* FunNetworkKit+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKit+Cache.swift"; path = "Source/FunNetworkKit+Cache.swift"; sourceTree = "<group>"; };
+		4AF4B2DB2356E47100F33EFB /* FunNetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunNetworkKit.swift; path = Source/FunNetworkKit.swift; sourceTree = "<group>"; };
+		4AF4B2DC2356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKitNetworkKit+HandyJSON.swift"; path = "Source/FunNetworkKitNetworkKit+HandyJSON.swift"; sourceTree = "<group>"; };
+		4AF4B2DD2356E47100F33EFB /* FunNetworkKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunNetworkKitManager.swift; path = Source/FunNetworkKitManager.swift; sourceTree = "<group>"; };
 		55A81A36D7D101DAB0701747C36A183A /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
 		5B56B46244005E3B150D8C2AAF04E6BD /* FunFreedom-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FunFreedom-prefix.pch"; sourceTree = "<group>"; };
 		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -317,36 +317,33 @@
 			path = "Target Support Files/Pods-FunFreedom_Example";
 			sourceTree = "<group>";
 		};
-		4994262F2355FF640069AA74 /* Sheet */ = {
+		4AF4B2D02356E35200F33EFB /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				499426422356030A0069AA74 /* FunSheet.swift */,
-				497D547F235605AC00F37E3E /* FunSheetView.swift */,
-				49942640235600860069AA74 /* FunSheetController.swift */,
-			);
-			name = Sheet;
-			path = Source/Sheet;
-			sourceTree = "<group>";
-		};
-		499426312355FF640069AA74 /* Cache */ = {
-			isa = PBXGroup;
-			children = (
-				499426322355FF640069AA74 /* FunCache.swift */,
+				4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */,
 			);
 			name = Cache;
-			path = Source/Cache;
 			sourceTree = "<group>";
 		};
-		499426332355FF640069AA74 /* NetworkKit */ = {
+		4AF4B2D22356E3F500F33EFB /* NetworkKit */ = {
 			isa = PBXGroup;
 			children = (
-				499426342355FF640069AA74 /* FunNetworkKit+Cache.swift */,
-				499426352355FF640069AA74 /* FunNetworkKitNetworkKit+HandyJSON.swift */,
-				499426362355FF640069AA74 /* FunNetworkKit.swift */,
-				499426372355FF640069AA74 /* FunNetworkKitManager.swift */,
+				4AF4B2DB2356E47100F33EFB /* FunNetworkKit.swift */,
+				4AF4B2DA2356E47100F33EFB /* FunNetworkKit+Cache.swift */,
+				4AF4B2DD2356E47100F33EFB /* FunNetworkKitManager.swift */,
+				4AF4B2DC2356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift */,
 			);
 			name = NetworkKit;
-			path = Source/NetworkKit;
+			sourceTree = "<group>";
+		};
+		4AF4B2D32356E41600F33EFB /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				4AF4B2D42356E46600F33EFB /* FunSheet.swift */,
+				4AF4B2D52356E46600F33EFB /* FunSheetController.swift */,
+				4AF4B2D62356E46600F33EFB /* FunSheetView.swift */,
+			);
+			name = Sheet;
 			sourceTree = "<group>";
 		};
 		53D2B14F62BC24DDA890D4B03B360B27 /* Support Files */ = {
@@ -482,9 +479,9 @@
 			isa = PBXGroup;
 			children = (
 				499426282355FC650069AA74 /* FunFreedom.swift */,
-				499426312355FF640069AA74 /* Cache */,
-				499426332355FF640069AA74 /* NetworkKit */,
-				4994262F2355FF640069AA74 /* Sheet */,
+				4AF4B2D02356E35200F33EFB /* Cache */,
+				4AF4B2D22356E3F500F33EFB /* NetworkKit */,
+				4AF4B2D32356E41600F33EFB /* Sheet */,
 				60033DA56A1C608693FD64BBD00C1BE8 /* Pod */,
 				53D2B14F62BC24DDA890D4B03B360B27 /* Support Files */,
 			);
@@ -865,16 +862,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4994263A2355FF640069AA74 /* FunNetworkKit+Cache.swift in Sources */,
-				4994263C2355FF640069AA74 /* FunNetworkKit.swift in Sources */,
+				4AF4B2D92356E46600F33EFB /* FunSheetView.swift in Sources */,
+				4AF4B2E12356E47100F33EFB /* FunNetworkKitManager.swift in Sources */,
+				4AF4B2DF2356E47100F33EFB /* FunNetworkKit.swift in Sources */,
+				4AF4B2E02356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
+				4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */,
+				4AF4B2DE2356E47100F33EFB /* FunNetworkKit+Cache.swift in Sources */,
 				499426292355FC650069AA74 /* FunFreedom.swift in Sources */,
-				499426392355FF640069AA74 /* FunCache.swift in Sources */,
-				4994263B2355FF640069AA74 /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
 				79E84B38E3E7F9A087C1E1C8E3DDE8EB /* FunFreedom-dummy.m in Sources */,
-				49942641235600860069AA74 /* FunSheetController.swift in Sources */,
-				499426432356030A0069AA74 /* FunSheet.swift in Sources */,
-				497D5480235605AD00F37E3E /* FunSheetView.swift in Sources */,
-				4994263D2355FF640069AA74 /* FunNetworkKitManager.swift in Sources */,
+				4AF4B2D82356E46600F33EFB /* FunSheetController.swift in Sources */,
+				4AF4B2D72356E46600F33EFB /* FunSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
