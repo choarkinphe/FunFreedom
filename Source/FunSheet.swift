@@ -72,10 +72,11 @@ public class FunSheet {
         return self
     }
     
-    public func resultActions(_ actions: [FunActionSheet]) -> Self {
-        
-        sheetController.result = actions
-        
+    public func resultActions(_ actions: [FunActionSheet]?) -> Self {
+        if let actions = actions {
+            sheetController.result = actions
+        }
+
         return self
     }
     
