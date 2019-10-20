@@ -16,9 +16,9 @@ public protocol ResponseDecodable: HandyJSON {
     var data: JSONType? {get set}
 }
 
-extension FunFreedom.NetworkKit {
+public extension FunFreedom.NetworkKit {
     
-    public func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
+    func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
         
         request { (success, data) in
             var model = T()

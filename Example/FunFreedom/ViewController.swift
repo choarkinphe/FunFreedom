@@ -25,9 +25,11 @@ class ViewController: UIViewController {
     
     @IBAction func sheet(_ sender: Any) {
         
-        FunFreedom.sheet.addActions(titles: ["A","B","C","E","F","G"]).resultActions(actions).selectType(.multi).multiHandler({ (actions) in
-            self.actions = actions
-        }).present()
+//        FunFreedom.sheet.addActions(titles: ["A","B","C","E","F","G"]).resultActions(actions).selectType(.multi).multiHandler({ (actions) in
+//            self.actions = actions
+//        }).present()
+        
+        FunFreedom.datePicker.present()
         
     }
     @IBAction func request(_ sender: Any) {
