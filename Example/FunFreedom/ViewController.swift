@@ -11,7 +11,7 @@ import FunFreedom
 import HandyJSON
 
 class ViewController: UIViewController {
-    var actions = [FunActionSheet]()
+    var actions = [FunFreedom.ActionSheet]()
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.netwokKit.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
+        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
             print(testModel?.description ?? "error")
         }
         

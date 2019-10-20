@@ -16,7 +16,7 @@ public protocol ResponseDecodable: HandyJSON {
     var data: JSONType? {get set}
 }
 
-extension FunNetworkKit {
+extension FunFreedom.NetworkKit {
     
     public func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
         
@@ -33,7 +33,7 @@ extension FunNetworkKit {
             }
             
             model.success = success
-
+            
             completion(model)
         }
     }

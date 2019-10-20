@@ -7,31 +7,30 @@
 //
 
 import Foundation
-
-public extension FunNetworkKit {
+public extension FunFreedom.NetworkKit {
     
-    func cache_request(config: FunNetworkKit.RequestConfig, response: Data?) {
+    func cache_request(config: FunFreedom.NetworkKit.RequestConfig, response: Data?) {
         FunFreedom.cache.cache_request(config: config, response: response)
     }
     
-    func remove_request(config: FunNetworkKit.RequestConfig) {
+    func remove_request(config: FunFreedom.NetworkKit.RequestConfig) {
         FunFreedom.cache.remove_request(config: config)
     }
-
+    
     func remove_request(identifier: String?) {
         FunFreedom.cache.remove_request(identifier: identifier)
     }
     
-    func load_request(config: FunNetworkKit.RequestConfig) -> Data? {
+    func load_request(config: FunFreedom.NetworkKit.RequestConfig) -> Data? {
         return FunFreedom.cache.load_request(config: config)
     }
     
     
 }
 
-private extension FunCache {
+private extension FunFreedom.Cache {
     
-    func cache_request(config: FunNetworkKit.RequestConfig, response: Data?) {
+    func cache_request(config: FunFreedom.NetworkKit.RequestConfig, response: Data?) {
         guard let key_str = format_key(config: config) else { return }
         
         cache(key: key_str, data: response)
@@ -39,7 +38,7 @@ private extension FunCache {
         debugPrint("cache_request=",config.urlString ?? "")
     }
     
-    func remove_request(config: FunNetworkKit.RequestConfig) {
+    func remove_request(config: FunFreedom.NetworkKit.RequestConfig) {
         guard let key_str = format_key(config: config) else { return }
         
         removeCache(key: key_str)
@@ -55,7 +54,7 @@ private extension FunCache {
         debugPrint("remove_request=",identifier ?? "")
     }
     
-    func load_request(config: FunNetworkKit.RequestConfig) -> Data? {
+    func load_request(config: FunFreedom.NetworkKit.RequestConfig) -> Data? {
         guard let key_str = format_key(config: config),
             let cache_data = loadCache(key: key_str),
             let cache_time = cache_data.cache_time
@@ -71,7 +70,7 @@ private extension FunCache {
         return cache_data.data as? Data
     }
     
-    private func format_key(config: FunNetworkKit.RequestConfig) -> String? {
+    private func format_key(config: FunFreedom.NetworkKit.RequestConfig) -> String? {
         
         if let identifier = config.identifier {
             return identifier
@@ -86,3 +85,4 @@ private extension FunCache {
         return "\(key.hashValue)"
     }
 }
+

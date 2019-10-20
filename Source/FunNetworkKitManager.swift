@@ -9,11 +9,13 @@
 import Foundation
 import Alamofire
 
-public class FunNetworkKitManager {
+public extension FunFreedom {
+class NetworkKitManager {
     
     public var baseUrl: String?
     public var headers: HTTPHeaders?
     public var cacheTimeOut: TimeInterval = 300
+}
 }
 
 extension SessionManager {

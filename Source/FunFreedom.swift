@@ -10,36 +10,36 @@ open class FunFreedom {
     
     private struct Static {
         
-        static var instance_networkManager: FunNetworkKitManager = FunNetworkKitManager()
+        static var instance_networkManager: NetworkKitManager = NetworkKitManager()
         
-        static var instance_cache: FunCache = FunCache()
+        static var instance_cache: Cache = Cache()
         
     }
     
-    public static var netwokKit: FunNetworkKit {
+    public static var netwokKit: NetworkKit {
         
-        let _kit = FunNetworkKit()
+        let _kit = NetworkKit()
         
         return _kit
     }
     
-    public static var sheet: FunSheet {
+    public static var sheet: Sheet {
         
-        let _sheet = FunSheet()
+        let _sheet = Sheet()
         
         return _sheet
     }
     
-    public static var networkManager: FunNetworkKitManager {
+    public static var networkManager: NetworkKitManager {
         return Static.instance_networkManager
     }
     
-    public static var cache: FunCache {
+    public static var cache: Cache {
         
         return Static.instance_cache
     }
     
-
+    
     
     
 }

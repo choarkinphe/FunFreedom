@@ -11,6 +11,42 @@ import Alamofire
 import HandyJSON
 import FunFreedom
 
+public struct BaseModel<T>: ResponseDecodable  {
+    public var success: Bool = false
+    
+    public init() {
+        
+    }
+    
+    public var code: Int?
+    
+    public var message: String?
+    
+    public var data: T?
+
+    var Code: Int {
+        return code ?? 0
+    }
+    var Data: String? {
+        return data as? String
+    }
+    var Message: String {
+        return message ?? ""
+    }
+    
+    public mutating func mapping(mapper: HelpingMapper) {
+        mapper.specify(property: &code, name: "Code")
+        mapper.specify(property: &data, name: "Data")
+        mapper.specify(property: &message, name: "Message")
+    }
+
+}
+
+typealias CKNetwork = FunFreedom.NetworkKitManager
+typealias CKNetworkKit = FunFreedom.NetworkKit
+typealias SuccessHandlerType = ((BaseModel<String>) -> Void)
+typealias FailureHandlerType = ((Int?, String) ->Void)
+
 public struct ResponseModel<T>: ResponseDecodable {
     
     public init() {
@@ -28,7 +64,11 @@ public struct ResponseModel<T>: ResponseDecodable {
     
 }
 
-extension FunNetworkKit {
+
+private var NetwokKitSuccessKey = "NetwokKitSuccessKey"
+private var NetwokKitFailureKey = "NetwokKitFailureKey"
+
+extension FunFreedom.NetworkKit: FunResponseDelegate {
     
     enum ResponseCode: Int {
         case success = 0
@@ -58,11 +98,91 @@ extension FunNetworkKit {
         }
     }
     
+    static var hz: FunFreedom.NetworkKit {
+        let a = FunFreedom.NetworkKit()
+        a.delegate = a
+        return a
+    }
     
     func response_needLogin(title: String?) {
         
         
         
     }
+    
+    final var success: SuccessHandlerType? {
+        set {
+            objc_setAssociatedObject(self, &NetwokKitSuccessKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        
+        get {
+            if let rs = objc_getAssociatedObject(self, &NetwokKitSuccessKey) {
+                return rs as? SuccessHandlerType
+            }
+            return nil
+        }
+    }
+    
+    final var failure: FailureHandlerType? {
+        set {
+            objc_setAssociatedObject(self, &NetwokKitFailureKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        
+        get {
+            if let rs = objc_getAssociatedObject(self, &NetwokKitFailureKey) {
+                return rs as? FailureHandlerType
+            }
+            return nil
+        }
+    }
+    
+//    private var success: SuccessHandlerType?
+//    private var failure: FailureHandlerType?
+    
+    
+    final func success(_ handler: @escaping SuccessHandlerType) -> Self {
+            success = handler
+            return self
+        }
+        
+        final func failure(_ handler: @escaping FailureHandlerType) -> Self {
+            failure = handler
+            return self
+        }
+
+    public func response_success(json: Data) {
+            
+            do {
+                // ***********Error code can be unified here, unified error pop-up ****
+    //            let decoder = JSONDecoder()
+    //            let baseModel = try? decoder.decode(BaseModel<String>.self, from: json)
+                
+                guard let model = BaseModel<String>.deserialize(from: String(data: json, encoding: .utf8)) else {
+//                    if let failureBlack = self.failure {
+//                        failureBlack(nil, "Parse failure")
+//                    }
+                    return
+                }
+//                switch (model.generalCode) {
+//                case HttpCode.success.rawValue :
+//                    //Data return correct
+//                    self.success?(model)
+//                case HttpCode.needLogin.rawValue:
+//                    //Please login again
+//                    self.failure?(model.generalCode ,model.generalMessage)
+//                    //                alertLogin(model.generalMessage)
+//                    response_needLogin(title: model.generalMessage)
+//                default:
+//                    //Other errors
+//                    self.failure?(model.generalCode ,model.generalMessage)
+//
+//                }
+            }
+        }
+        
+    public func response_failure(error: Error) {
+            
+//            self.failure?(nil ,"Parse failure")
+        }
     
 }
