@@ -31,7 +31,7 @@
 		4815CE72371770D36D7AF73EB197E265 /* CBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC4B3DB319F8E1AD485B4CF2769E6C /* CBridge.swift */; };
 		499426292355FC650069AA74 /* FunFreedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426282355FC650069AA74 /* FunFreedom.swift */; };
 		4A770D0B235CCC6200C71AEF /* FunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D0A235CCC6200C71AEF /* FunAlert.swift */; };
-		4A770D0F235CCE3700C71AEF /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D0E235CCE3700C71AEF /* FunDataPicker.swift */; };
+		4A770D12235CD20300C71AEF /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D11235CD20300C71AEF /* FunDataPicker.swift */; };
 		4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */; };
 		4AF4B2D72356E46600F33EFB /* FunSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D42356E46600F33EFB /* FunSheet.swift */; };
 		4AF4B2D82356E46600F33EFB /* FunSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D52356E46600F33EFB /* FunSheetController.swift */; };
@@ -171,7 +171,7 @@
 		499426282355FC650069AA74 /* FunFreedom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunFreedom.swift; path = Source/FunFreedom.swift; sourceTree = "<group>"; };
 		49C75C9481A61828B26D66447E655C6C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		4A770D0A235CCC6200C71AEF /* FunAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FunAlert.swift; path = Source/FunAlert.swift; sourceTree = "<group>"; };
-		4A770D0E235CCE3700C71AEF /* FunDataPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunDataPicker.swift; sourceTree = "<group>"; };
+		4A770D11235CD20300C71AEF /* FunDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunDataPicker.swift; path = Source/FunDataPicker.swift; sourceTree = "<group>"; };
 		4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunCache.swift; path = Source/FunCache.swift; sourceTree = "<group>"; };
 		4AF4B2D42356E46600F33EFB /* FunSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunSheet.swift; path = Source/FunSheet.swift; sourceTree = "<group>"; };
 		4AF4B2D52356E46600F33EFB /* FunSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunSheetController.swift; path = Source/FunSheetController.swift; sourceTree = "<group>"; };
@@ -332,7 +332,7 @@
 		4A770D10235CCE3D00C71AEF /* DataPicker */ = {
 			isa = PBXGroup;
 			children = (
-				4A770D0E235CCE3700C71AEF /* FunDataPicker.swift */,
+				4A770D11235CD20300C71AEF /* FunDataPicker.swift */,
 			);
 			name = DataPicker;
 			sourceTree = "<group>";
@@ -887,6 +887,7 @@
 				4A770D0B235CCC6200C71AEF /* FunAlert.swift in Sources */,
 				4AF4B2D92356E46600F33EFB /* FunSheetView.swift in Sources */,
 				4AF4B2E12356E47100F33EFB /* FunNetworkKitManager.swift in Sources */,
+				4A770D12235CD20300C71AEF /* FunDataPicker.swift in Sources */,
 				4AF4B2DF2356E47100F33EFB /* FunNetworkKit.swift in Sources */,
 				4AF4B2E02356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
 				4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */,
@@ -895,7 +896,6 @@
 				79E84B38E3E7F9A087C1E1C8E3DDE8EB /* FunFreedom-dummy.m in Sources */,
 				4AF4B2D82356E46600F33EFB /* FunSheetController.swift in Sources */,
 				4AF4B2D72356E46600F33EFB /* FunSheet.swift in Sources */,
-				4A770D0F235CCE3700C71AEF /* FunDataPicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
