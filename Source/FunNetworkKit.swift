@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 import HandyJSON
 
-public protocol FunResponseDelegate {
+public protocol FunResponseDelegate: class {
     func response_success(json: Data)
     func response_failure(error: Error)
 }
@@ -64,7 +64,7 @@ public extension FunFreedom {
         
         public lazy var config = RequestConfig()
         
-        public var delegate: FunResponseDelegate?
+        public weak var delegate: FunResponseDelegate?
         
         public init() {
             
