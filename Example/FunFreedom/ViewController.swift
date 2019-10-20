@@ -32,9 +32,10 @@ class ViewController: UIViewController {
     }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request_handy_completion(TESTModel.self) { (testModel) in
-            print(testModel?.description ?? "error")
-        }
+        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).success { (baseModel) in
+            
+            print(baseModel.data ?? "null")
+        }.request()
         
     }
     override func didReceiveMemoryWarning() {

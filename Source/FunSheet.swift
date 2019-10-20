@@ -42,6 +42,12 @@ public extension FunFreedom {
     
     class Sheet {
         
+        public static var `default`: Sheet {
+            
+            let sheet = Sheet()
+            return sheet
+        }
+        
         public lazy var sheetController = FunFreedom.ActionSheetController()
         private var _actions = [FunFreedom.ActionSheet]()
         

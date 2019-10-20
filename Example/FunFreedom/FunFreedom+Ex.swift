@@ -35,9 +35,9 @@ public struct BaseModel<T>: ResponseDecodable  {
     }
     
     public mutating func mapping(mapper: HelpingMapper) {
-        mapper.specify(property: &code, name: "Code")
-        mapper.specify(property: &data, name: "Data")
-        mapper.specify(property: &message, name: "Message")
+        mapper.specify(property: &code, name: "code")
+        mapper.specify(property: &data, name: "data")
+        mapper.specify(property: &message, name: "message")
     }
 
 }
@@ -158,25 +158,25 @@ extension FunFreedom.NetworkKit: FunResponseDelegate {
     //            let baseModel = try? decoder.decode(BaseModel<String>.self, from: json)
                 
                 guard let model = BaseModel<String>.deserialize(from: String(data: json, encoding: .utf8)) else {
-//                    if let failureBlack = self.failure {
-//                        failureBlack(nil, "Parse failure")
-//                    }
+                    if let failureBlack = self.failure {
+                        failureBlack(nil, "Parse failure")
+                    }
                     return
                 }
-//                switch (model.generalCode) {
-//                case HttpCode.success.rawValue :
-//                    //Data return correct
-//                    self.success?(model)
-//                case HttpCode.needLogin.rawValue:
-//                    //Please login again
-//                    self.failure?(model.generalCode ,model.generalMessage)
-//                    //                alertLogin(model.generalMessage)
-//                    response_needLogin(title: model.generalMessage)
-//                default:
-//                    //Other errors
-//                    self.failure?(model.generalCode ,model.generalMessage)
-//
-//                }
+                switch (model.Code) {
+                case 0:
+                    //Data return correct
+                    self.success?(model)
+                case 2:
+                    //Please login again
+                    self.failure?(model.Code ,model.Message)
+                    //                alertLogin(model.generalMessage)
+                    response_needLogin(title: model.message)
+                default:
+                    //Other errors
+                    self.failure?(model.Code ,model.Message)
+
+                }
             }
         }
         

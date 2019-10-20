@@ -18,16 +18,22 @@ open class FunFreedom {
     
     public static var netwokKit: NetworkKit {
         
-        let _kit = NetworkKit()
-        
-        return _kit
+        return NetworkKit.default
     }
     
     public static var sheet: Sheet {
         
-        let _sheet = Sheet()
+        return Sheet.default
+    }
+    
+    public static var alert: Alert {
         
-        return _sheet
+        return Alert.default
+    }
+    
+    public static var datePicker: DatePicker {
+        
+        return DatePicker.default
     }
     
     public static var networkManager: NetworkKitManager {

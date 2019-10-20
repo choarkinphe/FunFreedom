@@ -66,6 +66,13 @@ public extension FunFreedom {
         
         public weak var delegate: FunResponseDelegate?
         
+        public static var `default`: NetworkKit {
+            
+            let _kit = NetworkKit()
+            
+            return _kit
+        }
+        
         public init() {
             
         }
