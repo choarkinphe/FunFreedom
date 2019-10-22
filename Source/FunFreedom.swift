@@ -31,6 +31,10 @@ open class FunFreedom {
         return Alert.default
     }
     
+    public static var toast: Toast {
+        return Toast.default
+    }
+    
     public static var datePicker: DatePicker {
         
         return DatePicker.default
