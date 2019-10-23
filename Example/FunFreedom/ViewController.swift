@@ -29,8 +29,13 @@ class ViewController: UIViewController {
 //            self.actions = actions
 //        }).present()
         
-        FunFreedom.datePicker.present()
+//        FunFreedom.datePicker.present()
+        FunFreedom.toast.message("Loading").showActivity()
         
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        FunFreedom.toast.dismiss()
     }
     @IBAction func request(_ sender: Any) {
         
