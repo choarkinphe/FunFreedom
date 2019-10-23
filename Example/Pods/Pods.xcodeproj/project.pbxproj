@@ -32,7 +32,7 @@
 		499426292355FC650069AA74 /* FunFreedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499426282355FC650069AA74 /* FunFreedom.swift */; };
 		4A770D0B235CCC6200C71AEF /* FunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D0A235CCC6200C71AEF /* FunAlert.swift */; };
 		4A770D18235CD3AE00C71AEF /* FunNetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D17235CD3AE00C71AEF /* FunNetworkKit.swift */; };
-		4A770D1C235CD65D00C71AEF /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D1B235CD65D00C71AEF /* FunDataPicker.swift */; };
+		4AA8E5AF235CD91D00BA9397 /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A770D1B235CD65D00C71AEF /* FunDataPicker.swift */; };
 		4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2BF2356E2FA00F33EFB /* FunCache.swift */; };
 		4AF4B2D72356E46600F33EFB /* FunSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D42356E46600F33EFB /* FunSheet.swift */; };
 		4AF4B2D82356E46600F33EFB /* FunSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF4B2D52356E46600F33EFB /* FunSheetController.swift */; };
@@ -884,10 +884,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA8E5AF235CD91D00BA9397 /* FunDataPicker.swift in Sources */,
 				4A770D0B235CCC6200C71AEF /* FunAlert.swift in Sources */,
 				4AF4B2D92356E46600F33EFB /* FunSheetView.swift in Sources */,
 				4AF4B2E12356E47100F33EFB /* FunNetworkKitManager.swift in Sources */,
-				4A770D1C235CD65D00C71AEF /* FunDataPicker.swift in Sources */,
 				4AF4B2E02356E47100F33EFB /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
 				4AF4B2C72356E2FB00F33EFB /* FunCache.swift in Sources */,
 				4AF4B2DE2356E47100F33EFB /* FunNetworkKit+Cache.swift in Sources */,

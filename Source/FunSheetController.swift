@@ -33,22 +33,30 @@ public extension FunFreedom {
     class ActionSheetController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
         open lazy var config = FunFreedom.ActionSheetConfig()
         
-        open var handler: FunActionSheetHandler?
-        open var multiHandler: FunActionSheetMultiHandler?
+        open var handler: FunActionSheetHandler? {
+            didSet {
+                toolBar.isMultiSelector = false
+            }
+        }
+        open var multiHandler: FunActionSheetMultiHandler? {
+            didSet {
+                toolBar.isMultiSelector = true
+            }
+        }
         
         public lazy var result = [FunFreedom.ActionSheet]()
         
-        convenience init(handler a_handler: FunActionSheetHandler?) {
-            self.init(nibName: nil, bundle: nil)
-            
-            handler = a_handler
-        }
-        
-        convenience init(multiHandler a_multiHandler: FunActionSheetMultiHandler?) {
-            self.init(nibName: nil, bundle: nil)
-            
-            multiHandler = a_multiHandler
-        }
+//        convenience init(handler a_handler: FunActionSheetHandler?) {
+//            self.init(nibName: nil, bundle: nil)
+//
+//            handler = a_handler
+//        }
+//
+//        convenience init(multiHandler a_multiHandler: FunActionSheetMultiHandler?) {
+//            self.init(nibName: nil, bundle: nil)
+//
+//            multiHandler = a_multiHandler
+//        }
         
         public required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
@@ -142,8 +150,14 @@ public extension FunFreedom {
             }
             
             if let a_topView = topView {
+                a_topView.frame = CGRect.init(x: config.contentInsets.left, y: tableView.frame.origin.y, width: contentW, height: 44)
+                a_topView.backgroundColor = .white
+                if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
+                    a_topView.frame = CGRect.init(x: config.contentInsets.left, y: tableView.frame.origin.y, width: contentW, height: 8)
+                    a_topView.backgroundColor = .clear
+                }
                 
-                a_topView.frame = CGRect.init(x: config.contentInsets.left, y: tableView.frame.origin.y, width: contentW, height: a_topView.bounds.size.height)
+                tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
                 
             }
             
@@ -197,7 +211,7 @@ public extension FunFreedom {
                 
                 if let a_topView = newValue {
                     a_topView.frame = CGRect.init(x: config.contentInsets.left, y: config.contentInsets.top, width: tableView.frame.size.width, height: a_topView.bounds.size.height)
-                    tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
+//                    tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
                     view.addSubview(a_topView)
                     
                 }

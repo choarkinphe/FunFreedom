@@ -98,11 +98,12 @@ public extension FunFreedom {
             return self
         }
         
-        public func setHeaderTitle(_ headerTitle: String, _ headerDetail: String? = nil) -> Self {
+        public func setHeaderTips(_ tips: String?) -> Self {
             
-            let header = FunFreedom.ActionSheetHeader.init(title: headerTitle, detail: headerDetail)
+//            let header = FunFreedom.ActionSheetHeader.init(title: headerTitle, detail: headerDetail)
+            sheetController.toolBar.tipLabel.text = tips
             
-            return setHeaderView(header)
+            return self
         }
         
         public func setHeaderView(_ headerView: UIView) -> Self {
