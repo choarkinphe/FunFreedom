@@ -381,12 +381,13 @@ public extension UIView {
     
     // MARK: - Toast Construction
     
-    func toastViewForMessage(_ message: String?, title: String?, image: UIImage?, style: FunFreedom.Toast.Style) throws -> UIView {
+    func toastViewForMessage(_ message: String?, title: String?, image: UIImage?, style:  FunFreedom.Toast.Style) throws -> UIView {
         // sanity
         guard message != nil || title != nil || image != nil else {
             throw ToastError.missingParameters
         }
         
+        var style = style
         var messageLabel: UILabel?
         var titleLabel: UILabel?
         var imageView: UIImageView?
@@ -404,6 +405,7 @@ public extension UIView {
         }
         
         if let image = image {
+            style.verticalPadding = max(style.verticalPadding, 20)
             imageView = UIImageView(image: image)
             imageView?.contentMode = .scaleAspectFit
             imageView?.frame = CGRect(x: style.verticalPadding, y: style.verticalPadding, width: style.imageSize.width, height: style.imageSize.height)
@@ -458,7 +460,7 @@ public extension UIView {
         
         if let titleLabel = titleLabel {
             titleRect.origin.x = style.horizontalPadding
-            titleRect.origin.y = imageRect.origin.y + imageRect.size.height + style.verticalPadding
+            titleRect.origin.y = imageRect.origin.y + imageRect.size.height + style.margin
             titleRect.size.width = titleLabel.bounds.size.width
             titleRect.size.height = titleLabel.bounds.size.height
         }
@@ -467,20 +469,23 @@ public extension UIView {
         
         if let messageLabel = messageLabel {
             messageRect.origin.x = style.horizontalPadding
-            messageRect.origin.y = imageRect.origin.y + imageRect.size.height + style.verticalPadding + titleRect.size.height + style.verticalPadding
+            messageRect.origin.y = imageRect.origin.y + imageRect.size.height + style.margin + titleRect.size.height + style.verticalPadding
             messageRect.size.width = messageLabel.bounds.size.width
             messageRect.size.height = messageLabel.bounds.size.height
         }
         
-        let longerWidth = max(titleRect.size.width, messageRect.size.width)
-        let longerX = max(titleRect.origin.x, messageRect.origin.x)
-        let wrapperWidth = max(imageRect.size.width, (longerX + longerWidth + style.horizontalPadding))
-        let wrapperHeight = messageRect.origin.y + messageRect.size.height + style.verticalPadding
-        
-        wrapperView.frame = CGRect(x: 0.0, y: 0.0, width: wrapperWidth, height: wrapperHeight)
+        var longerWidth = max(titleRect.size.width, messageRect.size.width)
+        var longerX = max(titleRect.origin.x, messageRect.origin.x)
+        var wrapperWidth = max(imageRect.size.width, (longerX + longerWidth + style.horizontalPadding))
+        var wrapperHeight = messageRect.origin.y + messageRect.size.height + style.verticalPadding
         
         if let imageView = imageView {
+            wrapperWidth = max(wrapperWidth, 120)
+            wrapperHeight = max(wrapperHeight, 120)
+            longerWidth = wrapperWidth - style.horizontalPadding * 2
             imageRect.origin.x = (wrapperWidth - imageView.bounds.size.width) / 2.0
+            messageRect.origin.y = wrapperHeight - style.verticalPadding - messageRect.size.height
+            titleRect.origin.y = wrapperHeight - style.verticalPadding * 2 - messageRect.size.height - titleRect.size.height
             imageView.frame = imageRect
             wrapperView.addSubview(imageView)
         }
@@ -498,6 +503,8 @@ public extension UIView {
         }
         
         
+        
+        wrapperView.frame = CGRect(x: 0.0, y: 0.0, width: wrapperWidth, height: wrapperHeight)
         
         return wrapperView
     }
@@ -561,6 +568,8 @@ public extension FunFreedom.Toast {
          and `safeAreaInsets.bottom`.
          */
         public var verticalPadding: CGFloat = 10.0
+        
+        public var margin: CGFloat = 10.0
         
         /**
          The corner radius. Default is 10.0.
