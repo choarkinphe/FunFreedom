@@ -27,6 +27,7 @@ public extension FunFreedom {
         
         public static var `default`: Toast {
             let toast = Toast()
+            ToastManager.shared.isTapToDismissEnabled = true
             return toast
         }
         
@@ -76,6 +77,12 @@ public extension FunFreedom {
         
         public func style(_ style: ToastStyle) -> Self {
             config.style = style
+            
+            return self
+        }
+        
+        public func isTapToDismissEnabled(_ isTapToDismissEnabled: Bool) -> Self {
+            ToastManager.shared.isTapToDismissEnabled = isTapToDismissEnabled
             
             return self
         }
@@ -227,23 +234,25 @@ public extension UIView {
         
         let hasToast = config.title != nil || config.message != nil
         
-        ToastManager.shared.style.activitySize = CGSize.init(width: 100, height: 100)
+        var activitySize = CGSize.init(width: 100, height: 100)
         
         var toast_config = config
-        
+        var activity_point: CGPoint?
         if hasToast {
             
-            ToastManager.shared.style.activitySize = CGSize.init(width: 135, height: 135)
+            activitySize = CGSize.init(width: 135, height: 135)
             
-            toast_config.position = .top
+            toast_config.position = .bottom
             toast_config.completion = nil
             toast_config.duration = 500
             toast_config.style.backgroundColor = .clear
-            toast_config.style.verticalPadding = 0
-            
+//            toast_config.style.verticalPadding = 0
+            activity_point = CGPoint.init(x: activitySize.width / 2.0, y: activitySize.height / 2.0 - 18)
         }
         
-        let toast = createToastActivityView()
+        ToastManager.shared.style.activitySize = activitySize
+        
+        let toast = createToastActivityView(point: activity_point)
         
         var point = config.position.centerPoint(forToast: toast, inSuperview: self)
         
@@ -284,7 +293,7 @@ public extension UIView {
         })
     }
     
-    private func createToastActivityView() -> UIView {
+    private func createToastActivityView(point: CGPoint?=nil) -> UIView {
         let style = ToastManager.shared.style
         
         let activityView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: style.activitySize.width, height: style.activitySize.height))
@@ -301,6 +310,9 @@ public extension UIView {
         
         let activityIndicatorView = UIActivityIndicatorView(style: .whiteLarge)
         activityIndicatorView.center = CGPoint(x: activityView.bounds.size.width / 2.0, y: activityView.bounds.size.height / 2.0)
+        if let point = point {
+            activityIndicatorView.center = point
+        }
         activityView.addSubview(activityIndicatorView)
         activityIndicatorView.color = style.activityIndicatorColor
         activityIndicatorView.startAnimating()
