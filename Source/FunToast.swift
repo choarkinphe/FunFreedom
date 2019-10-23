@@ -507,7 +507,7 @@ public extension UIView {
 public extension FunFreedom.Toast {
     // MARK: - Toast Style
     
-    public struct Style {
+    struct Style {
         
         public init() {}
         
@@ -657,7 +657,7 @@ public extension FunFreedom.Toast {
     
     // MARK: - Toast Manager
     
-    public class Manager {
+    class Manager {
         
         /**
          The `ToastManager` singleton instance.
@@ -708,7 +708,7 @@ public extension FunFreedom.Toast {
     
     // MARK: - ToastPosition
     
-    public enum Position {
+    enum Position {
         case top
         case center
         case bottom
