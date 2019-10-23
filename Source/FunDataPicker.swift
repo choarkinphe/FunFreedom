@@ -361,7 +361,7 @@ public extension FunFreedom.DatePicker {
 
 extension FunFreedom.DatePicker: UIGestureRecognizerDelegate {
     // MARK: TapAction
-    private func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         
         if touch.view == self.datePicker || touch.view == self.toolBar {
             return false

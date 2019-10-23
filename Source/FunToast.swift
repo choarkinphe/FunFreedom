@@ -475,7 +475,7 @@ public extension UIView {
         }
         
         var longerWidth = max(titleRect.size.width, messageRect.size.width)
-        var longerX = max(titleRect.origin.x, messageRect.origin.x)
+        let longerX = max(titleRect.origin.x, messageRect.origin.x)
         var wrapperWidth = max(imageRect.size.width, (longerX + longerWidth + style.horizontalPadding))
         var wrapperHeight = messageRect.origin.y + messageRect.size.height + style.verticalPadding
         
