@@ -108,6 +108,7 @@ public extension FunFreedom {
             didSet {
                 
                 tableView.reloadData()
+                view.setNeedsLayout()
             }
         }
         
@@ -131,35 +132,42 @@ public extension FunFreedom {
             let max_Height = view.bounds.size.height - config.contentInsets.top - config.contentInsets.bottom
             let min_Height = contentW
             let actionHeight: CGFloat = CGFloat(49 * (actions?.count ?? 0))
-            var contentH = min_Height
-            
-            if actionHeight > min_Height {
-                contentH = actionHeight
-            }
-            
-            if actionHeight > max_Height {
-                contentH = max_Height
-            }
-            
+            let contentH = max(contentW, min(max_Height, actionHeight))
+
             let contentY = view.bounds.size.height - contentH - config.contentInsets.bottom
             
-            tableView.frame = CGRect.init(x: config.contentInsets.left, y: contentY, width: contentW, height: contentH)
+            var rect_topView = CGRect.zero
+            var rect_tableView = CGRect.init(x: config.contentInsets.left, y: contentY, width: contentW, height: contentH)
             
             if config.position == .center {
-                tableView.center = view.center
+                rect_tableView = CGRect.init(x: (view.bounds.size.width - contentW) / 2.0, y: (view.bounds.size.height - contentH) / 2.0, width: contentW, height: contentH)
+//                tableView.center = view.center
             }
             
+            
+            
             if let a_topView = topView {
-                a_topView.frame = CGRect.init(x: config.contentInsets.left, y: tableView.frame.origin.y, width: contentW, height: 44)
-                a_topView.backgroundColor = .white
-                if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
-                    a_topView.frame = CGRect.init(x: config.contentInsets.left, y: tableView.frame.origin.y, width: contentW, height: 8)
-                    a_topView.backgroundColor = .clear
+                rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: a_topView.bounds.size.height)
+                if a_topView == toolBar {
+                    a_topView.backgroundColor = .white
+                    if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
+                        rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: 8)
+                        a_topView.backgroundColor = .clear
+                    }
                 }
-                
-                tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
+
+                tableView.contentInset = UIEdgeInsets.init(top: rect_topView.size.height, left: 0, bottom: 0, right: 0)
                 
             }
+            
+//            UIView.animate(withDuration: 0.25, animations: {
+                self.tableView.frame = rect_tableView
+                if let a_topView = self.topView {
+                    a_topView.frame = rect_topView
+                }
+//            }) { (complete) in
+                
+//            }
             
             if let a_cornerRadius = config.cornerRadius {
                 tableView.layer.cornerRadius = a_cornerRadius
@@ -200,13 +208,17 @@ public extension FunFreedom {
                     return
                 }
                 
+//                if newValue != toolBar {
+//                    toolBar.removeFromSuperview()
+//                }
+                
                 if let topView = topView {
                     
-                    if newValue == nil {
+//                    if newValue == nil {
                         
                         topView.frame = .zero
                         topView.removeFromSuperview()
-                    }
+//                    }
                 }
                 
                 if let a_topView = newValue {
@@ -214,6 +226,7 @@ public extension FunFreedom {
 //                    tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
                     view.addSubview(a_topView)
                     
+                    tableView.scrollsToTop = true
                 }
             }
             
