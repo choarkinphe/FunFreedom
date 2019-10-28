@@ -130,7 +130,7 @@ public extension FunFreedom {
             
             let contentW = view.bounds.size.width - config.contentInsets.left - config.contentInsets.right
             let max_Height = view.bounds.size.height - config.contentInsets.top - config.contentInsets.bottom
-            let min_Height = contentW
+//            let min_Height = contentW
             let actionHeight: CGFloat = CGFloat(49 * (actions?.count ?? 0))
             let contentH = max(contentW, min(max_Height, actionHeight))
 
