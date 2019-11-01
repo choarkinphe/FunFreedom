@@ -15,6 +15,7 @@ class NetworkKitManager {
     public var baseUrl: String?
     public var headers: HTTPHeaders?
     public var cacheTimeOut: TimeInterval = 300
+    public var errorHUD: Bool = false
 }
 }
 

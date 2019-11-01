@@ -193,6 +193,9 @@ public extension FunFreedom {
                     
                     internal_response(success: false, data: error)
                     
+                    if FunFreedom.networkManager.errorHUD {
+                        FunFreedom.toast.message(error.localizedDescription).showToast()
+                    }
                     
                 }
                 
@@ -255,7 +258,9 @@ public extension FunFreedom {
                 //Error handling - pop-up error message
                 func failure(error : Error) {
                     internal_response(success: false, data: error)
-                    
+                    if FunFreedom.networkManager.errorHUD {
+                        FunFreedom.toast.message(error.localizedDescription).showToast()
+                    }
                 }
             }
             
@@ -322,15 +327,6 @@ public extension FunFreedom {
             }
             
         }
-        
-//        open func response_success(json: Data) {
-            //        request_end()
-            
-//        }
-        
-//        open func response_failure(error: Error){
-            //        request_end()
-//        }
         
         private func load_cache() -> Bool {
             
