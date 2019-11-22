@@ -988,7 +988,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FunFreedom/FunFreedom-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FunFreedom/FunFreedom-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.5.2;
 				MODULEMAP_FILE = "Target Support Files/FunFreedom/FunFreedom.modulemap";
@@ -1381,7 +1381,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/FunFreedom/FunFreedom-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/FunFreedom/FunFreedom-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MARKETING_VERSION = 1.5.2;
 				MODULEMAP_FILE = "Target Support Files/FunFreedom/FunFreedom.modulemap";

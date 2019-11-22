@@ -46,9 +46,14 @@ public extension FunFreedom {
             cachePool.removeValue(forKey: key)
         }
         
-        @objc private func didReceiveMemoryWarning() {
+        public func removeAllCache() {
             
             cachePool.removeAll()
+        }
+        
+        @objc private func didReceiveMemoryWarning() {
+            
+            removeAllCache()
         }
         
         deinit {

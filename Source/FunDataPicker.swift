@@ -15,8 +15,6 @@ public extension FunFreedom {
         
         var position: DatePicker.Position = .default
         
-        var formatter = DateFormatter()
-        
         var showDate: Date?
         
         var showAnimated: Bool = false
@@ -38,9 +36,15 @@ public extension FunFreedom {
         
         private lazy var config: DatePickerConfig = {
             let _config = DatePickerConfig()
-            _config.formatter.dateFormat = "dd/MM/YYYY"
             return _config
             
+        }()
+        
+        private lazy var formatter: DateFormatter = {
+            let _formatter = DateFormatter()
+            _formatter.locale = Locale.current
+            _formatter.dateFormat = "dd/MM/yyyy"
+            return _formatter
         }()
         
         public static var `default`: DatePicker {
@@ -74,7 +78,8 @@ public extension FunFreedom {
             modalTransitionStyle = .coverVertical
             modalPresentationStyle = .overFullScreen
             view.backgroundColor = UIColor.init(white: 0, alpha: 0)
-            datePicker.calendar = Calendar.current
+//            datePicker.calendar = Calendar.current
+            datePicker.locale = Locale.current
             if UIDevice.current.userInterfaceIdiom == .phone {
                 
                 if let mainWindow = UIApplication.shared.delegate?.window {
@@ -147,7 +152,7 @@ public extension FunFreedom {
             }
             
             if let dateStrHandler = config.dateStrHandler {
-                dateStrHandler(config.formatter.string(from: datePicker.date))
+                dateStrHandler(formatter.string(from: datePicker.date))
             }
             
             dismiss(animated: true, completion: nil)
@@ -298,7 +303,7 @@ public extension FunFreedom.DatePicker {
     func setDate(dateStr a_dateStr: String?, animated a_animated: Bool? = nil) -> Self {
         
         if let dateStr = a_dateStr {
-            guard let date = config.formatter.date(from: dateStr) else { return self }
+            guard let date = formatter.date(from: dateStr) else { return self }
             
             return setDate(date: date, animated: a_animated)
         }
@@ -318,7 +323,7 @@ public extension FunFreedom.DatePicker {
     
     func dateFormatter(_ formatterStr: String) -> Self {
         
-        config.formatter.dateFormat = formatterStr
+        formatter.dateFormat = formatterStr
         
         return self
     }
@@ -336,7 +341,7 @@ public extension FunFreedom.DatePicker {
     }
     
     func minimumDate(_ minimumDateStr: String) -> Self {
-        guard let date = config.formatter.date(from: minimumDateStr) else { return self }
+        guard let date = formatter.date(from: minimumDateStr) else { return self }
         return minimumDate(date)
     }
     
@@ -347,7 +352,7 @@ public extension FunFreedom.DatePicker {
     }
     
     func maximumDate(_ maximumDateStr: String) -> Self {
-        guard let date = config.formatter.date(from: maximumDateStr) else { return self }
+        guard let date = formatter.date(from: maximumDateStr) else { return self }
         return maximumDate(date)
     }
     

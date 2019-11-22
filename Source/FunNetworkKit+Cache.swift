@@ -78,6 +78,10 @@ private extension FunFreedom.Cache {
         guard let url = config.urlString else { return nil}
         var key = url
         
+        if let header = config.headers, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
+            key = key + header_string
+        }
+        
         if let params = config.params, let data = try? JSONSerialization.data(withJSONObject: params, options: []), let params_string = String(data: data, encoding: String.Encoding.utf8) {
             key = key + params_string
         }
