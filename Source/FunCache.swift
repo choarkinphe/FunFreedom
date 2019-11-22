@@ -17,8 +17,8 @@ public extension FunFreedom {
         }
         
         public struct CacheData {
-            var data: Any?
-            var cache_time: TimeInterval?
+            public var data: Any?
+            public var cache_time: TimeInterval?
         }
         
         public func cache(key: String?, data: Any?) {
