@@ -42,6 +42,7 @@
 		497D54A2235D638400F37E3E /* FunSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D549F235D638400F37E3E /* FunSheet.swift */; };
 		49DBAA53235F30F7001EEC7A /* FunToast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DBAA52235F30F7001EEC7A /* FunToast.swift */; };
 		49DBAA58235F3A5A001EEC7A /* FunTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49DBAA57235F3A5A001EEC7A /* FunTool.swift */; };
+		4AE7C8462387C60F00B69530 /* FunDrawingBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7C8452387C60F00B69530 /* FunDrawingBoard.swift */; };
 		4F51FFF3E6B55DD8F5EC974F168EB0F8 /* ContextDescriptorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96629ECDFF792CB2F2BD420DFD4432C6 /* ContextDescriptorType.swift */; };
 		53791F5E5F07400F92CFDFC89A432305 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3075E694812890E4ACE0B4967F1BA9A5 /* Validation.swift */; };
 		559DB0171DC67BEE3EEF28DA73845BA4 /* HandyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9390029D61212FF21A462D2730F7E57 /* HandyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -184,6 +185,7 @@
 		49C75C9481A61828B26D66447E655C6C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		49DBAA52235F30F7001EEC7A /* FunToast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunToast.swift; path = Source/FunToast.swift; sourceTree = "<group>"; };
 		49DBAA57235F3A5A001EEC7A /* FunTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunTool.swift; path = Source/FunTool.swift; sourceTree = "<group>"; };
+		4AE7C8452387C60F00B69530 /* FunDrawingBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunDrawingBoard.swift; path = Source/FunDrawingBoard.swift; sourceTree = "<group>"; };
 		55A81A36D7D101DAB0701747C36A183A /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
 		5B56B46244005E3B150D8C2AAF04E6BD /* FunFreedom-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FunFreedom-prefix.pch"; sourceTree = "<group>"; };
 		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -357,6 +359,14 @@
 			name = DataPicker;
 			sourceTree = "<group>";
 		};
+		4AE7C8442387C5EE00B69530 /* DrawingBoard */ = {
+			isa = PBXGroup;
+			children = (
+				4AE7C8452387C60F00B69530 /* FunDrawingBoard.swift */,
+			);
+			name = DrawingBoard;
+			sourceTree = "<group>";
+		};
 		4AF4B2D02356E35200F33EFB /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +529,7 @@
 			isa = PBXGroup;
 			children = (
 				497D5493235D636F00F37E3E /* FunFreedom.swift */,
+				4AE7C8442387C5EE00B69530 /* DrawingBoard */,
 				49DBAA56235F3A35001EEC7A /* Tool */,
 				49DBAA51235F2608001EEC7A /* Toast */,
 				4A770D10235CCE3D00C71AEF /* DataPicker */,
@@ -920,6 +931,7 @@
 				49DBAA53235F30F7001EEC7A /* FunToast.swift in Sources */,
 				497D54A0235D638400F37E3E /* FunSheetController.swift in Sources */,
 				497D5499235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
+				4AE7C8462387C60F00B69530 /* FunDrawingBoard.swift in Sources */,
 				79E84B38E3E7F9A087C1E1C8E3DDE8EB /* FunFreedom-dummy.m in Sources */,
 				497D54A2235D638400F37E3E /* FunSheet.swift in Sources */,
 				497D549A235D637C00F37E3E /* FunNetworkKitManager.swift in Sources */,
