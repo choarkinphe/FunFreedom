@@ -49,6 +49,10 @@ open class FunFreedom {
         return Static.instance_cache
     }
     
+    public static var drawingBoard: FunDrawingBoard {
+        
+        return FunDrawingBoard.default
+    }
     
     
     
