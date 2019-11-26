@@ -10,11 +10,7 @@ import Foundation
 public extension FunFreedom {
     class Cache {
         
-        private var cachePool = [String: CacheData]()
-        
-        init() {
-            NotificationCenter.default.addObserver(self, selector: #selector(didReceiveMemoryWarning), name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-        }
+        private var cachePool = NSCache<NSString,NSDictionary>()
         
         public struct CacheData {
             public var data: Any?
@@ -27,14 +23,17 @@ public extension FunFreedom {
             
             let cacheData = CacheData.init(data: data, cache_time: Date().timeIntervalSince1970)
             
-            cachePool[key] = cacheData
+            let cacheKey = NSString.init(string: key)
+            let cacheDict = NSDictionary.init(object: cacheData, forKey: cacheKey)
             
+            cachePool.setObject(cacheDict, forKey: cacheKey)
         }
         
         public func loadCache(key: String?) -> CacheData? {
             guard let key = key else { return nil }
-            if let data = cachePool[key] {
-                return data
+            let cacheKey = NSString.init(string: key)
+            if let cacheDict = cachePool.object(forKey: cacheKey), let data = cacheDict.object(forKey: cacheKey) {
+                return data as? CacheData
             }
             
             return nil
@@ -42,22 +41,14 @@ public extension FunFreedom {
         
         public func removeCache(key: String?) {
             guard let key = key else { return }
-            
-            cachePool.removeValue(forKey: key)
+            let cacheKey = NSString.init(string: key)
+            cachePool.removeObject(forKey: cacheKey)
         }
         
         public func removeAllCache() {
-            
-            cachePool.removeAll()
+
+            cachePool.removeAllObjects()
         }
-        
-        @objc private func didReceiveMemoryWarning() {
-            
-            removeAllCache()
-        }
-        
-        deinit {
-            NotificationCenter.default.removeObserver(self, name: UIApplication.didReceiveMemoryWarningNotification, object: nil)
-        }
+
     }
 }
