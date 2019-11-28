@@ -695,7 +695,7 @@ public extension FunFreedom.Toast {
          which operates independently of normal toast views. Default is `false`.
          
          */
-        public var isQueueEnabled = false
+        public var isQueueEnabled = true
         
         /**
          The default duration. Used for the `makeToast` and

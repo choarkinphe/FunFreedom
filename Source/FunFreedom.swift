@@ -14,6 +14,7 @@ open class FunFreedom {
         
         static var instance_cache: Cache = Cache()
         
+        static var instance_device: Device = Device()
     }
     
     public static var netwokKit: NetworkKit {
@@ -52,6 +53,10 @@ open class FunFreedom {
     public static var drawingBoard: DrawingBoard {
         
         return DrawingBoard.default
+    }
+    
+    public static var device: Device {
+        return Static.instance_device
     }
     
     

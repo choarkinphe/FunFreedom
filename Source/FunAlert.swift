@@ -205,7 +205,7 @@ public extension FunFreedom {
         }
         
         deinit {
-            print("die")
+            print("alert config die")
         }
         
         

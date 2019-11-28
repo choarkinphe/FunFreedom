@@ -266,7 +266,7 @@ public extension FunFreedom {
         }
         
         deinit {
-            print("die")
+            print("drawing config die")
         }
     }
 }

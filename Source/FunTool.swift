@@ -7,19 +7,43 @@
 
 import Foundation
 
-extension FunFreedom {
+public extension FunFreedom {
     class PublicTool {
         
-        static var frontController: UIViewController {
+        public static var frontController: UIViewController {
             
             return NSObject.currentViewController()
         }
         
     }
+    
+    struct Device {
+        
+        public var iPhoneXSeries: Bool = false
+        
+        public init() {
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                
+                if let mainWindow = UIApplication.shared.delegate?.window {
+                    
+                    if #available(iOS 11.0, *) {
+                        if mainWindow!.safeAreaInsets.bottom > CGFloat(0.0) {
+                            
+                            iPhoneXSeries = true
+                        }
+                    } else {
+                        // Fallback on earlier versions
+                    }
+                }
+                
+            }
+        }
+
+    }
 }
 
 //MARK: - findCurrentController
-extension NSObject {
+fileprivate extension NSObject {
     
     class func currentViewController() -> UIViewController {
         
@@ -82,36 +106,48 @@ extension NSObject {
 
 }
 
-struct CKDevice {
-    
-    var iPhoneXSeries: Bool = false
-    
-    private struct Static {
-        
-        static var instance: CKDevice = CKDevice()
-        
-    }
-    
-    static var shared: CKDevice {
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            
-            if let mainWindow = UIApplication.shared.delegate?.window {
-                
-                if #available(iOS 11.0, *) {
-                    if mainWindow!.safeAreaInsets.bottom > CGFloat(0.0) {
-                        
-                        Static.instance.iPhoneXSeries = true
-                    }
-                } else {
-                    // Fallback on earlier versions
-                }
-            }
-            
-        }
-        
-        return Static.instance
-    }
-
+public protocol FunSwizz: class {
+    static func awake()
+    static func swizzlingForClass(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector)
 }
+
+public extension FunSwizz {
+    
+    static func swizzlingForClass(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
+        let originalMethod = class_getInstanceMethod(forClass, originalSelector)
+        let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector)
+        guard (originalMethod != nil && swizzledMethod != nil) else {
+            return
+        }
+        if class_addMethod(forClass, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!)) {
+            class_replaceMethod(forClass, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
+        } else {
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
+        }
+    }
+}
+fileprivate class NothingToSeeHere {
+    static func harmlessFunction() {
+        let typeCount = Int(objc_getClassList(nil, 0))
+        let types = UnsafeMutablePointer<AnyClass>.allocate(capacity: typeCount)
+        let autoreleasingTypes = AutoreleasingUnsafeMutablePointer<AnyClass>(types)
+        objc_getClassList(autoreleasingTypes, Int32(typeCount))
+        for index in 0 ..< typeCount {
+            (types[index] as? FunSwizz.Type)?.awake()
+        }
+        types.deallocate()
+    }
+}
+public extension UIApplication {
+    private static let runOnce: Void = {
+        NothingToSeeHere.harmlessFunction()
+    }()
+    override var next: UIResponder? {
+        UIApplication.runOnce
+        return super.next
+    }
+}
+
+
+
 
