@@ -16,11 +16,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 66))
+        v.backgroundColor = .red
+        fun.navigationBar = v
+        
         FunFreedom.networkManager.baseUrl = "https://api.61park.cn/"
         //        if let model = ResponseModel<[ModuleModel]>.deserialize(from: str) {
         //
         //            print(model)
         //        }
+        
     }
     
     @IBAction func sheet(_ sender: Any) {
