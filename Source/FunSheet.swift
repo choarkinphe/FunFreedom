@@ -80,7 +80,21 @@ public extension FunFreedom {
         
         public func resultActions(_ actions: [FunFreedom.ActionSheet]?) -> Self {
             if let actions = actions {
-                sheetController.result = actions
+                sheetController.resultActions = actions
+            }
+            
+            return self
+        }
+        public func resultTitles(_ resultTitles: String?) -> Self {
+            if let resultTitles = resultTitles {
+                sheetController.resultTitles = resultTitles
+            }
+            
+            return self
+        }
+        public func resultValues(_ resultValues: String?) -> Self {
+            if let resultValues = resultValues {
+                sheetController.resultValues = resultValues
             }
             
             return self

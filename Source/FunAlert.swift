@@ -98,7 +98,7 @@ public extension FunFreedom {
             return self
         }
         
-        public func message(message: String, messageFont: UIFont? = nil, messageColor: UIColor? = nil) -> Self {
+        public func message(message: String?, messageFont: UIFont? = nil, messageColor: UIColor? = nil) -> Self {
             
             config.message = message
             

@@ -44,19 +44,20 @@ public extension FunFreedom {
             }
         }
         
-        public lazy var result = [FunFreedom.ActionSheet]()
-        
-//        convenience init(handler a_handler: FunActionSheetHandler?) {
-//            self.init(nibName: nil, bundle: nil)
-//
-//            handler = a_handler
-//        }
-//
-//        convenience init(multiHandler a_multiHandler: FunActionSheetMultiHandler?) {
-//            self.init(nibName: nil, bundle: nil)
-//
-//            multiHandler = a_multiHandler
-//        }
+        public lazy var resultActions = [FunFreedom.ActionSheet]()
+        public var resultValues: String?
+        public var resultTitles: String?
+        //        convenience init(handler a_handler: FunActionSheetHandler?) {
+        //            self.init(nibName: nil, bundle: nil)
+        //
+        //            handler = a_handler
+        //        }
+        //
+        //        convenience init(multiHandler a_multiHandler: FunActionSheetMultiHandler?) {
+        //            self.init(nibName: nil, bundle: nil)
+        //
+        //            multiHandler = a_multiHandler
+        //        }
         
         public required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
@@ -80,11 +81,11 @@ public extension FunFreedom {
                 if let actions = weakSelf?.actions {
                     for action in actions {
                         if action.isSelected {
-                            weakSelf?.result.append(action)
+                            weakSelf?.resultActions.append(action)
                         }
                         
                     }
-                    if let handler = weakSelf?.multiHandler, let result = weakSelf?.result, result.count > 0 {
+                    if let handler = weakSelf?.multiHandler, let result = weakSelf?.resultActions {
                         handler(result)
                     }
                 }
@@ -106,6 +107,33 @@ public extension FunFreedom {
         
         open var actions: [FunFreedom.ActionSheet]? {
             didSet {
+                
+                guard let actions = actions else {return}
+                var resultValues_array = self.resultValues?.components(separatedBy: ",") ?? [String]()
+                var resultTitles_array = self.resultTitles?.components(separatedBy: ",") ?? [String]()
+                
+                if resultActions.count > 0 {
+//                    resultValues_array = [String]()
+//                    resultTitles_array = [String]()
+                    for result_action in resultActions {
+                        if let title = result_action.title {
+                            resultTitles_array.append(title)
+                        }
+                        if let value = result_action.value {
+                            resultValues_array.append(value)
+                        }
+                    }
+                    
+                    resultActions.removeAll()
+                }
+                
+                for action in actions {
+                    if let value = action.value, resultValues_array.contains(value) {
+                        action.isSelected = true
+                    } else if let title = action.title, resultTitles_array.contains(title) {
+                        action.isSelected = true
+                    }
+                }
                 
                 tableView.reloadData()
                 view.setNeedsLayout()
@@ -130,10 +158,10 @@ public extension FunFreedom {
             
             let contentW = view.bounds.size.width - config.contentInsets.left - config.contentInsets.right
             let max_Height = view.bounds.size.height - config.contentInsets.top - config.contentInsets.bottom
-//            let min_Height = contentW
+            //            let min_Height = contentW
             let actionHeight: CGFloat = CGFloat(49 * (actions?.count ?? 0))
             let contentH = max(contentW, min(max_Height, actionHeight))
-
+            
             let contentY = view.bounds.size.height - contentH - config.contentInsets.bottom
             
             var rect_topView = CGRect.zero
@@ -141,7 +169,7 @@ public extension FunFreedom {
             
             if config.position == .center {
                 rect_tableView = CGRect.init(x: (view.bounds.size.width - contentW) / 2.0, y: (view.bounds.size.height - contentH) / 2.0, width: contentW, height: contentH)
-//                tableView.center = view.center
+                //                tableView.center = view.center
             }
             
             
@@ -155,19 +183,19 @@ public extension FunFreedom {
                         a_topView.backgroundColor = .clear
                     }
                 }
-
+                
                 tableView.contentInset = UIEdgeInsets.init(top: rect_topView.size.height, left: 0, bottom: 0, right: 0)
                 
             }
             
-//            UIView.animate(withDuration: 0.25, animations: {
-                self.tableView.frame = rect_tableView
-                if let a_topView = self.topView {
-                    a_topView.frame = rect_topView
-                }
-//            }) { (complete) in
-                
-//            }
+            //            UIView.animate(withDuration: 0.25, animations: {
+            self.tableView.frame = rect_tableView
+            if let a_topView = self.topView {
+                a_topView.frame = rect_topView
+            }
+            //            }) { (complete) in
+            
+            //            }
             
             if let a_cornerRadius = config.cornerRadius {
                 tableView.layer.cornerRadius = a_cornerRadius
@@ -208,22 +236,22 @@ public extension FunFreedom {
                     return
                 }
                 
-//                if newValue != toolBar {
-//                    toolBar.removeFromSuperview()
-//                }
+                //                if newValue != toolBar {
+                //                    toolBar.removeFromSuperview()
+                //                }
                 
                 if let topView = topView {
                     
-//                    if newValue == nil {
-                        
-                        topView.frame = .zero
-                        topView.removeFromSuperview()
-//                    }
+                    //                    if newValue == nil {
+                    
+                    topView.frame = .zero
+                    topView.removeFromSuperview()
+                    //                    }
                 }
                 
                 if let a_topView = newValue {
                     a_topView.frame = CGRect.init(x: config.contentInsets.left, y: config.contentInsets.top, width: tableView.frame.size.width, height: a_topView.bounds.size.height)
-//                    tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
+                    //                    tableView.contentInset = UIEdgeInsets.init(top: a_topView.bounds.size.height, left: 0, bottom: 0, right: 0)
                     view.addSubview(a_topView)
                     
                     tableView.scrollsToTop = true
@@ -265,16 +293,7 @@ public extension FunFreedom {
             //            tableView.setEditing(true, animated: true)
             //        }
             if let actions = actions {
-                if result.count > 0 {
-                    for action in actions {
-                        for result_action in result {
-                            if result_action.title == action.title, result_action.value == action.value {
-                                action.isSelected = true
-                            }
-                        }
-                    }
-                    result.removeAll()
-                }
+                
                 
                 return actions.count
             }
@@ -322,8 +341,12 @@ public extension FunFreedom {
             } else if config.selectType == .multi {
                 
                 if let action = actions?[indexPath.row] {
-                    
-                    action.isSelected = !action.isSelected
+                    if action.isSelected {
+                        action.isSelected = false
+                    } else {
+                        action.isSelected = true
+                    }
+//                     = !action.isSelected
                 }
                 
                 tableView.reloadData()
