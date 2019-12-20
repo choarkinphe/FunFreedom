@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import HandyJSON
 
 public typealias ResponseResult<T> = (((success: Bool, data: T?))->Void)
 public protocol FunResponseDelegate: class {

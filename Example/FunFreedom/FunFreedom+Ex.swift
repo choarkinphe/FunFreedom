@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import HandyJSON
 import FunFreedom
+
 public protocol ResponseDecodable: HandyJSON {
     associatedtype JSONType
     var success: Bool {get set}

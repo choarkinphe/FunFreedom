@@ -2,10 +2,10 @@ use_frameworks!
 
 target 'FunFreedom_Example' do
   pod 'FunFreedom', :path => '../'
+  pod 'HandyJSON'
 
   target 'FunFreedom_Tests' do
     inherit! :search_paths
 
-    pod 'HandyJSON'
   end
 end
