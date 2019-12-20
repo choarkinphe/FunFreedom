@@ -6,6 +6,6 @@ target 'FunFreedom_Example' do
   target 'FunFreedom_Tests' do
     inherit! :search_paths
 
-    
+    pod 'HandyJSON'
   end
 end

@@ -10,7 +10,13 @@ import Foundation
 import Alamofire
 import HandyJSON
 import FunFreedom
-
+public protocol ResponseDecodable: HandyJSON {
+    associatedtype JSONType
+    var success: Bool {get set}
+    var code: Int? {get set}
+    var message: String? {get set}
+    var data: JSONType? {get set}
+}
 public struct BaseModel<T>: ResponseDecodable  {
     public var success: Bool = false
     
@@ -86,17 +92,17 @@ extension FunFreedom.NetworkKit: FunResponseDelegate {
         return self
     }
     
-    func request_handy_completion<T>(_ type: T.Type?, _ completion: @escaping ((T?)->Void)) where T : HandyJSON {
-        
-        request_completion(ResponseModel<T>.self) { (responseModel) in
-            
-            if responseModel.code == ResponseCode.success.rawValue {
-                completion(responseModel.data)
-            } else {
-                
-            }
-        }
-    }
+//    func request_handy_completion<T>(_ type: T.Type?, _ completion: @escaping ((T?)->Void)) where T : HandyJSON {
+//        
+//        request_completion(ResponseModel<T>.self) { (responseModel) in
+//            
+//            if responseModel.code == ResponseCode.success.rawValue {
+//                completion(responseModel.data)
+//            } else {
+//                
+//            }
+//        }
+//    }
     
     static var hz: FunFreedom.NetworkKit {
         let a = FunFreedom.NetworkKit()
@@ -184,5 +190,34 @@ extension FunFreedom.NetworkKit: FunResponseDelegate {
             
 //            self.failure?(nil ,"Parse failure")
         }
+    
+}
+
+public extension FunFreedom.NetworkKit {
+    
+
+    func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
+        
+        request { (result) in
+            
+            var model = T()
+            
+            if let data = result.data {
+                if let message = String(data: data, encoding: .utf8) {
+                    model.message = message
+                }
+                if let a_model = T.deserialize(from: String(data: data, encoding: .utf8)) {
+                    model = a_model
+                }
+            }
+            
+            model.success = result.success
+            
+            completion(model)
+        }
+    }
+    
+
+    
     
 }

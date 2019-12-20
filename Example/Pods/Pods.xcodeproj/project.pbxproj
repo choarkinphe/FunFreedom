@@ -33,7 +33,7 @@
 		497D5490235D636100F37E3E /* FunCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D548F235D636100F37E3E /* FunCache.swift */; };
 		497D5492235D636800F37E3E /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5491235D636800F37E3E /* FunDataPicker.swift */; };
 		497D5494235D636F00F37E3E /* FunFreedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5493235D636F00F37E3E /* FunFreedom.swift */; };
-		497D5499235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift */; };
+		497D5499235D637C00F37E3E /* FunNetworkKitNetworkKit+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+Codable.swift */; };
 		497D549A235D637C00F37E3E /* FunNetworkKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5496235D637C00F37E3E /* FunNetworkKitManager.swift */; };
 		497D549B235D637C00F37E3E /* FunNetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5497235D637C00F37E3E /* FunNetworkKit.swift */; };
 		497D549C235D637C00F37E3E /* FunNetworkKit+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497D5498235D637C00F37E3E /* FunNetworkKit+Cache.swift */; };
@@ -176,7 +176,7 @@
 		497D548F235D636100F37E3E /* FunCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunCache.swift; path = Source/FunCache.swift; sourceTree = "<group>"; };
 		497D5491235D636800F37E3E /* FunDataPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunDataPicker.swift; path = Source/FunDataPicker.swift; sourceTree = "<group>"; };
 		497D5493235D636F00F37E3E /* FunFreedom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunFreedom.swift; path = Source/FunFreedom.swift; sourceTree = "<group>"; };
-		497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKitNetworkKit+HandyJSON.swift"; path = "Source/FunNetworkKitNetworkKit+HandyJSON.swift"; sourceTree = "<group>"; };
+		497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKitNetworkKit+Codable.swift"; path = "Source/FunNetworkKitNetworkKit+Codable.swift"; sourceTree = "<group>"; };
 		497D5496235D637C00F37E3E /* FunNetworkKitManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunNetworkKitManager.swift; path = Source/FunNetworkKitManager.swift; sourceTree = "<group>"; };
 		497D5497235D637C00F37E3E /* FunNetworkKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunNetworkKit.swift; path = Source/FunNetworkKit.swift; sourceTree = "<group>"; };
 		497D5498235D637C00F37E3E /* FunNetworkKit+Cache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKit+Cache.swift"; path = "Source/FunNetworkKit+Cache.swift"; sourceTree = "<group>"; };
@@ -391,7 +391,7 @@
 				497D5497235D637C00F37E3E /* FunNetworkKit.swift */,
 				497D5498235D637C00F37E3E /* FunNetworkKit+Cache.swift */,
 				497D5496235D637C00F37E3E /* FunNetworkKitManager.swift */,
-				497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift */,
+				497D5495235D637C00F37E3E /* FunNetworkKitNetworkKit+Codable.swift */,
 			);
 			name = NetworkKit;
 			sourceTree = "<group>";
@@ -942,7 +942,7 @@
 				49DBAA53235F30F7001EEC7A /* FunToast.swift in Sources */,
 				4A0E0B9E238FB75D00689F9E /* UIViewController+Fun.swift in Sources */,
 				497D54A0235D638400F37E3E /* FunSheetController.swift in Sources */,
-				497D5499235D637C00F37E3E /* FunNetworkKitNetworkKit+HandyJSON.swift in Sources */,
+				497D5499235D637C00F37E3E /* FunNetworkKitNetworkKit+Codable.swift in Sources */,
 				4AE7C8462387C60F00B69530 /* FunDrawingBoard.swift in Sources */,
 				79E84B38E3E7F9A087C1E1C8E3DDE8EB /* FunFreedom-dummy.m in Sources */,
 				497D54A2235D638400F37E3E /* FunSheet.swift in Sources */,

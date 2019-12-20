@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import HandyJSON
 
+public typealias ResponseResult<T> = (((success: Bool, data: T?))->Void)
 public protocol FunResponseDelegate: class {
     func response_success(json: Data)
     func response_failure(error: Error)
@@ -58,7 +59,7 @@ public extension FunFreedom {
             
             public var sender: UIControl?
             
-            public var completion: ((Bool,Data?)->Void)?
+            public var completion: ResponseResult<Data>?
         }
         
         
@@ -140,7 +141,7 @@ public extension FunFreedom {
             return self
         }
         
-        public func request(_ completion: ((Bool,Data?)->Void)?=nil) {
+        public func request(_ completion: ResponseResult<Data>?=nil) {
             
             config.completion = completion
             
@@ -182,10 +183,7 @@ public extension FunFreedom {
                 func success(json : Data) {
                     
                     internal_response(success: true, data: json)
-                    
-                    
-                    
-                    
+
                 }
                 
                 //Error handling - pop-up error message
@@ -307,7 +305,7 @@ public extension FunFreedom {
                     delegate?.response_success(json: json)
                     if let complete = config.completion {
                         
-                        complete(true,json)
+                        complete((success: true, data: json))
                     }
                     if config.isCache {
                         
@@ -320,7 +318,7 @@ public extension FunFreedom {
                     delegate?.response_failure(error: error)
                     if let complete = config.completion {
                         
-                        complete(false,error.localizedDescription.data(using: .utf8))
+                        complete((success: false, data: error.localizedDescription.data(using: .utf8)))
                     }
                 }
                 

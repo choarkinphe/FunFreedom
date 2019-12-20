@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '1.6.1'
+  s.version          = '1.6.5'
   s.summary          = 'FunFreedom is a requestKit'
   s.swift_version    = '5.0'
 
@@ -42,5 +42,5 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'Alamofire'
-  s.dependency 'HandyJSON'
+#  s.dependency 'HandyJSON'
 end

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3111D50CFCEFE82759902F11 /* Pods_FunFreedom_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD6106565C55335A8E0609A4 /* Pods_FunFreedom_Example.framework */; };
-		49C973FE232FBA1E0094C1FA /* FunFreedom+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C973FD232FBA1E0094C1FA /* FunFreedom+Ex.swift */; };
+		4AA6087D23AC919200244C3B /* FunFreedom+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6087C23AC919200244C3B /* FunFreedom+Ex.swift */; };
 		55C3E6AB3C19A612DE13C144 /* Pods_FunFreedom_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA363617BC67C7739A824F71 /* Pods_FunFreedom_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		1FA005082289086E14A8ED86 /* Pods-FunFreedom_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunFreedom_Tests.debug.xcconfig"; path = "Target Support Files/Pods-FunFreedom_Tests/Pods-FunFreedom_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		49C973FD232FBA1E0094C1FA /* FunFreedom+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FunFreedom+Ex.swift"; sourceTree = "<group>"; };
+		4AA6087C23AC919200244C3B /* FunFreedom+Ex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FunFreedom+Ex.swift"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* FunFreedom_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FunFreedom_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,7 +117,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				49C973FD232FBA1E0094C1FA /* FunFreedom+Ex.swift */,
+				4AA6087C23AC919200244C3B /* FunFreedom+Ex.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -340,7 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				49C973FE232FBA1E0094C1FA /* FunFreedom+Ex.swift in Sources */,
+				4AA6087D23AC919200244C3B /* FunFreedom+Ex.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -497,7 +497,7 @@
 				INFOPLIST_FILE = FunFreedom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.5;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -515,7 +515,7 @@
 				INFOPLIST_FILE = FunFreedom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.5;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -8,7 +8,7 @@
 
 import UIKit
 import FunFreedom
-import HandyJSON
+//import HandyJSON
 
 class ViewController: UIViewController {
     var actions = [FunFreedom.ActionSheet]()
@@ -44,10 +44,24 @@ class ViewController: UIViewController {
     }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).success { (baseModel) in
+        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request({ (result) in
+            if let data = result.data {
+            if let json = try? JSON(data: data) {
             
-            print(baseModel.data ?? "null")
-        }.request()
+                print(json.dictionaryObject?.keys)
+                            }
+            }
+            
+        })
+//            .request(BBModel.self, { (result) in
+//
+//            print(result.data)
+//
+//        })
+//            .success { (baseModel) in
+//
+//            print(baseModel.data ?? "null")
+//        }.request()
         
     }
     override func didReceiveMemoryWarning() {
@@ -57,33 +71,1423 @@ class ViewController: UIViewController {
     
 }
 
-struct TESTBaseModel: HandyJSON {
-    var code: Int?
-    var data: TESTModel?
+struct BBModel {
+//    var success: Bool {get set}
+    var code: String?
     var msg: String?
+    var data: String?
+
+//    init(from decoder: Decoder) throws {
+//        let container = try decoder.singleValueContainer()
+//        let string = try container.decode(String.self)
+////        data = T.deserialize(from: <#T##[String : Any]?#>)
+//        print(string)
+//    }
     
 }
 
-struct TESTModel: HandyJSON {
-    var description: String?
-    var pageName: String?
-    var modules: [ModuleModel]?
+//struct TESTBaseModel: HandyJSON {
+//    var code: Int?
+//    var data: TESTModel?
+//    var msg: String?
+//
+//}
+//
+//struct TESTModel: HandyJSON {
+//    var description: String?
+//    var pageName: String?
+//    var modules: [ModuleModel]?
+//}
+//
+//struct ModuleModel: HandyJSON {
+//    var templeteCode: String?
+//    var moduleName: String?
+//    var templeteData: [CMSDataConfig]?
+//}
+//
+//struct CMSDataConfig: HandyJSON {
+//    var id: Int?
+//    var title: String?
+//    var linkPic: String?
+//    var linkUrl: String?
+//    var linkeType: Int?
+//}
+
+
+// MARK: - Error
+// swiftlint:disable line_length
+public enum SwiftyJSONError: Int, Swift.Error {
+    case unsupportedType = 999
+    case indexOutOfBounds = 900
+    case elementTooDeep = 902
+    case wrongType = 901
+    case notExist = 500
+    case invalidJSON = 490
 }
 
-struct ModuleModel: HandyJSON {
-    var templeteCode: String?
-    var moduleName: String?
-    var templeteData: [CMSDataConfig]?
+extension SwiftyJSONError: CustomNSError {
+
+    /// return the error domain of SwiftyJSONError
+    public static var errorDomain: String { return "com.swiftyjson.SwiftyJSON" }
+
+    /// return the error code of SwiftyJSONError
+    public var errorCode: Int { return self.rawValue }
+
+    /// return the userInfo of SwiftyJSONError
+    public var errorUserInfo: [String: Any] {
+        switch self {
+        case .unsupportedType:
+            return [NSLocalizedDescriptionKey: "It is an unsupported type."]
+        case .indexOutOfBounds:
+            return [NSLocalizedDescriptionKey: "Array Index is out of bounds."]
+        case .wrongType:
+            return [NSLocalizedDescriptionKey: "Couldn't merge, because the JSONs differ in type on top level."]
+        case .notExist:
+            return [NSLocalizedDescriptionKey: "Dictionary key does not exist."]
+        case .invalidJSON:
+            return [NSLocalizedDescriptionKey: "JSON is invalid."]
+        case .elementTooDeep:
+            return [NSLocalizedDescriptionKey: "Element too deep. Increase maxObjectDepth and make sure there is no reference loop."]
+        }
+    }
 }
 
-struct CMSDataConfig: HandyJSON {
-    var id: Int?
-    var title: String?
-    var linkPic: String?
-    var linkUrl: String?
-    var linkeType: Int?
+// MARK: - JSON Type
+
+/**
+JSON's type definitions.
+
+See http://www.json.org
+*/
+public enum Type: Int {
+    case number
+    case string
+    case bool
+    case array
+    case dictionary
+    case null
+    case unknown
 }
 
-let str = "{\"code\":\"0\",\"msg\":\"hffhkjsdhjfkh\",\"ext\":null,\"data\":[{\"templeteCode\":\"cmsTopBanner\",\"moduleName\":\"顶部banner\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"61学院VIP直通车\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190312145846402_632.jpg?x-oss-process=style/compress_nologo\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/613\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"万能工匠大中小班科学构建示范课展示视频\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190313165957938_409.jpg?x-oss-process=style/compress_nologo\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/616\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"幼儿园区角环创设计\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190305153055849_194.jpg\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/615\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"做好“收心计划”\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190222134146555_909.jpg?x-oss-process=style/compress_nologo\",\"linkUrl\":\"http://m.61park.cn/teach/#/activity/activitycontent/1607\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"培训会精选\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190408134848686_187.jpg?x-oss-process=style/compress_nologo\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/626\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"幼儿园开学游戏精选\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190222101205386_276.jpg?x-oss-process=style/compress_nologo\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/610\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsFastGoTo\",\"moduleName\":\"快捷入口\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"创新师训\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20180912102132060_578.png\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/467\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"每日一学\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20180918150623595_775.png\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/466\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"服务提报\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20180921182831717_147.png\",\"linkUrl\":\"teach61://ServiceReport\",\"linkType\":10,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"操作指引\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20190415093820951_909.png\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/627\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsCategory\",\"moduleName\":\"创新体育\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"早操\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113103340335_362.png?x-oss-process=style/compress_nologo\",\"linkUrl\":\"基本体操|10|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"10\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"户外体育活动\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113103349777_210.png?x-oss-process=style/compress_nologo\",\"linkUrl\":\"自主游戏|11|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"11\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"体能教学\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113103402901_297.png?x-oss-process=style/compress_nologo\",\"linkUrl\":\"体能教学|13|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"13\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"运动会\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113103417563_926.png\",\"linkUrl\":\"运动会|63|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"63\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"活动音乐\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113103430275_712.png\",\"linkUrl\":\"活动音乐|22|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"22\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsCategory\",\"moduleName\":\"创新建构\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"区角环创\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181112101922177_553.png\",\"linkUrl\":\"环境布置|4|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"4\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"创造力课\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181112102041555_600.png\",\"linkUrl\":\"教案|61|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"61\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"亲子活动\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181112102148251_985.png\",\"linkUrl\":\"亲子活动|16|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"16\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsCategory\",\"moduleName\":\"家园共育\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"免费素材\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113105455606_712.png\",\"linkUrl\":\"电子素材|85|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"85\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"转给家长\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113105527301_0.png\",\"linkUrl\":\"转给家长|15|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"15\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null},{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"节日通知\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20181113105538012_864.png\",\"linkUrl\":\"节日通知|104|2\",\"linkType\":14,\"linkData\":\"{\\\"id\\\":\\\"104\\\",\\\"level\\\":2}\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsExpertOpinion\",\"moduleName\":\"专家观点\",\"templeteData\":[{\"id\":98,\"num\":null,\"bigPictureUrl\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/teach/20181224181210373_37.jpg?x-oss-process=style/compress_nologo\",\"name\":\"张怡筠\",\"subhead\":null,\"description\":null,\"status\":null,\"viewNumber\":null,\"delFlag\":null,\"headPictureUrl\":null,\"content\":null,\"contentUpdateTime\":null,\"createDate\":null,\"createBy\":null,\"updateDate\":null,\"updateBy\":null,\"contentTitle\":null,\"popularity\":null,\"trainerCourseSeriesList\":null}]},{\"templeteCode\":\"cmsGoldTeacher\",\"moduleName\":\"幼教专家\",\"templeteData\":{\"pageIndex\":0,\"pageSize\":3,\"total\":29,\"pageCount\":10,\"offset\":0,\"sort\":\"id\",\"order\":\"asc\",\"esPageIndex\":1,\"rows\":[{\"id\":1,\"num\":null,\"bigPictureUrl\":null,\"name\":\"61学院官方\",\"subhead\":\"线上师训/教研平台\",\"description\":\"致力于提高幼师教研能力\",\"status\":null,\"viewNumber\":null,\"delFlag\":null,\"headPictureUrl\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"content\":null,\"contentUpdateTime\":null,\"createDate\":null,\"createBy\":null,\"updateDate\":null,\"updateBy\":null,\"contentTitle\":\"【万能工匠】体育游戏大学问，园所老师们速来看！\",\"popularity\":\"1463.9万\",\"trainerCourseSeriesList\":null},{\"id\":15,\"num\":null,\"bigPictureUrl\":null,\"name\":\"陈冬华\",\"subhead\":\"幼儿体能教育泰斗\",\"description\":\"3-6岁儿童学习与发展指南，悬垂、远足、幼儿区域活动等项目科研成果转换实施\",\"status\":null,\"viewNumber\":null,\"delFlag\":null,\"headPictureUrl\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/teach/20171024174941739_499.jpg?x-oss-process=style/compress_nologo\",\"content\":null,\"contentUpdateTime\":null,\"createDate\":null,\"createBy\":null,\"updateDate\":null,\"updateBy\":null,\"contentTitle\":\"体操教学对幼教的重要性\",\"popularity\":\"21.1万\",\"trainerCourseSeriesList\":null},{\"id\":59,\"num\":null,\"bigPictureUrl\":null,\"name\":\"宁科\",\"subhead\":\"陕西学前师范学院体育系副教授\",\"description\":\"北京体育大学体育教育训练学博士研究生，儿童早期动作发展与体质健康促进研究方向\",\"status\":null,\"viewNumber\":null,\"delFlag\":null,\"headPictureUrl\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/teach/20180309203418365_641.jpg\",\"content\":null,\"contentUpdateTime\":null,\"createDate\":null,\"createBy\":null,\"updateDate\":null,\"updateBy\":null,\"contentTitle\":\"幼儿到底需要多少身体活动？\",\"popularity\":\"6.7万\",\"trainerCourseSeriesList\":null}]}},{\"templeteCode\":\"cmsMiddleBannerOne\",\"moduleName\":\"中部bannerOne\\r\\n\",\"templeteData\":[{\"id\":null,\"moduleId\":null,\"locationId\":null,\"title\":\"名园案例\",\"linkPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20180606150715435_874.jpg\",\"linkUrl\":\"http://m.61park.cn/teach/#/servicedict/index/464\",\"linkType\":1,\"linkData\":\"\",\"effectiveStartTime\":null,\"effectiveEndTime\":null,\"createDate\":\"2019-09-15 19:37:21\",\"updateDate\":\"2019-09-15 19:37:21\",\"locationIdArr\":null,\"limitNum\":null,\"selected\":0,\"selectedPicUrl\":null}]},{\"templeteCode\":\"cmsNewRecommend\",\"moduleName\":\"最新推荐\",\"templeteData\":{\"pageIndex\":0,\"pageSize\":10,\"total\":1439,\"pageCount\":144,\"offset\":0,\"sort\":\"id\",\"order\":\"asc\",\"esPageIndex\":1,\"rows\":[{\"id\":2984,\"code\":null,\"title\":\"【万能工匠】体育游戏大学问，园所老师们速来看！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190912154959573_782.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-12 16:05:28\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-12 16:05\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2983,\"code\":null,\"title\":\"【精彩案例】快接住！中秋教案豪华大礼包来啦！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190911161327947_953.png\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-11 16:25:15\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-11 16:25\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2982,\"code\":null,\"title\":\"教师节，如阳光一般灿烂的日子！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190910173931403_288.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-10 17:41:42\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-10 17:41\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2981,\"code\":null,\"title\":\"AR智慧教育产品“贝玛影见”首次亮相于世界物联网峰会！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190909113731115_847.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-09 11:37:43\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-09 11:37\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2980,\"code\":null,\"title\":\"【精彩案例】您的教师节攻略来啦，请注意查收~\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190907100539140_130.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-07 10:06:49\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-07 10:06\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2979,\"code\":null,\"title\":\"【师训手记】关于师训不得不说的二三事！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190905160121077_783.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-05 16:28:40\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-05 16:28\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2978,\"code\":null,\"title\":\"【家园共育】筑梦安全，家长是孩子最好的老师！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190902101415443_792.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-09-02 10:22:56\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"09-02 10:22\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2977,\"code\":null,\"title\":\"【万能工匠】有朋自远方来，携手共发展 ——唐山幼教访学团参观贝玛教育共同碰撞创新教育理念\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190830091735757_768.png\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-08-30 09:25:02\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"08-30 09:25\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2976,\"code\":null,\"title\":\"【万能工匠】新学期，幼儿园大中小班一日常规！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190829095423432_862.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-08-29 09:59:54\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"08-29 09:59\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1},{\"id\":2966,\"code\":null,\"title\":\"【区角系列】最好的教育，藏在细节里！\",\"level1CateId\":null,\"level2CateId\":null,\"adaptAge\":null,\"status\":0,\"coverImg\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/banner/20190828095918089_419.jpg\",\"content\":null,\"intro\":null,\"contentType\":0,\"commentNum\":0,\"viewNum\":0,\"praiseNum\":0,\"praiseTotal\":null,\"shareNum\":0,\"authorId\":null,\"authorMobile\":null,\"authorName\":\"61学院官方\",\"authorPic\":\"http://park61.oss-cn-zhangjiakou.aliyuncs.com/activity/20171201175242899_862.png?x-oss-process=style/compress_nologo\",\"teachActivityId\":null,\"activityType\":null,\"isFree\":0,\"isFine\":0,\"isNew\":0,\"keyWords\":null,\"keyWordArray\":null,\"delFlag\":\"0\",\"createBy\":null,\"createDate\":\"2019-08-28 10:35:55\",\"updateBy\":null,\"updateDate\":null,\"rejectBy\":null,\"rejectDate\":null,\"rejectCause\":null,\"sort\":0,\"sortTime\":\"2019-09-15 19:37:21\",\"level1CateName\":null,\"isCollect\":null,\"tags\":null,\"isPraised\":null,\"contentItemList\":null,\"attachments\":null,\"showDate\":\"08-28 10:35\",\"activityName\":null,\"activityPic\":null,\"praiseTimes\":null,\"newTag\":null,\"praiseNumDsc\":null,\"originalHeight\":null,\"originalWidth\":null,\"playTotalNum\":null,\"focusNum\":0,\"putawayStatus\":null,\"isSourceCanExport\":null,\"isMember\":0,\"isTag\":0,\"memberGroupId\":null,\"isView\":1,\"viewCode\":1}]}}]}"
+// MARK: - JSON Base
 
+public struct JSON {
 
+    /**
+     Creates a JSON using the data.
+    
+     - parameter data: The NSData used to convert to json.Top level object in data is an NSArray or NSDictionary
+     - parameter opt: The JSON serialization reading options. `[]` by default.
+    
+     - returns: The created JSON
+     */
+    public init(data: Data, options opt: JSONSerialization.ReadingOptions = []) throws {
+        let object: Any = try JSONSerialization.jsonObject(with: data, options: opt)
+        self.init(jsonObject: object)
+    }
+
+    /**
+     Creates a JSON object
+     - note: this does not parse a `String` into JSON, instead use `init(parseJSON: String)`
+    
+     - parameter object: the object
+
+     - returns: the created JSON object
+     */
+    public init(_ object: Any) {
+        switch object {
+        case let object as Data:
+            do {
+                try self.init(data: object)
+            } catch {
+                self.init(jsonObject: NSNull())
+            }
+        default:
+            self.init(jsonObject: object)
+        }
+    }
+
+    /**
+     Parses the JSON string into a JSON object
+    
+     - parameter json: the JSON string
+    
+     - returns: the created JSON object
+    */
+    public init(parseJSON jsonString: String) {
+        if let data = jsonString.data(using: .utf8) {
+            self.init(data)
+        } else {
+            self.init(NSNull())
+        }
+    }
+
+    /**
+     Creates a JSON using the object.
+    
+     - parameter jsonObject:  The object must have the following properties: All objects are NSString/String, NSNumber/Int/Float/Double/Bool, NSArray/Array, NSDictionary/Dictionary, or NSNull; All dictionary keys are NSStrings/String; NSNumbers are not NaN or infinity.
+    
+     - returns: The created JSON
+     */
+    fileprivate init(jsonObject: Any) {
+        object = jsonObject
+    }
+
+    /**
+     Merges another JSON into this JSON, whereas primitive values which are not present in this JSON are getting added,
+     present values getting overwritten, array values getting appended and nested JSONs getting merged the same way.
+ 
+     - parameter other: The JSON which gets merged into this JSON
+    
+     - throws `ErrorWrongType` if the other JSONs differs in type on the top level.
+     */
+    public mutating func merge(with other: JSON) throws {
+        try self.merge(with: other, typecheck: true)
+    }
+
+    /**
+     Merges another JSON into this JSON and returns a new JSON, whereas primitive values which are not present in this JSON are getting added,
+     present values getting overwritten, array values getting appended and nested JSONS getting merged the same way.
+    
+     - parameter other: The JSON which gets merged into this JSON
+    
+     - throws `ErrorWrongType` if the other JSONs differs in type on the top level.
+    
+     - returns: New merged JSON
+     */
+    public func merged(with other: JSON) throws -> JSON {
+        var merged = self
+        try merged.merge(with: other, typecheck: true)
+        return merged
+    }
+
+    /**
+     Private woker function which does the actual merging
+     Typecheck is set to true for the first recursion level to prevent total override of the source JSON
+     */
+     fileprivate mutating func merge(with other: JSON, typecheck: Bool) throws {
+        if type == other.type {
+            switch type {
+            case .dictionary:
+                for (key, _) in other {
+                    try self[key].merge(with: other[key], typecheck: false)
+                }
+            case .array:
+                self = JSON(arrayValue + other.arrayValue)
+            default:
+                self = other
+            }
+        } else {
+            if typecheck {
+                throw SwiftyJSONError.wrongType
+            } else {
+                self = other
+            }
+        }
+    }
+
+    /// Private object
+    fileprivate var rawArray: [Any] = []
+    fileprivate var rawDictionary: [String: Any] = [:]
+    fileprivate var rawString: String = ""
+    fileprivate var rawNumber: NSNumber = 0
+    fileprivate var rawNull: NSNull = NSNull()
+    fileprivate var rawBool: Bool = false
+
+    /// JSON type, fileprivate setter
+    public fileprivate(set) var type: Type = .null
+
+    /// Error in JSON, fileprivate setter
+    public fileprivate(set) var error: SwiftyJSONError?
+
+    /// Object in JSON
+    public var object: Any {
+        get {
+            switch type {
+            case .array:      return rawArray
+            case .dictionary: return rawDictionary
+            case .string:     return rawString
+            case .number:     return rawNumber
+            case .bool:       return rawBool
+            default:          return rawNull
+            }
+        }
+        set {
+            error = nil
+            switch unwrap(newValue) {
+            case let number as NSNumber:
+                if number.isBool {
+                    type = .bool
+                    rawBool = number.boolValue
+                } else {
+                    type = .number
+                    rawNumber = number
+                }
+            case let string as String:
+                type = .string
+                rawString = string
+            case _ as NSNull:
+                type = .null
+            case nil:
+                type = .null
+            case let array as [Any]:
+                type = .array
+                rawArray = array
+            case let dictionary as [String: Any]:
+                type = .dictionary
+                rawDictionary = dictionary
+            default:
+                type = .unknown
+                error = SwiftyJSONError.unsupportedType
+            }
+        }
+    }
+
+    /// The static null JSON
+    @available(*, unavailable, renamed:"null")
+    public static var nullJSON: JSON { return null }
+    public static var null: JSON { return JSON(NSNull()) }
+}
+
+/// Private method to unwarp an object recursively
+private func unwrap(_ object: Any) -> Any {
+    switch object {
+    case let json as JSON:
+        return unwrap(json.object)
+    case let array as [Any]:
+        return array.map(unwrap)
+    case let dictionary as [String: Any]:
+        var d = dictionary
+        dictionary.forEach { pair in
+            d[pair.key] = unwrap(pair.value)
+        }
+        return d
+    default:
+        return object
+    }
+}
+
+public enum Index<T: Any>: Comparable {
+    case array(Int)
+    case dictionary(DictionaryIndex<String, T>)
+    case null
+
+    static public func == (lhs: Index, rhs: Index) -> Bool {
+        switch (lhs, rhs) {
+        case (.array(let left), .array(let right)):           return left == right
+        case (.dictionary(let left), .dictionary(let right)): return left == right
+        case (.null, .null):                                  return true
+        default:                                              return false
+        }
+    }
+
+    static public func < (lhs: Index, rhs: Index) -> Bool {
+        switch (lhs, rhs) {
+        case (.array(let left), .array(let right)):           return left < right
+        case (.dictionary(let left), .dictionary(let right)): return left < right
+        default:                                              return false
+        }
+    }
+}
+
+public typealias JSONIndex = Index<JSON>
+public typealias JSONRawIndex = Index<Any>
+
+extension JSON: Swift.Collection {
+
+    public typealias Index = JSONRawIndex
+
+    public var startIndex: Index {
+        switch type {
+        case .array:      return .array(rawArray.startIndex)
+        case .dictionary: return .dictionary(rawDictionary.startIndex)
+        default:          return .null
+        }
+    }
+
+    public var endIndex: Index {
+        switch type {
+        case .array:      return .array(rawArray.endIndex)
+        case .dictionary: return .dictionary(rawDictionary.endIndex)
+        default:          return .null
+        }
+    }
+
+    public func index(after i: Index) -> Index {
+        switch i {
+        case .array(let idx):      return .array(rawArray.index(after: idx))
+        case .dictionary(let idx): return .dictionary(rawDictionary.index(after: idx))
+        default:                   return .null
+        }
+    }
+
+    public subscript (position: Index) -> (String, JSON) {
+        switch position {
+        case .array(let idx):      return (String(idx), JSON(rawArray[idx]))
+        case .dictionary(let idx): return (rawDictionary[idx].key, JSON(rawDictionary[idx].value))
+        default:                   return ("", JSON.null)
+        }
+    }
+}
+
+// MARK: - Subscript
+
+/**
+ *  To mark both String and Int can be used in subscript.
+ */
+public enum JSONKey {
+    case index(Int)
+    case key(String)
+}
+
+public protocol JSONSubscriptType {
+    var jsonKey: JSONKey { get }
+}
+
+extension Int: JSONSubscriptType {
+    public var jsonKey: JSONKey {
+        return JSONKey.index(self)
+    }
+}
+
+extension String: JSONSubscriptType {
+    public var jsonKey: JSONKey {
+        return JSONKey.key(self)
+    }
+}
+
+extension JSON {
+
+    /// If `type` is `.array`, return json whose object is `array[index]`, otherwise return null json with error.
+    fileprivate subscript(index index: Int) -> JSON {
+        get {
+            if type != .array {
+                var r = JSON.null
+                r.error = self.error ?? SwiftyJSONError.wrongType
+                return r
+            } else if rawArray.indices.contains(index) {
+                return JSON(rawArray[index])
+            } else {
+                var r = JSON.null
+                r.error = SwiftyJSONError.indexOutOfBounds
+                return r
+            }
+        }
+        set {
+            if type == .array &&
+                rawArray.indices.contains(index) &&
+                newValue.error == nil {
+                rawArray[index] = newValue.object
+            }
+        }
+    }
+
+    /// If `type` is `.dictionary`, return json whose object is `dictionary[key]` , otherwise return null json with error.
+    fileprivate subscript(key key: String) -> JSON {
+        get {
+            var r = JSON.null
+            if type == .dictionary {
+                if let o = rawDictionary[key] {
+                    r = JSON(o)
+                } else {
+                    r.error = SwiftyJSONError.notExist
+                }
+            } else {
+                r.error = self.error ?? SwiftyJSONError.wrongType
+            }
+            return r
+        }
+        set {
+            if type == .dictionary && newValue.error == nil {
+                rawDictionary[key] = newValue.object
+            }
+        }
+    }
+
+    /// If `sub` is `Int`, return `subscript(index:)`; If `sub` is `String`,  return `subscript(key:)`.
+    fileprivate subscript(sub sub: JSONSubscriptType) -> JSON {
+        get {
+            switch sub.jsonKey {
+            case .index(let index): return self[index: index]
+            case .key(let key):     return self[key: key]
+            }
+        }
+        set {
+            switch sub.jsonKey {
+            case .index(let index): self[index: index] = newValue
+            case .key(let key):     self[key: key] = newValue
+            }
+        }
+    }
+
+    /**
+     Find a json in the complex data structures by using array of Int and/or String as path.
+    
+     Example:
+    
+     ```
+     let json = JSON[data]
+     let path = [9,"list","person","name"]
+     let name = json[path]
+     ```
+    
+     The same as: let name = json[9]["list"]["person"]["name"]
+    
+     - parameter path: The target json's path.
+    
+     - returns: Return a json found by the path or a null json with error
+     */
+    public subscript(path: [JSONSubscriptType]) -> JSON {
+        get {
+            return path.reduce(self) { $0[sub: $1] }
+        }
+        set {
+            switch path.count {
+            case 0: return
+            case 1: self[sub:path[0]].object = newValue.object
+            default:
+                var aPath = path
+                aPath.remove(at: 0)
+                var nextJSON = self[sub: path[0]]
+                nextJSON[aPath] = newValue
+                self[sub: path[0]] = nextJSON
+            }
+        }
+    }
+
+    /**
+     Find a json in the complex data structures by using array of Int and/or String as path.
+
+     - parameter path: The target json's path. Example:
+
+     let name = json[9,"list","person","name"]
+
+     The same as: let name = json[9]["list"]["person"]["name"]
+
+     - returns: Return a json found by the path or a null json with error
+     */
+    public subscript(path: JSONSubscriptType...) -> JSON {
+        get {
+            return self[path]
+        }
+        set {
+            self[path] = newValue
+        }
+    }
+}
+
+// MARK: - LiteralConvertible
+
+extension JSON: Swift.ExpressibleByStringLiteral {
+
+    public init(stringLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+
+    public init(extendedGraphemeClusterLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+
+    public init(unicodeScalarLiteral value: StringLiteralType) {
+        self.init(value)
+    }
+}
+
+extension JSON: Swift.ExpressibleByIntegerLiteral {
+
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(value)
+    }
+}
+
+extension JSON: Swift.ExpressibleByBooleanLiteral {
+
+    public init(booleanLiteral value: BooleanLiteralType) {
+        self.init(value)
+    }
+}
+
+extension JSON: Swift.ExpressibleByFloatLiteral {
+
+    public init(floatLiteral value: FloatLiteralType) {
+        self.init(value)
+    }
+}
+
+extension JSON: Swift.ExpressibleByDictionaryLiteral {
+    public init(dictionaryLiteral elements: (String, Any)...) {
+        let dictionary = elements.reduce(into: [String: Any](), { $0[$1.0] = $1.1})
+        self.init(dictionary)
+    }
+}
+
+extension JSON: Swift.ExpressibleByArrayLiteral {
+
+    public init(arrayLiteral elements: Any...) {
+        self.init(elements)
+    }
+}
+
+// MARK: - Raw
+
+extension JSON: Swift.RawRepresentable {
+
+    public init?(rawValue: Any) {
+        if JSON(rawValue).type == .unknown {
+            return nil
+        } else {
+            self.init(rawValue)
+        }
+    }
+
+    public var rawValue: Any {
+        return object
+    }
+
+    public func rawData(options opt: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(rawValue: 0)) throws -> Data {
+        guard JSONSerialization.isValidJSONObject(object) else {
+            throw SwiftyJSONError.invalidJSON
+        }
+
+        return try JSONSerialization.data(withJSONObject: object, options: opt)
+    }
+
+    public func rawString(_ encoding: String.Encoding = .utf8, options opt: JSONSerialization.WritingOptions = .prettyPrinted) -> String? {
+        do {
+            return try _rawString(encoding, options: [.jsonSerialization: opt])
+        } catch {
+            print("Could not serialize object to JSON because:", error.localizedDescription)
+            return nil
+        }
+    }
+
+    public func rawString(_ options: [writingOptionsKeys: Any]) -> String? {
+        let encoding = options[.encoding] as? String.Encoding ?? String.Encoding.utf8
+        let maxObjectDepth = options[.maxObjextDepth] as? Int ?? 10
+        do {
+            return try _rawString(encoding, options: options, maxObjectDepth: maxObjectDepth)
+        } catch {
+            print("Could not serialize object to JSON because:", error.localizedDescription)
+            return nil
+        }
+    }
+
+    fileprivate func _rawString(_ encoding: String.Encoding = .utf8, options: [writingOptionsKeys: Any], maxObjectDepth: Int = 10) throws -> String? {
+        guard maxObjectDepth > 0 else { throw SwiftyJSONError.invalidJSON }
+        switch type {
+        case .dictionary:
+            do {
+                if !(options[.castNilToNSNull] as? Bool ?? false) {
+                    let jsonOption = options[.jsonSerialization] as? JSONSerialization.WritingOptions ?? JSONSerialization.WritingOptions.prettyPrinted
+                    let data = try rawData(options: jsonOption)
+                    return String(data: data, encoding: encoding)
+                }
+
+                guard let dict = object as? [String: Any?] else {
+                    return nil
+                }
+                let body = try dict.keys.map { key throws -> String in
+                    guard let value = dict[key] else {
+                        return "\"\(key)\": null"
+                    }
+                    guard let unwrappedValue = value else {
+                        return "\"\(key)\": null"
+                    }
+
+                    let nestedValue = JSON(unwrappedValue)
+                    guard let nestedString = try nestedValue._rawString(encoding, options: options, maxObjectDepth: maxObjectDepth - 1) else {
+                        throw SwiftyJSONError.elementTooDeep
+                    }
+                    if nestedValue.type == .string {
+                        return "\"\(key)\": \"\(nestedString.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\""))\""
+                    } else {
+                        return "\"\(key)\": \(nestedString)"
+                    }
+                }
+
+                return "{\(body.joined(separator: ","))}"
+            } catch _ {
+                return nil
+            }
+        case .array:
+            do {
+                if !(options[.castNilToNSNull] as? Bool ?? false) {
+                    let jsonOption = options[.jsonSerialization] as? JSONSerialization.WritingOptions ?? JSONSerialization.WritingOptions.prettyPrinted
+                    let data = try rawData(options: jsonOption)
+                    return String(data: data, encoding: encoding)
+                }
+
+                guard let array = object as? [Any?] else {
+                    return nil
+                }
+                let body = try array.map { value throws -> String in
+                    guard let unwrappedValue = value else {
+                        return "null"
+                    }
+
+                    let nestedValue = JSON(unwrappedValue)
+                    guard let nestedString = try nestedValue._rawString(encoding, options: options, maxObjectDepth: maxObjectDepth - 1) else {
+                        throw SwiftyJSONError.invalidJSON
+                    }
+                    if nestedValue.type == .string {
+                        return "\"\(nestedString.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\""))\""
+                    } else {
+                        return nestedString
+                    }
+                }
+
+                return "[\(body.joined(separator: ","))]"
+            } catch _ {
+                return nil
+            }
+        case .string: return rawString
+        case .number: return rawNumber.stringValue
+        case .bool:   return rawBool.description
+        case .null:   return "null"
+        default:      return nil
+        }
+    }
+}
+
+// MARK: - Printable, DebugPrintable
+
+extension JSON: Swift.CustomStringConvertible, Swift.CustomDebugStringConvertible {
+
+    public var description: String {
+        return rawString(options: .prettyPrinted) ?? "unknown"
+    }
+
+    public var debugDescription: String {
+        return description
+    }
+}
+
+// MARK: - Array
+
+extension JSON {
+
+    //Optional [JSON]
+    public var array: [JSON]? {
+        return type == .array ? rawArray.map { JSON($0) } : nil
+    }
+
+    //Non-optional [JSON]
+    public var arrayValue: [JSON] {
+        return self.array ?? []
+    }
+
+    //Optional [Any]
+    public var arrayObject: [Any]? {
+        get {
+            switch type {
+            case .array: return rawArray
+            default:     return nil
+            }
+        }
+        set {
+            self.object = newValue ?? NSNull()
+        }
+    }
+}
+
+// MARK: - Dictionary
+
+extension JSON {
+
+    //Optional [String : JSON]
+    public var dictionary: [String: JSON]? {
+        if type == .dictionary {
+            var d = [String: JSON](minimumCapacity: rawDictionary.count)
+            rawDictionary.forEach { pair in
+                d[pair.key] = JSON(pair.value)
+            }
+            return d
+        } else {
+            return nil
+        }
+    }
+
+    //Non-optional [String : JSON]
+    public var dictionaryValue: [String: JSON] {
+        return dictionary ?? [:]
+    }
+
+    //Optional [String : Any]
+
+    public var dictionaryObject: [String: Any]? {
+        get {
+            switch type {
+            case .dictionary: return rawDictionary
+            default:          return nil
+            }
+        }
+        set {
+            object = newValue ?? NSNull()
+        }
+    }
+}
+
+// MARK: - Bool
+
+extension JSON { // : Swift.Bool
+
+    //Optional bool
+    public var bool: Bool? {
+        get {
+            switch type {
+            case .bool: return rawBool
+            default:    return nil
+            }
+        }
+        set {
+            object = newValue ?? NSNull()
+        }
+    }
+
+    //Non-optional bool
+    public var boolValue: Bool {
+        get {
+            switch type {
+            case .bool:   return rawBool
+            case .number: return rawNumber.boolValue
+            case .string: return ["true", "y", "t", "yes", "1"].contains { rawString.caseInsensitiveCompare($0) == .orderedSame }
+            default:      return false
+            }
+        }
+        set {
+            object = newValue
+        }
+    }
+}
+
+// MARK: - String
+
+extension JSON {
+
+    //Optional string
+    public var string: String? {
+        get {
+            switch type {
+            case .string: return object as? String
+            default:      return nil
+            }
+        }
+        set {
+            object = newValue ?? NSNull()
+        }
+    }
+
+    //Non-optional string
+    public var stringValue: String {
+        get {
+            switch type {
+            case .string: return object as? String ?? ""
+            case .number: return rawNumber.stringValue
+            case .bool:   return (object as? Bool).map { String($0) } ?? ""
+            default:      return ""
+            }
+        }
+        set {
+            object = newValue
+        }
+    }
+}
+
+// MARK: - Number
+
+extension JSON {
+
+    //Optional number
+    public var number: NSNumber? {
+        get {
+            switch type {
+            case .number: return rawNumber
+            case .bool:   return NSNumber(value: rawBool ? 1 : 0)
+            default:      return nil
+            }
+        }
+        set {
+            object = newValue ?? NSNull()
+        }
+    }
+
+    //Non-optional number
+    public var numberValue: NSNumber {
+        get {
+            switch type {
+            case .string:
+                let decimal = NSDecimalNumber(string: object as? String)
+                return decimal == .notANumber ? .zero : decimal
+            case .number: return object as? NSNumber ?? NSNumber(value: 0)
+            case .bool: return NSNumber(value: rawBool ? 1 : 0)
+            default: return NSNumber(value: 0.0)
+            }
+        }
+        set {
+            object = newValue
+        }
+    }
+}
+
+// MARK: - Null
+
+extension JSON {
+
+    public var null: NSNull? {
+        set {
+            object = NSNull()
+        }
+        get {
+            switch type {
+            case .null: return rawNull
+            default:    return nil
+            }
+        }
+    }
+    public func exists() -> Bool {
+        if let errorValue = error, (400...1000).contains(errorValue.errorCode) {
+            return false
+        }
+        return true
+    }
+}
+
+// MARK: - URL
+
+extension JSON {
+
+    //Optional URL
+    public var url: URL? {
+        get {
+            switch type {
+            case .string:
+                // Check for existing percent escapes first to prevent double-escaping of % character
+                if rawString.range(of: "%[0-9A-Fa-f]{2}", options: .regularExpression, range: nil, locale: nil) != nil {
+                    return Foundation.URL(string: rawString)
+                } else if let encodedString_ = rawString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) {
+                    // We have to use `Foundation.URL` otherwise it conflicts with the variable name.
+                    return Foundation.URL(string: encodedString_)
+                } else {
+                    return nil
+                }
+            default:
+                return nil
+            }
+        }
+        set {
+            object = newValue?.absoluteString ?? NSNull()
+        }
+    }
+}
+
+// MARK: - Int, Double, Float, Int8, Int16, Int32, Int64
+
+extension JSON {
+
+    public var double: Double? {
+        get {
+            return number?.doubleValue
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object = NSNull()
+            }
+        }
+    }
+
+    public var doubleValue: Double {
+        get {
+            return numberValue.doubleValue
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var float: Float? {
+        get {
+            return number?.floatValue
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object = NSNull()
+            }
+        }
+    }
+
+    public var floatValue: Float {
+        get {
+            return numberValue.floatValue
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var int: Int? {
+        get {
+            return number?.intValue
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object = NSNull()
+            }
+        }
+    }
+
+    public var intValue: Int {
+        get {
+            return numberValue.intValue
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var uInt: UInt? {
+        get {
+            return number?.uintValue
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object = NSNull()
+            }
+        }
+    }
+
+    public var uIntValue: UInt {
+        get {
+            return numberValue.uintValue
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var int8: Int8? {
+        get {
+            return number?.int8Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: Int(newValue))
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var int8Value: Int8 {
+        get {
+            return numberValue.int8Value
+        }
+        set {
+            object = NSNumber(value: Int(newValue))
+        }
+    }
+
+    public var uInt8: UInt8? {
+        get {
+            return number?.uint8Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var uInt8Value: UInt8 {
+        get {
+            return numberValue.uint8Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var int16: Int16? {
+        get {
+            return number?.int16Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var int16Value: Int16 {
+        get {
+            return numberValue.int16Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var uInt16: UInt16? {
+        get {
+            return number?.uint16Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var uInt16Value: UInt16 {
+        get {
+            return numberValue.uint16Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var int32: Int32? {
+        get {
+            return number?.int32Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var int32Value: Int32 {
+        get {
+            return numberValue.int32Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var uInt32: UInt32? {
+        get {
+            return number?.uint32Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var uInt32Value: UInt32 {
+        get {
+            return numberValue.uint32Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var int64: Int64? {
+        get {
+            return number?.int64Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var int64Value: Int64 {
+        get {
+            return numberValue.int64Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+
+    public var uInt64: UInt64? {
+        get {
+            return number?.uint64Value
+        }
+        set {
+            if let newValue = newValue {
+                object = NSNumber(value: newValue)
+            } else {
+                object =  NSNull()
+            }
+        }
+    }
+
+    public var uInt64Value: UInt64 {
+        get {
+            return numberValue.uint64Value
+        }
+        set {
+            object = NSNumber(value: newValue)
+        }
+    }
+}
+
+// MARK: - Comparable
+
+extension JSON: Swift.Comparable {}
+
+public func == (lhs: JSON, rhs: JSON) -> Bool {
+
+    switch (lhs.type, rhs.type) {
+    case (.number, .number): return lhs.rawNumber == rhs.rawNumber
+    case (.string, .string): return lhs.rawString == rhs.rawString
+    case (.bool, .bool):     return lhs.rawBool == rhs.rawBool
+    case (.array, .array):   return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    case (.dictionary, .dictionary): return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    case (.null, .null):     return true
+    default:                 return false
+    }
+}
+
+public func <= (lhs: JSON, rhs: JSON) -> Bool {
+
+    switch (lhs.type, rhs.type) {
+    case (.number, .number): return lhs.rawNumber <= rhs.rawNumber
+    case (.string, .string): return lhs.rawString <= rhs.rawString
+    case (.bool, .bool):     return lhs.rawBool == rhs.rawBool
+    case (.array, .array):   return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    case (.dictionary, .dictionary): return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    case (.null, .null):     return true
+    default:                 return false
+    }
+}
+
+public func >= (lhs: JSON, rhs: JSON) -> Bool {
+
+    switch (lhs.type, rhs.type) {
+    case (.number, .number): return lhs.rawNumber >= rhs.rawNumber
+    case (.string, .string): return lhs.rawString >= rhs.rawString
+    case (.bool, .bool):     return lhs.rawBool == rhs.rawBool
+    case (.array, .array):   return lhs.rawArray as NSArray == rhs.rawArray as NSArray
+    case (.dictionary, .dictionary): return lhs.rawDictionary as NSDictionary == rhs.rawDictionary as NSDictionary
+    case (.null, .null):     return true
+    default:                 return false
+    }
+}
+
+public func > (lhs: JSON, rhs: JSON) -> Bool {
+
+    switch (lhs.type, rhs.type) {
+    case (.number, .number): return lhs.rawNumber > rhs.rawNumber
+    case (.string, .string): return lhs.rawString > rhs.rawString
+    default:                 return false
+    }
+}
+
+public func < (lhs: JSON, rhs: JSON) -> Bool {
+
+    switch (lhs.type, rhs.type) {
+    case (.number, .number): return lhs.rawNumber < rhs.rawNumber
+    case (.string, .string): return lhs.rawString < rhs.rawString
+    default:                 return false
+    }
+}
+
+private let trueNumber = NSNumber(value: true)
+private let falseNumber = NSNumber(value: false)
+private let trueObjCType = String(cString: trueNumber.objCType)
+private let falseObjCType = String(cString: falseNumber.objCType)
+
+// MARK: - NSNumber: Comparable
+
+extension NSNumber {
+    fileprivate var isBool: Bool {
+        let objCType = String(cString: self.objCType)
+        if (self.compare(trueNumber) == .orderedSame && objCType == trueObjCType) || (self.compare(falseNumber) == .orderedSame && objCType == falseObjCType) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+
+func == (lhs: NSNumber, rhs: NSNumber) -> Bool {
+    switch (lhs.isBool, rhs.isBool) {
+    case (false, true): return false
+    case (true, false): return false
+    default:            return lhs.compare(rhs) == .orderedSame
+    }
+}
+
+func != (lhs: NSNumber, rhs: NSNumber) -> Bool {
+    return !(lhs == rhs)
+}
+
+func < (lhs: NSNumber, rhs: NSNumber) -> Bool {
+
+    switch (lhs.isBool, rhs.isBool) {
+    case (false, true): return false
+    case (true, false): return false
+    default:            return lhs.compare(rhs) == .orderedAscending
+    }
+}
+
+func > (lhs: NSNumber, rhs: NSNumber) -> Bool {
+
+    switch (lhs.isBool, rhs.isBool) {
+    case (false, true): return false
+    case (true, false): return false
+    default:            return lhs.compare(rhs) == ComparisonResult.orderedDescending
+    }
+}
+
+func <= (lhs: NSNumber, rhs: NSNumber) -> Bool {
+
+    switch (lhs.isBool, rhs.isBool) {
+    case (false, true): return false
+    case (true, false): return false
+    default:            return lhs.compare(rhs) != .orderedDescending
+    }
+}
+
+func >= (lhs: NSNumber, rhs: NSNumber) -> Bool {
+
+    switch (lhs.isBool, rhs.isBool) {
+    case (false, true): return false
+    case (true, false): return false
+    default:            return lhs.compare(rhs) != .orderedAscending
+    }
+}
+
+public enum writingOptionsKeys {
+    case jsonSerialization
+    case castNilToNSNull
+    case maxObjextDepth
+    case encoding
+}
+
+// MARK: - JSON: Codable
+extension JSON: Codable {
+    private static var codableTypes: [Codable.Type] {
+        return [
+            Bool.self,
+            Int.self,
+            Int8.self,
+            Int16.self,
+            Int32.self,
+            Int64.self,
+            UInt.self,
+            UInt8.self,
+            UInt16.self,
+            UInt32.self,
+            UInt64.self,
+            Double.self,
+            String.self,
+            [JSON].self,
+            [String: JSON].self
+        ]
+    }
+    public init(from decoder: Decoder) throws {
+        var object: Any?
+
+        if let container = try? decoder.singleValueContainer(), !container.decodeNil() {
+            for type in JSON.codableTypes {
+                if object != nil {
+                    break
+                }
+                // try to decode value
+                switch type {
+                case let boolType as Bool.Type:
+                    object = try? container.decode(boolType)
+                case let intType as Int.Type:
+                    object = try? container.decode(intType)
+                case let int8Type as Int8.Type:
+                    object = try? container.decode(int8Type)
+                case let int32Type as Int32.Type:
+                    object = try? container.decode(int32Type)
+                case let int64Type as Int64.Type:
+                    object = try? container.decode(int64Type)
+                case let uintType as UInt.Type:
+                    object = try? container.decode(uintType)
+                case let uint8Type as UInt8.Type:
+                    object = try? container.decode(uint8Type)
+                case let uint16Type as UInt16.Type:
+                    object = try? container.decode(uint16Type)
+                case let uint32Type as UInt32.Type:
+                    object = try? container.decode(uint32Type)
+                case let uint64Type as UInt64.Type:
+                    object = try? container.decode(uint64Type)
+                case let doubleType as Double.Type:
+                    object = try? container.decode(doubleType)
+                case let stringType as String.Type:
+                    object = try? container.decode(stringType)
+                case let jsonValueArrayType as [JSON].Type:
+                    object = try? container.decode(jsonValueArrayType)
+                case let jsonValueDictType as [String: JSON].Type:
+                    object = try? container.decode(jsonValueDictType)
+                default:
+                    break
+                }
+            }
+        }
+        self.init(object ?? NSNull())
+    }
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        if object is NSNull {
+            try container.encodeNil()
+            return
+        }
+        switch object {
+        case let intValue as Int:
+            try container.encode(intValue)
+        case let int8Value as Int8:
+            try container.encode(int8Value)
+        case let int32Value as Int32:
+            try container.encode(int32Value)
+        case let int64Value as Int64:
+            try container.encode(int64Value)
+        case let uintValue as UInt:
+            try container.encode(uintValue)
+        case let uint8Value as UInt8:
+            try container.encode(uint8Value)
+        case let uint16Value as UInt16:
+            try container.encode(uint16Value)
+        case let uint32Value as UInt32:
+            try container.encode(uint32Value)
+        case let uint64Value as UInt64:
+            try container.encode(uint64Value)
+        case let doubleValue as Double:
+            try container.encode(doubleValue)
+        case let boolValue as Bool:
+            try container.encode(boolValue)
+        case let stringValue as String:
+            try container.encode(stringValue)
+        case is [Any]:
+            let jsonValueArray = array ?? []
+            try container.encode(jsonValueArray)
+        case is [String: Any]:
+            let jsonValueDictValue = dictionary ?? [:]
+            try container.encode(jsonValueDictValue)
+        default:
+            break
+        }
+    }
+}
