@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import HandyJSON
-
-
 
 public extension FunFreedom.NetworkKit {
     
@@ -28,8 +25,5 @@ public extension FunFreedom.NetworkKit {
             
         }
     }
-    
 
-    
-    
 }
