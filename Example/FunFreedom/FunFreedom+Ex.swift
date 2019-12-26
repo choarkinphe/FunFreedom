@@ -49,7 +49,7 @@ public struct BaseModel<T>: ResponseDecodable  {
 
 }
 
-typealias CKNetwork = FunFreedom.NetworkKitManager
+typealias CKNetwork = FunFreedom.NetworkKit.Manager
 typealias CKNetworkKit = FunFreedom.NetworkKit
 typealias SuccessHandlerType = ((BaseModel<String>) -> Void)
 typealias FailureHandlerType = ((Int?, String) ->Void)

@@ -25,12 +25,13 @@
 		28CF8CAF6F50BF87BA465687B03ABE86 /* FunFreedom-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 91497F88F5114447313B913B2B644439 /* FunFreedom-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2920C1B558FB0A07C59C5C4312095AE2 /* FunTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3392A1D4C7B2618F76C2073DC2C5E8 /* FunTool.swift */; };
 		2C61B040BA6A9A7AE66C4D9BA26D5520 /* SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBF0DE0ABD7DF39CC3B1071A431A368 /* SessionDelegate.swift */; };
-		3358326108D5E1FF27398D096BD81BDE /* FunNetworkKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1CE34D69CEFAD247FB1D22A1D69C46 /* FunNetworkKitManager.swift */; };
 		3571F958A3907B3A806E62D50C2550D4 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E62BBF5488CDFE70B24817DBBB9E7DF /* NetworkReachabilityManager.swift */; };
 		35FACA839E3E45530D4D925DA94ABA3A /* DataTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC2F731A8845CF3A2A8DF61995D13143 /* DataTransform.swift */; };
 		3BF67E5AEF5378F19F9E1B569EF7376B /* MangledName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2F702180B8C2FF0C44C55559A6A1DC /* MangledName.swift */; };
 		3D7A617F66B55F11C328344CA0CF804E /* ISO8601DateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190E65A84B024CFFDF70F20C021B88CC /* ISO8601DateTransform.swift */; };
 		4665274B82A1477F9A675E58C93E5814 /* ExtendCustomBasicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB013FB40D98999A627D816A7A93F055 /* ExtendCustomBasicType.swift */; };
+		4ABD4A9423B4410A00F350CA /* FunNetworkKit+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD4A9323B4410A00F350CA /* FunNetworkKit+Codable.swift */; };
+		4ABD4A9623B4417100F350CA /* FunDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD4A9523B4417100F350CA /* FunDatePicker.swift */; };
 		4E2B14200047E6C7E715CC9310236951 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716C5841B2AE8F1DA005877B35E6D4E3 /* Logger.swift */; };
 		514B6B46E6C66A8411D95AE64B4F20CF /* FunNetworkKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8841EB8113964232C8066E50240D2B7A /* FunNetworkKit.swift */; };
 		521E330943F0873C4A7233989DC674DD /* EnumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D13B5A0F8F1614ED3820A2F391E899E /* EnumType.swift */; };
@@ -52,7 +53,6 @@
 		6D7A437591E3BFF39D5085B8BC81EEFD /* Measuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF79164EE59AE35C7157E6E8D80E08F6 /* Measuable.swift */; };
 		7664FD4F59A0C00866CBAE60B0A3AD64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DAB41DE6AF59D8362CBC670CDF0EEC /* Foundation.framework */; };
 		77A1763B63A54502551B58B510D8929D /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B03B07DFA7C8BB60693AE1DE30731E2 /* Alamofire.framework */; };
-		78A6E25305D080D20EF0E98C1A727CB2 /* FunSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18529586096C5905679C5F65AE214A9A /* FunSheetView.swift */; };
 		78B971DF19387A49198D087D9822856B /* HandyJSON-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AD2442D2E6AB6BDE9D341EF754D1F1 /* HandyJSON-dummy.m */; };
 		7EBC925D01A284B7890229FBCA249942 /* Pods-FunFreedom_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9A273673254482F4B4421A8A28D4BC4 /* Pods-FunFreedom_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		81A190CE47DF77AAB12B0CDA19234F62 /* FunNetworkKit+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9853150866F4B4564046A244FAC61227 /* FunNetworkKit+Cache.swift */; };
@@ -64,7 +64,6 @@
 		933FDA5970AA525D6CB92BFEBA2BAB4A /* Timeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BE13613B422840D25A1905E16B01A2 /* Timeline.swift */; };
 		98A929C8E9012AB167672714FFD2113C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77738015BE95B7DB69EF7BBFFAA427D7 /* Request.swift */; };
 		9E0FD038E3D4A6CCE0F2167B77B22C67 /* Pods-FunFreedom_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D742E1FB02D2653EFF9F8E0D6D0429 /* Pods-FunFreedom_Tests-dummy.m */; };
-		A26F5FF48685D5F4828FC0B1E2D7B7D9 /* FunNetworkKitNetworkKit+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CD32080A25BACD11528E11D44355A5 /* FunNetworkKitNetworkKit+Codable.swift */; };
 		A307C88FE8D8326307F22FB68EDE874B /* AnyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B04E616A5AE42A5C47BF13D2F08A459 /* AnyExtensions.swift */; };
 		A6C997F7043C462E8EDB08A4DF60F3DD /* HandyJSON-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9390029D61212FF21A462D2730F7E57 /* HandyJSON-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB95C103D7606983A04F7C4F8B9E1242 /* Pods-FunFreedom_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D8D3165EDA58E5A5EB05F35AAB2E5D /* Pods-FunFreedom_Example-dummy.m */; };
@@ -77,7 +76,6 @@
 		C4D7AE18C56CE7BF154EC720ACDE064B /* ExtendCustomModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954DC56D416AC952986B8CE31C7E7DA /* ExtendCustomModelType.swift */; };
 		D3D8C379C6E4FB487E5ABD6800AD7B7E /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428CA2BA013478532D8D5F1C20F6DD1E /* DispatchQueue+Alamofire.swift */; };
 		D65C254F5ABF2CB5ECEE50FE8F8E1A80 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B09502EE6203036514A0A549F81B2E /* Response.swift */; };
-		D78C48606BADF5C7D6AC6EDD631885ED /* FunSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF30A45B66FD65DEBCDD4A74B1D427A6 /* FunSheetController.swift */; };
 		D95CCAF06FA5744C3276E217C1F6D279 /* FunFreedom-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D6171C9ABD346DD5AAEB40B308BD4F5 /* FunFreedom-dummy.m */; };
 		DA513AD44E95294DDD0E6E1F5A5F5EA4 /* FunFreedom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C054AC29AA6040B52BBEE7CEAE8D791B /* FunFreedom.swift */; };
 		DE85C1B0871507870DC305D09E72B561 /* BuiltInBridgeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33ED3F5E2C4885BF1B790E55B4FEF202 /* BuiltInBridgeType.swift */; };
@@ -85,7 +83,6 @@
 		DFB3F75B56C66C100882B15B09522C35 /* ContextDescriptorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96629ECDFF792CB2F2BD420DFD4432C6 /* ContextDescriptorType.swift */; };
 		E0EE06871F64D1F431E5020309B3709E /* HexColorTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0874E0FCA2EFC213D122AF075BD18A57 /* HexColorTransform.swift */; };
 		E3747EC31FCCA97D75A81FC700CF7E24 /* ResponseSerialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154562DCE24F98DE07DD5BBEBB116998 /* ResponseSerialization.swift */; };
-		EBB659AE38963D93A76ABA45DC4D2CA1 /* FunDataPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 416DABBDFF3032B4FE0376936A1B9E15 /* FunDataPicker.swift */; };
 		F13F2AA7F2E6D95A181CAB99B900D531 /* ServerTrustPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6DD440B812DA97E61BB35A0A107BEB /* ServerTrustPolicy.swift */; };
 		F7B74645E07C39771156A1FA413B98D4 /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = AAA21ACAD125C68F4EA10299406A6EFC /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FCC27B590F6894DB689B55D2916A7AE3 /* FunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79BA7762F9B223AAAA3156FD9E34A11 /* FunAlert.swift */; };
@@ -133,14 +130,12 @@
 
 /* Begin PBXFileReference section */
 		02463AC02AEB1D82BBB64F9EAD5D25FB /* BuiltInBasicType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BuiltInBasicType.swift; path = Source/BuiltInBasicType.swift; sourceTree = "<group>"; };
-		073ED513D9070E56D25CBFDE4F92C5C8 /* FunFreedom.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = FunFreedom.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		073ED513D9070E56D25CBFDE4F92C5C8 /* FunFreedom.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = FunFreedom.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		07A9053A948271995EE422399091FA5F /* URLTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLTransform.swift; path = Source/URLTransform.swift; sourceTree = "<group>"; };
 		0874E0FCA2EFC213D122AF075BD18A57 /* HexColorTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HexColorTransform.swift; path = Source/HexColorTransform.swift; sourceTree = "<group>"; };
-		0D1CE34D69CEFAD247FB1D22A1D69C46 /* FunNetworkKitManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunNetworkKitManager.swift; path = Source/FunNetworkKitManager.swift; sourceTree = "<group>"; };
 		1067BAC0AE47F92E6EBA84CCD93B24E9 /* HandyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HandyJSON.xcconfig; sourceTree = "<group>"; };
 		10965EEA8BFCE64B7A6A3B92F53981EC /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
 		154562DCE24F98DE07DD5BBEBB116998 /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
-		18529586096C5905679C5F65AE214A9A /* FunSheetView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunSheetView.swift; path = Source/FunSheetView.swift; sourceTree = "<group>"; };
 		190E65A84B024CFFDF70F20C021B88CC /* ISO8601DateTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ISO8601DateTransform.swift; path = Source/ISO8601DateTransform.swift; sourceTree = "<group>"; };
 		198F8964295A9EA74A79B64CA62CD69E /* Pods-FunFreedom_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FunFreedom_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		1A477CDBDBDBADB42F55C484F1CD60CB /* EnumTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EnumTransform.swift; path = Source/EnumTransform.swift; sourceTree = "<group>"; };
@@ -163,16 +158,17 @@
 		36DFFCB681EC529FB5DA869A9DED3947 /* HandyJSON.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = HandyJSON.modulemap; sourceTree = "<group>"; };
 		3954DC56D416AC952986B8CE31C7E7DA /* ExtendCustomModelType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtendCustomModelType.swift; path = Source/ExtendCustomModelType.swift; sourceTree = "<group>"; };
 		3D13B5A0F8F1614ED3820A2F391E899E /* EnumType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EnumType.swift; path = Source/EnumType.swift; sourceTree = "<group>"; };
-		416DABBDFF3032B4FE0376936A1B9E15 /* FunDataPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunDataPicker.swift; path = Source/FunDataPicker.swift; sourceTree = "<group>"; };
 		41E824E19065CCACCB6ED51192AC8B80 /* Configuration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Configuration.swift; path = Source/Configuration.swift; sourceTree = "<group>"; };
 		428CA2BA013478532D8D5F1C20F6DD1E /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		494AA0FA3CF25E576515114711473BAE /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
 		49C75C9481A61828B26D66447E655C6C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
+		4ABD4A9323B4410A00F350CA /* FunNetworkKit+Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "FunNetworkKit+Codable.swift"; path = "Source/FunNetworkKit+Codable.swift"; sourceTree = "<group>"; };
+		4ABD4A9523B4417100F350CA /* FunDatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunDatePicker.swift; path = Source/FunDatePicker.swift; sourceTree = "<group>"; };
 		4B03B07DFA7C8BB60693AE1DE30731E2 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A81A36D7D101DAB0701747C36A183A /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC3F8C3E55ECD9C2893AC79685BA7E2 /* FunCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunCache.swift; path = Source/FunCache.swift; sourceTree = "<group>"; };
-		5EC99663CC1170B307CA1A5CC535511D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		5EC99663CC1170B307CA1A5CC535511D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		602A1581113BB0DB4EBDD9B2BF9B06B8 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		608174BE6EE5488CFE0C964756E17E2E /* DateFormatterTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DateFormatterTransform.swift; path = Source/DateFormatterTransform.swift; sourceTree = "<group>"; };
 		636D25E209050A245A5DF866D7FD2E7B /* Pods-FunFreedom_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-FunFreedom_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -204,18 +200,18 @@
 		96629ECDFF792CB2F2BD420DFD4432C6 /* ContextDescriptorType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContextDescriptorType.swift; path = Source/ContextDescriptorType.swift; sourceTree = "<group>"; };
 		983924C72B32881D05E8B2249AD55C1B /* TransformOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransformOf.swift; path = Source/TransformOf.swift; sourceTree = "<group>"; };
 		9853150866F4B4564046A244FAC61227 /* FunNetworkKit+Cache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FunNetworkKit+Cache.swift"; path = "Source/FunNetworkKit+Cache.swift"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A3B3FE2E335EC3ABA6B807CBED295F15 /* Pods-FunFreedom_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FunFreedom_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		AAA21ACAD125C68F4EA10299406A6EFC /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
 		AB6DD440B812DA97E61BB35A0A107BEB /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerTrustPolicy.swift; path = Source/ServerTrustPolicy.swift; sourceTree = "<group>"; };
 		AC2F731A8845CF3A2A8DF61995D13143 /* DataTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DataTransform.swift; path = Source/DataTransform.swift; sourceTree = "<group>"; };
-		AD8190C0C8C498A3CE6BB833B8D6BED9 /* FunFreedom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FunFreedom.framework; path = FunFreedom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AEFF0651B68BA0174E310328931B032E /* Pods_FunFreedom_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_FunFreedom_Tests.framework; path = "Pods-FunFreedom_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8190C0C8C498A3CE6BB833B8D6BED9 /* FunFreedom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunFreedom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEFF0651B68BA0174E310328931B032E /* Pods_FunFreedom_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2D5FA7456CE33A2C5F031911F0FDE80 /* FunFreedom.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FunFreedom.modulemap; sourceTree = "<group>"; };
 		B3D0A2D5CBF37EFC991061352AFCD725 /* HandyJSON.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HandyJSON.h; path = Source/HandyJSON.h; sourceTree = "<group>"; };
 		B3F14DE0D1F42DB056E1BCB7F66967BE /* FieldDescriptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FieldDescriptor.swift; path = Source/FieldDescriptor.swift; sourceTree = "<group>"; };
-		B61F60A5AFF06302AF286D83386242A1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		B6AEEC90E9CD9C85AB0F9FF940D501B5 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_FunFreedom_Example.framework; path = "Pods-FunFreedom_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B61F60A5AFF06302AF286D83386242A1 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B6AEEC90E9CD9C85AB0F9FF940D501B5 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB2E31C817A177087CE00E480E233489 /* Alamofire-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-prefix.pch"; sourceTree = "<group>"; };
 		BC465560FD94A3E47CAABC0D498F2ACB /* Pods-FunFreedom_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-FunFreedom_Example.modulemap"; sourceTree = "<group>"; };
 		BC53C2152ABDF667CA653E2A78836B31 /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
@@ -226,11 +222,9 @@
 		C52D05F5CBE4648ACFAEB6BDF4D48B6D /* Metadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Metadata.swift; path = Source/Metadata.swift; sourceTree = "<group>"; };
 		C89432F650436A58BC6EFD2DB6CC8459 /* TransformType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransformType.swift; path = Source/TransformType.swift; sourceTree = "<group>"; };
 		CD3392A1D4C7B2618F76C2073DC2C5E8 /* FunTool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunTool.swift; path = Source/FunTool.swift; sourceTree = "<group>"; };
-		CD54121DDA84872534168702B5F92950 /* HandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HandyJSON.framework; path = HandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD54121DDA84872534168702B5F92950 /* HandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD76B178F45603D103E3DF5934D65531 /* Pods-FunFreedom_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FunFreedom_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		CE56B1BD0CB43C289A155E10BA18DBE9 /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
-		CF30A45B66FD65DEBCDD4A74B1D427A6 /* FunSheetController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunSheetController.swift; path = Source/FunSheetController.swift; sourceTree = "<group>"; };
-		D5CD32080A25BACD11528E11D44355A5 /* FunNetworkKitNetworkKit+Codable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FunNetworkKitNetworkKit+Codable.swift"; path = "Source/FunNetworkKitNetworkKit+Codable.swift"; sourceTree = "<group>"; };
 		D9A35F9DD09EE8AFDE00DF92DC932CC3 /* Pods-FunFreedom_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FunFreedom_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		DAD3E16FD5F60812BC0FF6C3D69D1A49 /* PropertyInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PropertyInfo.swift; path = Source/PropertyInfo.swift; sourceTree = "<group>"; };
 		DB013FB40D98999A627D816A7A93F055 /* ExtendCustomBasicType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtendCustomBasicType.swift; path = Source/ExtendCustomBasicType.swift; sourceTree = "<group>"; };
@@ -363,18 +357,15 @@
 		5DD43D57A58252B1C6490CAB85F74813 /* FunFreedom */ = {
 			isa = PBXGroup;
 			children = (
+				4ABD4A9523B4417100F350CA /* FunDatePicker.swift */,
 				E79BA7762F9B223AAAA3156FD9E34A11 /* FunAlert.swift */,
 				5EC3F8C3E55ECD9C2893AC79685BA7E2 /* FunCache.swift */,
-				416DABBDFF3032B4FE0376936A1B9E15 /* FunDataPicker.swift */,
 				DE4E6A126DAAF8C419D65508662DEEA6 /* FunDrawingBoard.swift */,
 				C054AC29AA6040B52BBEE7CEAE8D791B /* FunFreedom.swift */,
 				8841EB8113964232C8066E50240D2B7A /* FunNetworkKit.swift */,
 				9853150866F4B4564046A244FAC61227 /* FunNetworkKit+Cache.swift */,
-				0D1CE34D69CEFAD247FB1D22A1D69C46 /* FunNetworkKitManager.swift */,
-				D5CD32080A25BACD11528E11D44355A5 /* FunNetworkKitNetworkKit+Codable.swift */,
+				4ABD4A9323B4410A00F350CA /* FunNetworkKit+Codable.swift */,
 				EB3EC6186C697D9B935C55E7F05E426B /* FunSheet.swift */,
-				CF30A45B66FD65DEBCDD4A74B1D427A6 /* FunSheetController.swift */,
-				18529586096C5905679C5F65AE214A9A /* FunSheetView.swift */,
 				2C7CE340C81855E21EC1FE4A5B31CB42 /* FunToast.swift */,
 				CD3392A1D4C7B2618F76C2073DC2C5E8 /* FunTool.swift */,
 				E5E41BDDB32CB7B17BDD8689F0A82C88 /* UIViewController+Fun.swift */,
@@ -456,7 +447,6 @@
 				07A9053A948271995EE422399091FA5F /* URLTransform.swift */,
 				7B2B3D69351F7133AAEA4E9880971D0E /* Support Files */,
 			);
-			name = HandyJSON;
 			path = HandyJSON;
 			sourceTree = "<group>";
 		};
@@ -517,7 +507,6 @@
 				3075E694812890E4ACE0B4967F1BA9A5 /* Validation.swift */,
 				97E11BF8F6B63BC89AD83AB5EAFB55A4 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -799,17 +788,14 @@
 			files = (
 				FCC27B590F6894DB689B55D2916A7AE3 /* FunAlert.swift in Sources */,
 				69665D0BFDA9FD06728951F8F826B5A3 /* FunCache.swift in Sources */,
-				EBB659AE38963D93A76ABA45DC4D2CA1 /* FunDataPicker.swift in Sources */,
+				4ABD4A9423B4410A00F350CA /* FunNetworkKit+Codable.swift in Sources */,
 				17718FEC279EBC37F7D38BD8C389E4FE /* FunDrawingBoard.swift in Sources */,
+				4ABD4A9623B4417100F350CA /* FunDatePicker.swift in Sources */,
 				D95CCAF06FA5744C3276E217C1F6D279 /* FunFreedom-dummy.m in Sources */,
 				DA513AD44E95294DDD0E6E1F5A5F5EA4 /* FunFreedom.swift in Sources */,
 				81A190CE47DF77AAB12B0CDA19234F62 /* FunNetworkKit+Cache.swift in Sources */,
 				514B6B46E6C66A8411D95AE64B4F20CF /* FunNetworkKit.swift in Sources */,
-				3358326108D5E1FF27398D096BD81BDE /* FunNetworkKitManager.swift in Sources */,
-				A26F5FF48685D5F4828FC0B1E2D7B7D9 /* FunNetworkKitNetworkKit+Codable.swift in Sources */,
 				5813CC74848F026C664CE4A326908238 /* FunSheet.swift in Sources */,
-				D78C48606BADF5C7D6AC6EDD631885ED /* FunSheetController.swift in Sources */,
-				78A6E25305D080D20EF0E98C1A727CB2 /* FunSheetView.swift in Sources */,
 				601C7597C6368FFC3E986C4F5C95A957 /* FunToast.swift in Sources */,
 				2920C1B558FB0A07C59C5C4312095AE2 /* FunTool.swift in Sources */,
 				09CF42BFB13E59FCE114C97AD4BB3545 /* UIViewController+Fun.swift in Sources */,
@@ -1140,8 +1126,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};

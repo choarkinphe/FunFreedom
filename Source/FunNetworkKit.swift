@@ -352,6 +352,24 @@ public extension FunFreedom {
 }
 
 
+public extension FunFreedom.NetworkKit {
+class Manager {
+    
+    public var baseUrl: String?
+    public var headers: HTTPHeaders?
+    public var cacheTimeOut: TimeInterval = 300
+    public var errorHUD: Bool = false
+}
+}
+
+extension SessionManager {
+    static let sharedSessionManager: SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 15
+        return SessionManager(configuration: configuration)
+        
+    }()
+}
 
 
 

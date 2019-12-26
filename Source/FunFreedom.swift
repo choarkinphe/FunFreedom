@@ -10,7 +10,7 @@ open class FunFreedom {
     
     private struct Static {
         
-        static var instance_networkManager: NetworkKitManager = NetworkKitManager()
+        static var instance_networkManager: NetworkKit.Manager = NetworkKit.Manager()
         
         static var instance_cache: Cache = Cache()
         
@@ -41,7 +41,7 @@ open class FunFreedom {
         return DatePicker.default
     }
     
-    public static var networkManager: NetworkKitManager {
+    public static var networkManager: NetworkKit.Manager {
         return Static.instance_networkManager
     }
     

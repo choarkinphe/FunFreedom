@@ -72,6 +72,7 @@ class ViewController: UIViewController {
 }
 
 struct BBModel {
+    
 //    var success: Bool {get set}
     var code: String?
     var msg: String?

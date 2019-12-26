@@ -12,8 +12,8 @@ public extension FunFreedom {
         
         private var cachePool = NSCache<NSString,NSDictionary>()
         
-        public struct CacheData {
-            public var data: Any?
+        public struct CacheData<T> {
+            public var data: T?
             public var cache_time: TimeInterval?
         }
         
@@ -29,11 +29,21 @@ public extension FunFreedom {
             cachePool.setObject(cacheDict, forKey: cacheKey)
         }
         
-        public func loadCache(key: String?) -> CacheData? {
+        public func loadCache(key: String?) -> CacheData<Any>? {
             guard let key = key else { return nil }
             let cacheKey = NSString.init(string: key)
             if let cacheDict = cachePool.object(forKey: cacheKey), let data = cacheDict.object(forKey: cacheKey) {
                 return data as? CacheData
+            }
+            
+            return nil
+        }
+        
+        public func loadCache<T>(type: T.Type, key: String?) -> CacheData<T>? {
+            guard let key = key else { return nil }
+            let cacheKey = NSString.init(string: key)
+            if let cacheDict = cachePool.object(forKey: cacheKey), let data = cacheDict.object(forKey: cacheKey) {
+                return data as? CacheData<T>
             }
             
             return nil
