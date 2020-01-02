@@ -17,7 +17,7 @@
     "tag": "1.6.5"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
   "source_files": "Source/*.swift",
   "dependencies": {

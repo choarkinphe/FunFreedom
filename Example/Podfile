@@ -1,6 +1,7 @@
 use_frameworks!
 
 target 'FunFreedom_Example' do
+  platform :ios, '9.0'
   pod 'FunFreedom', :path => '../'
   pod 'HandyJSON'
 

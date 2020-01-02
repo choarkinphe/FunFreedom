@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '1.6.5'
+  s.version          = '1.6.6'
   s.summary          = 'FunFreedom is a requestKit'
   s.swift_version    = '5.0'
 
@@ -29,7 +29,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/choarkinphe/FunFreedom.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   # s.source_files = 'FunFreedom/Classes/**/*'
   s.source_files = 'Source/*.swift'
