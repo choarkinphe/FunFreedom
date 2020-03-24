@@ -82,7 +82,7 @@ public extension FunFreedom {
                 // 获取当前时间
                 let load_time = Date().timeIntervalSince1970
                 // 创建真实的缓存模型（直接算出时效时间，并存储） * 优先存储传入的有效期，没有再读取默认值
-                let cacheModel = CacheData.init(data: a_data, invalid_time: Date().timeIntervalSince1970 + (timeOut ?? self.cacheTimeOut))
+                let cacheModel = CacheData.init(data: a_data, invalid_time: load_time + (timeOut ?? self.cacheTimeOut))
                 // 获取缓存key
 //                let cacheKey = cachePath.absoluteString
                 // 获取真实的Data
@@ -92,6 +92,7 @@ public extension FunFreedom {
                     let cacheData = try encoder.encode(cacheModel)
                     // 放进缓存池
                     self.memoryCache.setObject(cacheData as NSData, forKey: NSString(string: cachePath))
+
                     // 写入
                     if let diskCachePath = self.diskCachePath {
                         if !self.fileManager.fileExists(atPath: diskCachePath) {
@@ -127,8 +128,8 @@ public extension FunFreedom {
             guard let cachePath = self.cachePathForKey(key: key), containsData(key: key) else { return nil }
             
             // 获取内存缓存
-            if let cacheData = memoryCache.object(forKey: NSString(string: cachePath)) as? Data {
-                return proving(key: key, data: cacheData)
+            if let cacheData = memoryCache.object(forKey: NSString(string: cachePath)) {
+                return proving(key: key, data: cacheData as Data)
             }
             // 读取磁盘缓存
             if let cacheData = NSKeyedUnarchiver.unarchiveObject(withFile: cachePath) as? Data {
