@@ -8,17 +8,16 @@
 
 import Foundation
 import Alamofire
-
+// 缓存用的线程
+fileprivate let FunNetworkCachePathName = "com.funfreedom.funnetwork.cache"
+// 成功回调
 public typealias ResponseResult<T> = (((success: Bool, data: T?))->Void)
-public protocol FunResponseDelegate: class {
-    func response_success(json: Data)
-    func response_failure(error: Error)
-}
 
 public extension FunFreedom {
-
+    
     class NetworkKit {
-        public struct RequestConfig {
+        // 请求用到的所有相关信息
+        public struct RequestSession {
             public struct UploadFile {
                 public var name: String?
                 public var type: String?
@@ -49,22 +48,20 @@ public extension FunFreedom {
             
             public var downloadClosure: ((Progress) -> Void)?
             public var downloadComplete: ((URL?) -> Void)?
-            
+            // 可以自定义请求标示
             public var identifier: String?
             
             public var isCache: Bool = false
-            
-            public var cacheTimeOut: TimeInterval = FunFreedom.networkManager.cacheTimeOut
-            
+            // 缓存时效
+            public var cacheTimeOut: TimeInterval?
+            // 请求的响应者（请求开始的时候会关闭这个响应者的响应链，防止重复请求）
             public var sender: UIControl?
-            
+            // 统一的回调信号
             public var completion: ResponseResult<Data>?
         }
         
-        
-        public lazy var config = RequestConfig()
-        
-        public weak var delegate: FunResponseDelegate?
+        // 创建一个请求时就会对应的创建组请求的数据
+        public lazy var session = RequestSession()
         
         public static var `default`: NetworkKit {
             
@@ -78,29 +75,29 @@ public extension FunFreedom {
         }
         
         public func downloadClosure(_ downloadClosure: ((Progress) -> Void)?) -> Self {
-            config.downloadClosure = downloadClosure
+            session.downloadClosure = downloadClosure
             
             return self
         }
         
         public func downloadComplete(_ downloadComplete: ((URL?) -> Void)?) -> Self {
-            config.downloadComplete = downloadComplete
+            session.downloadComplete = downloadComplete
             return self
         }
         
         public func headers(_ header: HTTPHeaders?) -> Self {
-            config.headers = header
+            session.headers = header
             
             return self
         }
         
         public func urlString(_ url: String?) -> Self {
-            config.urlString = url
+            session.urlString = url
             
             if let a_url = url {
                 if !a_url.hasPrefix("http") {
-                    if let baseURL = config.baseUrl {
-                        config.urlString = baseURL + a_url
+                    if let baseURL = session.baseUrl {
+                        session.urlString = baseURL + a_url
                     }
                 }
             }
@@ -110,52 +107,52 @@ public extension FunFreedom {
         }
         
         public func identifier(_ identifier: String?) -> Self {
-            config.identifier = identifier
+            session.identifier = identifier
             
             return self
         }
         
         public func isCache(_ isCache: Bool) -> Self {
-            config.isCache = isCache
+            session.isCache = isCache
             return self
         }
         
         public func cacheTimeOut(_ cacheTimeOut: TimeInterval) -> Self {
-            config.cacheTimeOut = cacheTimeOut
+            session.cacheTimeOut = cacheTimeOut
             return self
         }
         
         public func params(_ params: [String: Any]?) -> Self {
-            config.params = params
+            session.params = params
             return self
         }
         
         public func requestType(_ type: HTTPMethod) -> Self {
-            config.requestType = type
+            session.requestType = type
             return self
         }
         
         public func sender(_ sender: UIControl?) -> Self {
-            config.sender = sender
+            session.sender = sender
             return self
         }
         
         public func request(_ completion: ResponseResult<Data>?=nil) {
             
-            config.completion = completion
+            session.completion = completion
             
-            if var URLString = config.urlString {
+            if var URLString = session.urlString {
                 if load_cache() {
                     
                     return
                 }
                 
                 request_start()
-                let dataRequest =  Alamofire.SessionManager.sharedSessionManager.request(URLString, method: config.requestType, parameters: config.params, encoding: URLEncoding.default, headers: config.headers)
+                let dataRequest =  Alamofire.SessionManager.sharedSessionManager.request(URLString, method: session.requestType, parameters: session.params, encoding: URLEncoding.default, headers: session.headers)
                 
-                debugPrint("url = " + URLString + " Type = " + config.requestType.rawValue)
+                debugPrint("url = " + URLString + " Type = " + session.requestType.rawValue)
                 
-                if let params = config.params {
+                if let params = session.params {
                     debugPrint("parameters =", params)
                 }
                 
@@ -182,7 +179,7 @@ public extension FunFreedom {
                 func success(json : Data) {
                     
                     internal_response(success: true, data: json)
-
+                    
                 }
                 
                 //Error handling - pop-up error message
@@ -202,13 +199,13 @@ public extension FunFreedom {
         
         
         public func upload() {
-            if let URLString = config.urlString {
+            if let URLString = session.urlString {
                 request_start()
                 
                 Alamofire.SessionManager.sharedSessionManager.upload(multipartFormData: { (multipartFormData) in
                     debugPrint("upload_url = " + URLString)
                     
-                    if let files = self.config.uploadFiles {
+                    if let files = self.session.uploadFiles {
                         for file in files {
                             if let data = file.data {
                                 if let withName = file.withName {
@@ -224,7 +221,7 @@ public extension FunFreedom {
                         }
                     }
                     
-                }, usingThreshold: SessionManager.multipartFormDataEncodingMemoryThreshold, to: URLString, method: config.requestType, headers: config.headers) { (encodingResult) in
+                }, usingThreshold: SessionManager.multipartFormDataEncodingMemoryThreshold, to: URLString, method: session.requestType, headers: session.headers) { (encodingResult) in
                     
                     self.request_end()
                     
@@ -265,13 +262,13 @@ public extension FunFreedom {
         
         public func download() {
             
-            if let URLString = config.urlString {
+            if let URLString = session.urlString {
                 request_start()
                 
-                Alamofire.SessionManager.sharedSessionManager.download(URLString, method: config.requestType, parameters: config.params, encoding: JSONEncoding.default, headers: config.headers, to: config.destination).downloadProgress(queue: DispatchQueue.global(qos: .utility)) { progress in
+                Alamofire.SessionManager.sharedSessionManager.download(URLString, method: session.requestType, parameters: session.params, encoding: JSONEncoding.default, headers: session.headers, to: session.destination).downloadProgress(queue: DispatchQueue.global(qos: .utility)) { progress in
                     
                     debugPrint("Progress: \(progress.fractionCompleted)")
-                    if let closureHandel = self.config.downloadClosure {
+                    if let closureHandel = self.session.downloadClosure {
                         DispatchQueue.main.async {
                             closureHandel(progress)
                         }
@@ -287,7 +284,7 @@ public extension FunFreedom {
                     debugPrint(response.temporaryURL as Any)
                     debugPrint(response.destinationURL as Any)
                     
-                    if let complete = self.config.downloadComplete {
+                    if let complete = self.session.downloadComplete {
                         complete(response.destinationURL)
                     }
                     
@@ -295,27 +292,30 @@ public extension FunFreedom {
             }
         }
         
-        internal func internal_response(success: Bool, data: Any?) {
+        // 内部统一请求结果的处理
+        internal func internal_response(success: Bool, data: Any?, loadCache: Bool? = false) {
+            
             request_end()
             
             if success {
                 if let json = data as? Data {
                     
-                    delegate?.response_success(json: json)
-                    if let complete = config.completion {
+                    if let complete = session.completion {
                         
                         complete((success: true, data: json))
                     }
-                    if config.isCache {
+                    
+                    // 开启了缓存，并且结果不是从缓存内读取的，就写入缓存
+                    if session.isCache, loadCache != true {
                         
-                        cache_request(config: config, response: json)
+                        cache_request(session: session, response: json)
                     }
                 }
                 
             } else {
                 if let error = data as? Error {
-                    delegate?.response_failure(error: error)
-                    if let complete = config.completion {
+                    
+                    if let complete = session.completion {
                         
                         complete((success: false, data: error.localizedDescription.data(using: .utf8)))
                     }
@@ -327,10 +327,10 @@ public extension FunFreedom {
         
         private func load_cache() -> Bool {
             
-            if config.isCache {
-                if let data = load_request(config: config) {
+            if session.isCache {
+                if let data = load_request(session: session) {
                     
-                    internal_response(success: true, data: data)
+                    internal_response(success: true, data: data, loadCache: true)
                     
                     return true
                 }
@@ -340,11 +340,11 @@ public extension FunFreedom {
         }
         
         private func request_start() {
-            config.sender?.isEnabled = false
+            session.sender?.isEnabled = false
         }
         
         private func request_end() {
-            config.sender?.isEnabled = true
+            session.sender?.isEnabled = true
         }
         
     }
@@ -353,13 +353,26 @@ public extension FunFreedom {
 
 
 public extension FunFreedom.NetworkKit {
-class Manager {
-    
-    public var baseUrl: String?
-    public var headers: HTTPHeaders?
-    public var cacheTimeOut: TimeInterval = 300
-    public var errorHUD: Bool = false
-}
+    class Manager {
+        
+        public var baseUrl: String?
+        public var headers: HTTPHeaders?
+        
+        // 默认不显示错误HUD
+        public var errorHUD: Bool = false
+        public lazy var request_cache: FunFreedom.Cache = {
+            
+            // 默认的请求缓存放在temp下（重启或储存空间报警自动移除）
+            // 生成对应的请求缓存工具
+            let request_cache = FunFreedom.Cache.init(path: NSTemporaryDirectory() + "/\(FunNetworkCachePathName)")
+            // 默认请求缓存的时效为2分钟
+            request_cache.cacheTimeOut = 120
+            
+            return request_cache
+            
+            
+        }()
+    }
 }
 
 extension SessionManager {

@@ -75,7 +75,7 @@ public struct ResponseModel<T>: ResponseDecodable {
 private var NetwokKitSuccessKey = "NetwokKitSuccessKey"
 private var NetwokKitFailureKey = "NetwokKitFailureKey"
 
-extension FunFreedom.NetworkKit: FunResponseDelegate {
+extension FunFreedom.NetworkKit {
     
     enum ResponseCode: Int {
         case success = 0
@@ -107,7 +107,7 @@ extension FunFreedom.NetworkKit: FunResponseDelegate {
     
     static var hz: FunFreedom.NetworkKit {
         let a = FunFreedom.NetworkKit()
-        a.delegate = a
+//        a.delegate = a
         return a
     }
     

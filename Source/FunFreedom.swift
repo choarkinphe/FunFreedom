@@ -12,53 +12,67 @@ open class FunFreedom {
         
         static var instance_networkManager: NetworkKit.Manager = NetworkKit.Manager()
         
-        static var instance_cache: Cache = Cache()
-        
         static var instance_device: Device = Device()
     }
     
-    public static var netwokKit: NetworkKit {
+}
+
+// MARK: - DrawingBoard
+public extension FunFreedom {
+   static var drawingBoard: DrawingBoard {
         
-        return NetworkKit.default
+        return DrawingBoard.default
     }
+}
+
+// MARK: - picker
+public extension FunFreedom {
     
-    public static var sheet: Sheet {
-        
-        return Sheet.default
-    }
-    
-    public static var alert: Alert {
-        
-        return Alert.default
-    }
-    
-    public static var toast: Toast {
-        return Toast.default
-    }
-    
-    public static var datePicker: DatePicker {
+    static var datePicker: DatePicker {
         
         return DatePicker.default
     }
     
-    public static var networkManager: NetworkKit.Manager {
-        return Static.instance_networkManager
-    }
-    
-    public static var cache: Cache {
+    static var sheet: Sheet {
         
-        return Static.instance_cache
+        return Sheet.default
     }
     
-    public static var drawingBoard: DrawingBoard {
+    static var alert: Alert {
         
-        return DrawingBoard.default
+        return Alert.default
     }
     
-    public static var device: Device {
+    static var toast: Toast {
+        return Toast.default
+    }
+    
+
+}
+
+// MARK: -Tool
+public extension FunFreedom {
+
+    static var cache: Cache {
+        
+        return Cache.default
+    }
+    
+    static var device: Device {
         return Static.instance_device
     }
+}
+
+// MARK: - NetworkKit
+public extension FunFreedom {
+
     
+    static var netwokKit: NetworkKit {
+        
+        return NetworkKit.default
+    }
     
-    
+    static var networkManager: NetworkKit.Manager {
+        return Static.instance_networkManager
+    }
 }

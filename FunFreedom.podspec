@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '1.6.6'
-  s.summary          = 'FunFreedom is a requestKit'
+  s.version          = '1.7.0'
+  s.summary          = 'FunFreedom is a develop tool'
   s.swift_version    = '5.0'
 
 # This description is used to generate tags and improve search results.

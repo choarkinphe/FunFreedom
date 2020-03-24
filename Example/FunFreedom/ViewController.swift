@@ -16,15 +16,24 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 66))
-        v.backgroundColor = .red
-        fun.navigationBar = v
+//        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 66))
+//        v.backgroundColor = .red
+//        fun.navigationBar = v
         
         FunFreedom.networkManager.baseUrl = "https://api.61park.cn/"
         //        if let model = ResponseModel<[ModuleModel]>.deserialize(from: str) {
         //
         //            print(model)
         //        }
+        
+//        FunFreedom.alert
+//            .message(message: "message")
+//            .title(title: "title")
+//            .addAction(title: "cancel", style: .cancel)
+//            .addAction(title: "OK", style: .default) { (action) in
+//
+//            }
+//            .show()
         
     }
     
@@ -39,6 +48,15 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func nextAction(_ sender: UIButton) {
+        
+//        present(TestViewController(), animated: true, completion: nil)
+        
+//        FunFreedom.cache.cache(key: "a", data: "b")
+//        FunFreedom.cache.totalSize
+        
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         FunFreedom.toast.dismiss()
     }
@@ -46,10 +64,10 @@ class ViewController: UIViewController {
         
         FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request({ (result) in
             if let data = result.data {
-            if let json = try? JSON(data: data) {
-            
-                print(json.dictionaryObject?.keys)
-                            }
+                if let json = try? JSON(data: data) {
+                    
+                    print(json.dictionaryObject?.keys)
+                }
             }
             
         })

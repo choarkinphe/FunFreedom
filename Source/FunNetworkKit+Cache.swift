@@ -9,43 +9,43 @@
 import Foundation
 public extension FunFreedom.NetworkKit {
     
-    func cache_request(config: FunFreedom.NetworkKit.RequestConfig, response: Data?) {
-        FunFreedom.cache.cache_request(config: config, response: response)
+    func cache_request(session: FunFreedom.NetworkKit.RequestSession, response: Data?) {
+        FunFreedom.networkManager.request_cache.cache_request(session: session, response: response)
     }
     
-    func remove_request(config: FunFreedom.NetworkKit.RequestConfig) {
-        FunFreedom.cache.remove_request(config: config)
+    func remove_request(session: FunFreedom.NetworkKit.RequestSession) {
+        FunFreedom.networkManager.request_cache.remove_request(session: session)
     }
     
     func remove_request(identifier: String?) {
-        FunFreedom.cache.remove_request(identifier: identifier)
+        FunFreedom.networkManager.request_cache.remove_request(identifier: identifier)
     }
     
-    func load_request(config: FunFreedom.NetworkKit.RequestConfig) -> Data? {
-        return FunFreedom.cache.load_request(config: config)
+    func load_request(session: FunFreedom.NetworkKit.RequestSession) -> Data? {
+        return FunFreedom.networkManager.request_cache.load_request(session: session)
     }
     
     
 }
 
 private extension FunFreedom.Cache {
-    
-    func cache_request(config: FunFreedom.NetworkKit.RequestConfig, response: Data?) {
-        guard let key_str = format_key(config: config) else { return }
+    // 缓存
+    func cache_request(session: FunFreedom.NetworkKit.RequestSession, response: Data?) {
+        guard let key_str = format_key(session: session) else { return }
         
-        cache(key: key_str, data: response)
+        cache(key: key_str, data: response, timeOut: session.cacheTimeOut)
         
-        debugPrint("cache_request=",config.urlString ?? "")
+        debugPrint("cache_request=",session.urlString ?? "")
     }
-    
-    func remove_request(config: FunFreedom.NetworkKit.RequestConfig) {
-        guard let key_str = format_key(config: config) else { return }
+    // 按完整请求信息删除对应缓存
+    func remove_request(session: FunFreedom.NetworkKit.RequestSession) {
+        guard let key_str = format_key(session: session) else { return }
         
         removeCache(key: key_str)
         
-        debugPrint("remove_request=",config.urlString ?? "")
+        debugPrint("remove_request=",session.urlString ?? "")
     }
-    
+    // 按标识符删除对应的缓存
     func remove_request(identifier: String?) {
         guard let key_str = identifier else { return }
         
@@ -54,39 +54,34 @@ private extension FunFreedom.Cache {
         debugPrint("remove_request=",identifier ?? "")
     }
     
-    func load_request(config: FunFreedom.NetworkKit.RequestConfig) -> Data? {
-        guard let key_str = format_key(config: config),
-            let cache_data = loadCache(key: key_str),
-            let cache_time = cache_data.cache_time
+    // 读取缓存
+    func load_request(session: FunFreedom.NetworkKit.RequestSession) -> Data? {
+        guard let key_str = format_key(session: session),
+            let cache_data = loadCache(key: key_str)
             else { return nil}
-        let load_time = Date().timeIntervalSince1970
-        if (load_time - cache_time) > config.cacheTimeOut {
-            debugPrint("cache_timeOut=",config.urlString ?? "")
-            removeCache(key: key_str)
-            return nil
-        }
-        debugPrint("load_request=",config.urlString ?? "")
         
-        return cache_data.data as? Data
+        debugPrint("load_request=",session.urlString ?? "")
+        
+        return cache_data
     }
     
-    private func format_key(config: FunFreedom.NetworkKit.RequestConfig) -> String? {
+    private func format_key(session: FunFreedom.NetworkKit.RequestSession) -> String? {
         
-        if let identifier = config.identifier {
+        if let identifier = session.identifier {
             return identifier
         }
-        guard let url = config.urlString else { return nil}
+        guard let url = session.urlString else { return nil}
         var key = url
         
-        if let header = config.headers, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
+        if let header = session.headers, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
             key = key + header_string
         }
         
-        if let params = config.params, let data = try? JSONSerialization.data(withJSONObject: params, options: []), let params_string = String(data: data, encoding: String.Encoding.utf8) {
+        if let params = session.params, let data = try? JSONSerialization.data(withJSONObject: params, options: []), let params_string = String(data: data, encoding: String.Encoding.utf8) {
             key = key + params_string
         }
         
-        return "\(key.hashValue)"
+        return key
     }
 }
 

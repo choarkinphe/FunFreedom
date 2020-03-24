@@ -1,4 +1,4 @@
-framework module FunFreedom {
+module FunFreedom {
   umbrella header "FunFreedom-umbrella.h"
 
   export *
