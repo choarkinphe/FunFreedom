@@ -9,6 +9,7 @@
 import UIKit
 import FunFreedom
 //import HandyJSON
+import CoreLocation
 
 class ViewController: UIViewController {
     var actions = [FunFreedom.ActionSheet]()
@@ -55,10 +56,19 @@ class ViewController: UIViewController {
 //        FunFreedom.cache.cache(key: "a", data: "b")
 //        FunFreedom.cache.totalSize
         // 快速获取当前定位信息
-        FunFreedom.Location.default.updatingLocation { (location) in
-            print(location)
-        }
+//        FunFreedom.Location.default.updatingLocation { (location) in
+//            print(location)
+//        }
         
+        let location = CLLocation.init(latitude: 30.51667, longitude: 114.31667)
+        
+        
+//        FunFreedom.Location.default.reverseGeocodeLocation(location)
+        FunFreedom.Location.default.reverseGeocodeLocation(location) { (result) in
+            if let address = result.address {
+                print(address)
+            }
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

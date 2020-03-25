@@ -8,18 +8,30 @@
 import Foundation
 import CoreLocation
 
-//打开Info.plist，在<dict>节点增加NSLocationUsageDescription值：
+//打开Info.plist，在<dict>节点增加Privacy - Location When In Use Usage Description / Privacy - Location Always and When In Use Usage Description 值
 
 public extension FunFreedom {
-    class Location: CLLocationManager {
-
-        public static var `default`: Location {
-            let _default = Location()
-            _default.delegate = _default
-            return _default
-        }
-
+    class Location: NSObject {
         
+        struct Static {
+            static var instance_location: Location = Location()
+        }
+        
+        public static var `default`: Location {
+            
+            return Static.instance_location
+        }
+        
+        // 创建单利工具类
+        private lazy var manager: CLLocationManager = {
+            let manager = CLLocationManager()
+            manager.delegate = self
+            return manager
+        }()
+        
+        lazy var geocoder = CLGeocoder()
+        
+        // 暂存回调
         fileprivate var locationHandler: ((_ result: (location: CLLocation?,error: Error?))->Void)?
         
         // 打开定位服务
@@ -34,33 +46,26 @@ public extension FunFreedom {
             }
             
             if CLLocationManager.authorizationStatus() == .notDetermined {
-                  
-                    //如果没有授权会请求用户授权
-                    switch authorizationStatus {
-                    case .authorizedWhenInUse:
-                        //获取前台定位权限
-                        requestWhenInUseAuthorization()
-                    case .authorizedAlways:
-                        // 获取后台定位权限
-                        requestAlwaysAuthorization()
-                    default:
-                        break
-                    }
+                
+                //如果没有授权会请求用户授权
+                switch authorizationStatus {
+                case .authorizedWhenInUse:
+                    //获取前台定位权限
+                    manager.requestWhenInUseAuthorization()
+                case .authorizedAlways:
+                    // 获取后台定位权限
+                    manager.requestAlwaysAuthorization()
+                default:
+                    break
+                }
             }
             
             // 开启定位服务
-            requestLocation()
-
-        }
-
-        public func updatingLocation(_ locationComplete: @escaping ((_ result: (location: CLLocation?,error: Error?))->Void)) {
-
-            locationHandler = locationComplete
-
-            // 开启前台定位服务
-            enableLocationServices(authorizationStatus: .authorizedWhenInUse)
+            manager.requestLocation()
             
         }
+        
+        
         
         deinit {
             debugPrint("FunLocation: die")
@@ -68,6 +73,35 @@ public extension FunFreedom {
     }
     
     
+}
+
+// MARK： - 对外方法
+public extension FunFreedom.Location {
+    
+    /// 更新当前经纬度信息
+    /// - Parameter locationComplete: 回调地址信息
+    func updatingLocation(_ locationComplete: @escaping ((_ result: (location: CLLocation?, error: Error?))->Void)) {
+        
+        locationHandler = locationComplete
+        
+        // 开启前台定位服务
+        enableLocationServices(authorizationStatus: .authorizedWhenInUse)
+        
+    }
+    
+    /// 根据经纬度获取地址对象
+    /// - Parameters:
+    ///   - location: 经纬度
+    ///   - complete: 回调信息
+    func reverseGeocodeLocation(_ location: CLLocation, complete: @escaping ((_ result: (address: CLPlacemark?, error: Error?))->Void)) {
+        
+        geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
+            
+            
+            complete((placemarks?.first,error))
+            
+        }
+    }
 }
 
 
@@ -78,10 +112,10 @@ extension FunFreedom.Location: CLLocationManagerDelegate {
         switch status {
         case .authorizedAlways:
             // 后台定位时打开实时更新
-            allowsBackgroundLocationUpdates = true
+            manager.allowsBackgroundLocationUpdates = true
         case .authorizedWhenInUse:
             // 前台定位时关闭实时更新
-            allowsBackgroundLocationUpdates = false
+            manager.allowsBackgroundLocationUpdates = false
         default:
             break
         }
@@ -104,6 +138,6 @@ extension FunFreedom.Location: CLLocationManagerDelegate {
         }
         
         // 定位完成时，关闭师生更新
-        allowsBackgroundLocationUpdates = false
+        manager.allowsBackgroundLocationUpdates = false
     }
 }
