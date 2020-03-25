@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.0.5)
   - FunFreedom (1.7.0):
-    - Alamofire
+    - Alamofire (~> 5.0.5)
   - HandyJSON (5.0.1)
 
 DEPENDENCIES:
@@ -18,10 +18,10 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  FunFreedom: 009eee824c865665235e5e99e1436278bd3a7bef
+  Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  FunFreedom: d7b14b4924a527c94e6c8172318b151c39703a2a
   HandyJSON: d45b8415c501e3affc59ca9762c1197ff0feb646
 
-PODFILE CHECKSUM: 8674485107050cc195d076f9059f990c75e387a6
+PODFILE CHECKSUM: d1e2c6e145046f02cf005540a38074ffc1ce4513
 
 COCOAPODS: 1.9.0

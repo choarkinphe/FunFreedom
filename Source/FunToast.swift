@@ -15,7 +15,7 @@ public extension FunFreedom {
             var title: String?
             var message: String?
             var inView: UIView?
-            var duration: TimeInterval = 0.5
+            var duration: TimeInterval = 1.5
             var point: CGPoint?
             var position: Position = .bottom
             var image: UIImage?

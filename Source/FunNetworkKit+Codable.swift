@@ -15,11 +15,11 @@ public extension FunFreedom.NetworkKit {
             if let data = result.data {
 
                 let model = try? JSONDecoder().decode(T.self, from: data)
-                completion((success: result.success, data: model))
+                completion((success: result.success, data: model, message: nil))
                 
 
             } else {
-                completion((success: result.success, data: nil))
+                completion((success: result.success, data: nil, message: nil))
             }
             
             

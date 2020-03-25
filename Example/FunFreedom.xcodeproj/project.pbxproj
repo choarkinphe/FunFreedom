@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		40B9E86F9BED53535FD00BEB /* Pods_FunFreedom_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E297D165D98D6C9C6CE6537 /* Pods_FunFreedom_Tests.framework */; };
 		49141A19242891EF00E8D7BC /* TESTTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49141A18242891EF00E8D7BC /* TESTTableViewController.swift */; };
 		49663F6F23F150EB00F75468 /* WKWebView+Fun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49663F6E23F150EB00F75468 /* WKWebView+Fun.swift */; };
 		49663F7123F154C200F75468 /* TESTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49663F7023F154C200F75468 /* TESTViewController.swift */; };
@@ -18,8 +19,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		6B12D4E334EF8B38ABC5637D /* libPods-FunFreedom_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6AC3501110BAAA4F1D79541 /* libPods-FunFreedom_Example.a */; };
-		D837798E013B57834675B5A4 /* libPods-FunFreedom_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 85271F1207D428620DDA7061 /* libPods-FunFreedom_Tests.a */; };
+		7F6604B0DE746AD6DFEF8BA2 /* Pods_FunFreedom_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E994D30D4CCDB185260AFB /* Pods_FunFreedom_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,12 +54,12 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		691B17E4AA037CD8D4ECF498 /* Pods-FunFreedom_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunFreedom_Example.debug.xcconfig"; path = "Target Support Files/Pods-FunFreedom_Example/Pods-FunFreedom_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		85271F1207D428620DDA7061 /* libPods-FunFreedom_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FunFreedom_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9E297D165D98D6C9C6CE6537 /* Pods_FunFreedom_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A31D3C567EB94454C1BDA83D /* FunFreedom.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = FunFreedom.podspec; path = ../FunFreedom.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A3A12FD3CB0E5DDBFFA821EA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B37ADC32D7A318B0E8960AEA /* Pods-FunFreedom_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunFreedom_Tests.release.xcconfig"; path = "Target Support Files/Pods-FunFreedom_Tests/Pods-FunFreedom_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C2741ABC8638BB4D41F15962 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		D6AC3501110BAAA4F1D79541 /* libPods-FunFreedom_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FunFreedom_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E8E994D30D4CCDB185260AFB /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ECA5C6C0E281235CDC9CF1E2 /* Pods-FunFreedom_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FunFreedom_Example.release.xcconfig"; path = "Target Support Files/Pods-FunFreedom_Example/Pods-FunFreedom_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B12D4E334EF8B38ABC5637D /* libPods-FunFreedom_Example.a in Frameworks */,
+				7F6604B0DE746AD6DFEF8BA2 /* Pods_FunFreedom_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D837798E013B57834675B5A4 /* libPods-FunFreedom_Tests.a in Frameworks */,
+				40B9E86F9BED53535FD00BEB /* Pods_FunFreedom_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,8 +90,8 @@
 				497EE1F12428B8AA0014574F /* Alamofire.framework */,
 				49141A1C2428B80700E8D7BC /* Alamofire.framework */,
 				49141A1A2428B79000E8D7BC /* Alamofire.framework */,
-				D6AC3501110BAAA4F1D79541 /* libPods-FunFreedom_Example.a */,
-				85271F1207D428620DDA7061 /* libPods-FunFreedom_Tests.a */,
+				E8E994D30D4CCDB185260AFB /* Pods_FunFreedom_Example.framework */,
+				9E297D165D98D6C9C6CE6537 /* Pods_FunFreedom_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -193,6 +193,7 @@
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
+				FE46183AE82D87B357B4C661 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -331,6 +332,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FE46183AE82D87B357B4C661 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FunFreedom_Example/Pods-FunFreedom_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/FunFreedom/FunFreedom.framework",
+				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FunFreedom.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FunFreedom_Example/Pods-FunFreedom_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -433,7 +456,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -482,7 +505,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -499,7 +522,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RYCBLDQ5JD;
 				INFOPLIST_FILE = FunFreedom/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				MODULE_NAME = ExampleApp;
@@ -520,7 +543,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RYCBLDQ5JD;
 				INFOPLIST_FILE = FunFreedom/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.7.0;
 				MODULE_NAME = ExampleApp;

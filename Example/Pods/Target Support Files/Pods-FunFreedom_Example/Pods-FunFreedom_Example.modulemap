@@ -1,4 +1,4 @@
-module Pods_FunFreedom_Example {
+framework module Pods_FunFreedom_Example {
   umbrella header "Pods-FunFreedom_Example-umbrella.h"
 
   export *

@@ -17,12 +17,12 @@
     "tag": "1.7.0"
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "10.0"
   },
   "source_files": "Source/*.swift",
   "dependencies": {
     "Alamofire": [
-
+      "~>5.0.5"
     ]
   },
   "swift_version": "5.0"

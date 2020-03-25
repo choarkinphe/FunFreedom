@@ -1,9 +1,10 @@
 target 'FunFreedom_Example' do
-  source ‘https://github.com/CocoaPods/Specs.git’
-#  use_frameworks!
+#  source ‘https://github.com/CocoaPods/Specs.git’
+  use_frameworks!
 #  inhibit_all_warnings!
-  platform :ios, '9.0'
+  platform :ios, '10.0'
   pod 'FunFreedom', :path => '../'
+#  pod 'Alamofire', '~>5.0.5'
   pod 'HandyJSON'
   target 'FunFreedom_Tests' do
     inherit! :search_paths

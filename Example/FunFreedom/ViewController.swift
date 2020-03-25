@@ -19,7 +19,7 @@ class ViewController: UIViewController {
 //        let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 100, height: 66))
 //        v.backgroundColor = .red
 //        fun.navigationBar = v
-        
+        FunFreedom.networkManager.errorHUD = true
         FunFreedom.networkManager.baseUrl = "https://api.61park.cn/"
         //        if let model = ResponseModel<[ModuleModel]>.deserialize(from: str) {
         //
@@ -59,6 +59,23 @@ class ViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         FunFreedom.toast.dismiss()
+    }
+    @IBAction func upload(_ sender: UIButton) {
+        if let image = UIImage.init(named: "timg-2"), let imageData = image.jpegData(compressionQuality: 1) {
+        
+//            FunFreedom.NetworkKit.hz.urlString("http://test.xoinstein.com/upload.php").body { (formatData) in
+//                //            formatData.append(UIImage.jpegData(image!), withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
+//                formatData.append(imageData, withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
+//            }.progress { (progress) in
+//                print(progress)
+//            }.upload()
+            
+            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/Music/music1.mp3").method(.get).progress { (progress) in
+                print(progress)
+            }.download { (result) in
+                print(result.data)
+            }
+        }
     }
     @IBAction func request(_ sender: Any) {
         
