@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FunFreedom'
-  s.version          = '1.7.0'
+  s.version          = '1.8.0'
   s.summary          = 'FunFreedom is a develop tool'
   s.swift_version    = '5.0'
 
