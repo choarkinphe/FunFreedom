@@ -54,6 +54,10 @@ class ViewController: UIViewController {
         
 //        FunFreedom.cache.cache(key: "a", data: "b")
 //        FunFreedom.cache.totalSize
+        // 快速获取当前定位信息
+        FunFreedom.Location.default.updatingLocation { (location) in
+            print(location)
+        }
         
     }
     

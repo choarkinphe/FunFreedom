@@ -11,7 +11,7 @@ import Alamofire
 // 缓存用的线程
 fileprivate let FunNetworkCachePathName = "com.funfreedom.funnetwork.cache"
 // 回调
-public typealias ResponseResult<T> = (((success: Bool, data: T?, message: String?))->Void)
+public typealias ResponseResult<T> = (((success: Bool, data: T?, error: Error?))->Void)
 
 public extension FunFreedom {
     
@@ -116,7 +116,7 @@ public extension FunFreedom {
                         if let data = result.data {
                             filePath = URL.init(dataRepresentation: data, relativeTo: nil)
                         }
-                        complete((result.success, filePath, result.message))
+                        complete((result.success, filePath, result.error))
                     }
                     
                 }
@@ -150,7 +150,7 @@ public extension FunFreedom {
                         // 实际返回数据为空时，抛出异常直接退出
                         // 内部回调
                         if let result = resultHandler {
-                            result((false,nil,"responseData is empty"))
+                            result((false,nil,FunError.init(desc: "responseData is empty")))
                         }
                         return
                     }
@@ -210,7 +210,7 @@ public extension FunFreedom {
                 
                 // 内部回调
                 if let result = resultHandler {
-                    result((false,nil,error?.localizedDescription))
+                    result((false,nil,error))
                 }
                 // 默认的错误HUD
                 if FunFreedom.networkManager.errorHUD {

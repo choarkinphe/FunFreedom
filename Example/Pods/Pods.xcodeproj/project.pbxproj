@@ -36,6 +36,8 @@
 		44127C4B989C9CC6A90D78B66A929A5E /* AlamofireExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891373D8D044B2675A1F217EA1D5BF2B /* AlamofireExtended.swift */; };
 		4665274B82A1477F9A675E58C93E5814 /* ExtendCustomBasicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A4CC2363EFEF2ED7D73C167C6D575B /* ExtendCustomBasicType.swift */; };
 		48D97BE7D5CAED273BD2341C239CC934 /* RequestTaskMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79795A83524F064044ACD67C0D91DE1 /* RequestTaskMap.swift */; };
+		49825719242B904300ABD7FB /* FunError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49825718242B904300ABD7FB /* FunError.swift */; };
+		49FA2C9F242B4C5100653AA2 /* FunLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FA2C9E242B4C5100653AA2 /* FunLocation.swift */; };
 		4E2B14200047E6C7E715CC9310236951 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0A70A4E3E631AA0232A6B3A1C68A93 /* Logger.swift */; };
 		521E330943F0873C4A7233989DC674DD /* EnumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286C914577B70F2F17EBB23EC65C822 /* EnumType.swift */; };
 		56EC8ED1535DAB987F3D2B71D4C05773 /* HTTPHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B6CA1A3E59556FE81B9DAAC50C25A2 /* HTTPHeaders.swift */; };
@@ -170,7 +172,7 @@
 		344754A3AF4FF6371F340AD7F1103F9A /* Pods-FunFreedom_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-FunFreedom_Example.release.xcconfig"; sourceTree = "<group>"; };
 		3645FE74566C0E59AF49D197D7917C72 /* EnumTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EnumTransform.swift; path = Source/EnumTransform.swift; sourceTree = "<group>"; };
 		3C6167641459841E08D9D5286A659EBB /* RequestInterceptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestInterceptor.swift; path = Source/RequestInterceptor.swift; sourceTree = "<group>"; };
-		3CAB4281D07DD60A3FA3E3D819A0013C /* FunFreedom.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = FunFreedom.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		3CAB4281D07DD60A3FA3E3D819A0013C /* FunFreedom.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = FunFreedom.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		3CF6F5AE189EC1209C49B5DD38A381C7 /* CachedResponseHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CachedResponseHandler.swift; path = Source/CachedResponseHandler.swift; sourceTree = "<group>"; };
 		3D15642C223957482F0E972B8FC1A15C /* ExtendCustomModelType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtendCustomModelType.swift; path = Source/ExtendCustomModelType.swift; sourceTree = "<group>"; };
 		3EF9BB4BEDA30709E8EF359FCA94BE6B /* HandyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "HandyJSON-umbrella.h"; sourceTree = "<group>"; };
@@ -182,7 +184,9 @@
 		446EDB85230CD516A230F388F4D36872 /* MultipartUpload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartUpload.swift; path = Source/MultipartUpload.swift; sourceTree = "<group>"; };
 		4579693F64A68B4DE000C927D0D38246 /* URLRequest+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLRequest+Alamofire.swift"; path = "Source/URLRequest+Alamofire.swift"; sourceTree = "<group>"; };
 		49426F7C4DF76CC99AC59756645C17A7 /* FunFreedom.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FunFreedom.modulemap; sourceTree = "<group>"; };
+		49825718242B904300ABD7FB /* FunError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunError.swift; sourceTree = "<group>"; };
 		499F9E3AE5CBC2D219966AAD8878639C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
+		49FA2C9E242B4C5100653AA2 /* FunLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FunLocation.swift; path = Source/FunLocation.swift; sourceTree = "<group>"; };
 		4FBFC88162CF8781086B9B7DDC1E4426 /* HTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HTTPMethod.swift; path = Source/HTTPMethod.swift; sourceTree = "<group>"; };
 		5026F6C351DF82F9447C65D32D04C0D2 /* URLSessionConfiguration+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLSessionConfiguration+Alamofire.swift"; path = "Source/URLSessionConfiguration+Alamofire.swift"; sourceTree = "<group>"; };
 		547AE3BCDE86162BE90C9316AD3AD3E8 /* HandyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "HandyJSON-dummy.m"; sourceTree = "<group>"; };
@@ -190,7 +194,7 @@
 		55397D02D7D64AB5D6560B0E899DFA99 /* UIViewController+Fun.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIViewController+Fun.swift"; path = "Source/UIViewController+Fun.swift"; sourceTree = "<group>"; };
 		5AA32821C9034A7EAFD2196DA5FDD0BA /* CBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CBridge.swift; path = Source/CBridge.swift; sourceTree = "<group>"; };
 		5AE184EBDD99E3363D5164CE9536E0EC /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Alamofire.modulemap; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FDC764DDCDBA60671C9E81B09F4A4D2 /* PropertyInfo.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PropertyInfo.swift; path = Source/PropertyInfo.swift; sourceTree = "<group>"; };
 		6235485B4B2BC17B34B4AA61A55C1155 /* FunFreedom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FunFreedom.debug.xcconfig; sourceTree = "<group>"; };
 		634C025C29E9E0039797FB40C7932886 /* RetryPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RetryPolicy.swift; path = Source/RetryPolicy.swift; sourceTree = "<group>"; };
@@ -219,20 +223,20 @@
 		9564FCD37FF3974FB5D8D8F1AEB5827F /* AnyExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyExtensions.swift; path = Source/AnyExtensions.swift; sourceTree = "<group>"; };
 		99425D272B1B31A547827742425556EB /* NSDecimalNumberTransform.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NSDecimalNumberTransform.swift; path = Source/NSDecimalNumberTransform.swift; sourceTree = "<group>"; };
 		99A4CC2363EFEF2ED7D73C167C6D575B /* ExtendCustomBasicType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtendCustomBasicType.swift; path = Source/ExtendCustomBasicType.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E02A78C21B832D093ACD3DE49781D2C /* FieldDescriptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FieldDescriptor.swift; path = Source/FieldDescriptor.swift; sourceTree = "<group>"; };
 		9E36F42073630CC80B8B7EACC4F680B1 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		A135596565653D103943BE93E61493D5 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
 		A3B3FE2E335EC3ABA6B807CBED295F15 /* Pods-FunFreedom_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FunFreedom_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		A66EAD5C3806907F1B76089B2D934D16 /* Result+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Result+Alamofire.swift"; path = "Source/Result+Alamofire.swift"; sourceTree = "<group>"; };
-		AA47F4ACBBD5A0BA61CF597A25C244EF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
-		AA9C4A1B0E6DA835D5890371D4816E52 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		AD8190C0C8C498A3CE6BB833B8D6BED9 /* FunFreedom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = FunFreedom.framework; path = FunFreedom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA47F4ACBBD5A0BA61CF597A25C244EF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		AA9C4A1B0E6DA835D5890371D4816E52 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		AD8190C0C8C498A3CE6BB833B8D6BED9 /* FunFreedom.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FunFreedom.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEDF455CD82681FCC1ED3BDDDAE0A306 /* OtherExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = OtherExtension.swift; path = Source/OtherExtension.swift; sourceTree = "<group>"; };
-		AEFF0651B68BA0174E310328931B032E /* Pods_FunFreedom_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_FunFreedom_Tests.framework; path = "Pods-FunFreedom_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AEFF0651B68BA0174E310328931B032E /* Pods_FunFreedom_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B040263F9B1EEA4553601CFFA6337AFE /* Alamofire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Alamofire.debug.xcconfig; sourceTree = "<group>"; };
 		B3967E34212B255FB4F3BF360ED4EA36 /* Properties.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Properties.swift; path = Source/Properties.swift; sourceTree = "<group>"; };
-		B6AEEC90E9CD9C85AB0F9FF940D501B5 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_FunFreedom_Example.framework; path = "Pods-FunFreedom_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6AEEC90E9CD9C85AB0F9FF940D501B5 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FunFreedom_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B96539BFAD9B10081A798CBB4E93E9D5 /* HandyJSON.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HandyJSON.debug.xcconfig; sourceTree = "<group>"; };
 		B9D28DE4480E7D378ABB3174EE7D4A38 /* FunDrawingBoard.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunDrawingBoard.swift; path = Source/FunDrawingBoard.swift; sourceTree = "<group>"; };
 		BB0127C043EEFAF0F78F16A4BA018EE5 /* FunNetworkKit+Cache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "FunNetworkKit+Cache.swift"; path = "Source/FunNetworkKit+Cache.swift"; sourceTree = "<group>"; };
@@ -242,7 +246,7 @@
 		BF13C0F1D01B1D25831301991830E637 /* FunFreedom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = FunFreedom.release.xcconfig; sourceTree = "<group>"; };
 		C3CCD7B21BB9237A981053B47180EB03 /* HandyJSON.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = HandyJSON.release.xcconfig; sourceTree = "<group>"; };
 		C71DA985334BC4858CF9E634ED4A2336 /* TransformOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransformOf.swift; path = Source/TransformOf.swift; sourceTree = "<group>"; };
-		CD54121DDA84872534168702B5F92950 /* HandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HandyJSON.framework; path = HandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD54121DDA84872534168702B5F92950 /* HandyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HandyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD76B178F45603D103E3DF5934D65531 /* Pods-FunFreedom_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-FunFreedom_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		CD78B76BCBFDC5495345C454A36BCCC2 /* DispatchQueue+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "DispatchQueue+Alamofire.swift"; path = "Source/DispatchQueue+Alamofire.swift"; sourceTree = "<group>"; };
 		CFC04AE51420B895F193595D25747281 /* FunTool.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FunTool.swift; path = Source/FunTool.swift; sourceTree = "<group>"; };
@@ -364,7 +368,6 @@
 				EA717853EC921C520A60D5329D776798 /* URLTransform.swift */,
 				F8FDE07802553DA6A915452A0703092C /* Support Files */,
 			);
-			name = HandyJSON;
 			path = HandyJSON;
 			sourceTree = "<group>";
 		};
@@ -405,7 +408,6 @@
 				7183841426FE893A325F3B61156C2B57 /* Validation.swift */,
 				922A7ED1B6A79BDDBD798366CE157188 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -555,6 +557,8 @@
 			children = (
 				88325148AE03FC69E683BA6572EEAC0A /* FunAlert.swift */,
 				85A3BC8F1A98DA2DDC157FFED480E26A /* FunCache.swift */,
+				49825718242B904300ABD7FB /* FunError.swift */,
+				49FA2C9E242B4C5100653AA2 /* FunLocation.swift */,
 				CFF98B78B51928B5F39D3E3555260A47 /* FunDatePicker.swift */,
 				B9D28DE4480E7D378ABB3174EE7D4A38 /* FunDrawingBoard.swift */,
 				BD4B9027C48AD763AFC167C908263240 /* FunFreedom.swift */,
@@ -807,6 +811,7 @@
 				64FED62E08E3F47132C3E3F942772C03 /* FunCache.swift in Sources */,
 				C59AE70B925E636AA3E87F32B4DA4048 /* FunDatePicker.swift in Sources */,
 				A1E6BF8275F2C3D540BBE24AAEA0BE4B /* FunDrawingBoard.swift in Sources */,
+				49FA2C9F242B4C5100653AA2 /* FunLocation.swift in Sources */,
 				9D2E210C6A0640F8EDFA4FEBFD808925 /* FunFreedom-dummy.m in Sources */,
 				A3CBCE25CB3BDB91A25E56A80B2E1674 /* FunFreedom.swift in Sources */,
 				6B9AD53CF5CD2765C54F6893629BB7D5 /* FunNetworkKit+Cache.swift in Sources */,
@@ -814,6 +819,7 @@
 				DA40E9F5FD982CAAEFABAEFBAF32E18E /* FunNetworkKit.swift in Sources */,
 				0CA649ACBFD5ADCFE7B194FB7426CEA6 /* FunSheet.swift in Sources */,
 				1F70025B1CDEDD5949BD506A32A00E7E /* FunToast.swift in Sources */,
+				49825719242B904300ABD7FB /* FunError.swift in Sources */,
 				F02D8EBA41CC524A1F8DE49B756BBAFA /* FunTool.swift in Sources */,
 				B892A0BC6E09E37618E6022F9F99FF74 /* UIViewController+Fun.swift in Sources */,
 			);
@@ -1366,8 +1372,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
