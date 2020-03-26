@@ -36,7 +36,7 @@
 		44127C4B989C9CC6A90D78B66A929A5E /* AlamofireExtended.swift in Sources */ = {isa = PBXBuildFile; fileRef = 891373D8D044B2675A1F217EA1D5BF2B /* AlamofireExtended.swift */; };
 		4665274B82A1477F9A675E58C93E5814 /* ExtendCustomBasicType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A4CC2363EFEF2ED7D73C167C6D575B /* ExtendCustomBasicType.swift */; };
 		48D97BE7D5CAED273BD2341C239CC934 /* RequestTaskMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F79795A83524F064044ACD67C0D91DE1 /* RequestTaskMap.swift */; };
-		49825719242B904300ABD7FB /* FunError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49825718242B904300ABD7FB /* FunError.swift */; };
+		4982571B242C971400ABD7FB /* FunError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4982571A242C971400ABD7FB /* FunError.swift */; };
 		49FA2C9F242B4C5100653AA2 /* FunLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FA2C9E242B4C5100653AA2 /* FunLocation.swift */; };
 		4E2B14200047E6C7E715CC9310236951 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0A70A4E3E631AA0232A6B3A1C68A93 /* Logger.swift */; };
 		521E330943F0873C4A7233989DC674DD /* EnumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1286C914577B70F2F17EBB23EC65C822 /* EnumType.swift */; };
@@ -184,7 +184,7 @@
 		446EDB85230CD516A230F388F4D36872 /* MultipartUpload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartUpload.swift; path = Source/MultipartUpload.swift; sourceTree = "<group>"; };
 		4579693F64A68B4DE000C927D0D38246 /* URLRequest+Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLRequest+Alamofire.swift"; path = "Source/URLRequest+Alamofire.swift"; sourceTree = "<group>"; };
 		49426F7C4DF76CC99AC59756645C17A7 /* FunFreedom.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = FunFreedom.modulemap; sourceTree = "<group>"; };
-		49825718242B904300ABD7FB /* FunError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunError.swift; sourceTree = "<group>"; };
+		4982571A242C971400ABD7FB /* FunError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FunError.swift; path = Source/FunError.swift; sourceTree = "<group>"; };
 		499F9E3AE5CBC2D219966AAD8878639C /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
 		49FA2C9E242B4C5100653AA2 /* FunLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FunLocation.swift; path = Source/FunLocation.swift; sourceTree = "<group>"; };
 		4FBFC88162CF8781086B9B7DDC1E4426 /* HTTPMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HTTPMethod.swift; path = Source/HTTPMethod.swift; sourceTree = "<group>"; };
@@ -557,7 +557,7 @@
 			children = (
 				88325148AE03FC69E683BA6572EEAC0A /* FunAlert.swift */,
 				85A3BC8F1A98DA2DDC157FFED480E26A /* FunCache.swift */,
-				49825718242B904300ABD7FB /* FunError.swift */,
+				4982571A242C971400ABD7FB /* FunError.swift */,
 				49FA2C9E242B4C5100653AA2 /* FunLocation.swift */,
 				CFF98B78B51928B5F39D3E3555260A47 /* FunDatePicker.swift */,
 				B9D28DE4480E7D378ABB3174EE7D4A38 /* FunDrawingBoard.swift */,
@@ -819,7 +819,7 @@
 				DA40E9F5FD982CAAEFABAEFBAF32E18E /* FunNetworkKit.swift in Sources */,
 				0CA649ACBFD5ADCFE7B194FB7426CEA6 /* FunSheet.swift in Sources */,
 				1F70025B1CDEDD5949BD506A32A00E7E /* FunToast.swift in Sources */,
-				49825719242B904300ABD7FB /* FunError.swift in Sources */,
+				4982571B242C971400ABD7FB /* FunError.swift in Sources */,
 				F02D8EBA41CC524A1F8DE49B756BBAFA /* FunTool.swift in Sources */,
 				B892A0BC6E09E37618E6022F9F99FF74 /* UIViewController+Fun.swift in Sources */,
 			);

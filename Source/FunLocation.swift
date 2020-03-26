@@ -8,7 +8,12 @@
 import Foundation
 import CoreLocation
 
-//打开Info.plist，在<dict>节点增加Privacy - Location When In Use Usage Description / Privacy - Location Always and When In Use Usage Description 值
+/*
+ 在Info.plist节点增加
+ Privacy - Location When In Use Usage Description
+ Privacy - Location Always and When In Use Usage Description
+ 提示语，根据自己的具体请求需求来
+ */
 
 public extension FunFreedom {
     class Location: NSObject {
@@ -66,10 +71,6 @@ public extension FunFreedom {
         }
         
         
-        
-        deinit {
-            debugPrint("FunLocation: die")
-        }
     }
     
     
