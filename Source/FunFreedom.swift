@@ -6,6 +6,14 @@
 //
 
 import Foundation
+public typealias FunNetworkKit = FunFreedom.NetworkKit
+public typealias FunLocation = FunFreedom.Location
+public typealias FunToast = FunFreedom.Toast
+public typealias FunSheet = FunFreedom.Sheet
+public typealias FunAlert = FunFreedom.Alert
+public typealias FunDatePicker = FunFreedom.DatePicker
+public typealias FunCache = FunFreedom.Cache
+public typealias FunDrawingBoard = FunFreedom.DrawingBoard
 open class FunFreedom {
     
     private struct Static {

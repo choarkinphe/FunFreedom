@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+
 // 缓存用的线程
 fileprivate let FunNetworkCachePathName = "com.funfreedom.funnetwork.cache"
 

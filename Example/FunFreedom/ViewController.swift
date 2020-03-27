@@ -10,7 +10,7 @@ import UIKit
 import FunFreedom
 //import HandyJSON
 import CoreLocation
-
+//typealias FunNetworkKit = FunFreedom.NetworkKit
 class ViewController: UIViewController {
     var actions = [FunFreedom.ActionSheet]()
     override func viewDidLoad() {
@@ -77,7 +77,7 @@ class ViewController: UIViewController {
     @IBAction func upload(_ sender: UIButton) {
         if let image = UIImage.init(named: "timg-2"), let imageData = image.jpegData(compressionQuality: 1) {
         
-            FunFreedom.NetworkKit.hz.urlString("http://test.xoinstein.com/upload.php").body { (formatData) in
+            FunNetworkKit.hz.urlString("http://test.xoinstein.com/upload.php").body { (formatData) in
                 //            formatData.append(UIImage.jpegData(image!), withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
                 formatData.append(imageData, withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
             }.build(.upload).progress { (progress) in
