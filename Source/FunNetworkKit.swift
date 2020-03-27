@@ -14,40 +14,76 @@ fileprivate let FunNetworkCachePathName = "com.funfreedom.funnetwork.cache"
 public typealias ResponseResult<T> = (((success: Bool, data: T?, error: Error?))->Void)
 
 public extension FunFreedom {
+    // 请求用到的所有相关信息
+    struct RequestSession {
+        // method
+        public var method: HTTPMethod = .post
+        // 请求地址
+        public var urlString: String?
+        // 请求参数
+        public var params: [String: Any]?
+        // baseURL
+        public var baseUrl: String? = FunFreedom.networkManager.baseUrl
+        // 请求头
+        public var headers: HTTPHeaders? = FunFreedom.networkManager.headers
+        // body体
+        public var formDataHandler: ((MultipartFormData)->Void)?
+//        // 储存路径
+//        public var destinationURL: URL? {
+//            didSet {
+//
+//            }
+//        }
+        fileprivate var destination = DownloadRequest.suggestedDownloadDestination(
+            for: .cachesDirectory,
+            in: .userDomainMask,
+            options: .removePreviousFile
+        )
+        // 上传&下载进度
+        public var progressHandler: ((Progress) -> Void)?
+        
+        // 请求结果
+        public var resultHandler: ResponseResult<Data>?
+        
+        // 是否开启请求的缓存（默认不开启）
+        public var isCache: Bool = false
+        // 缓存时效
+        public var cacheTimeOut: TimeInterval?
+        // 请求的响应者（请求开始的时候会关闭这个响应者的响应链，防止重复请求）
+        public var sender: UIControl?
+        // 下载恢复文件
+        public var resumeData: Data?
+        
+        // 可以自定义请求标示
+        private var _identifier: String?
+        public var identifier: String? {
+            get {
+                guard let identifier = _identifier else {
+                    
+                    guard let url = urlString else { return nil}
+                    var key = url
+                    
+                    if let header = headers, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
+                        key = key + header_string
+                    }
+                    
+                    if let params = params, let data = try? JSONSerialization.data(withJSONObject: params, options: []), let params_string = String(data: data, encoding: String.Encoding.utf8) {
+                        key = key + params_string
+                    }
+                    
+                    return key
+                    
+                }
+                
+                return identifier
+            }
+            set {
+                _identifier = newValue
+            }
+        }    
+    }
     
-    class NetworkKit {
-        // 请求用到的所有相关信息
-        public struct RequestSession {
-
-            public var method: HTTPMethod = .post
-            
-            public var urlString: String?
-            
-            public var params: [String: Any]?
-            
-            public var baseUrl: String? = FunFreedom.networkManager.baseUrl
-            // 请求头
-            public var headers: HTTPHeaders? = FunFreedom.networkManager.headers
-            // body体
-            public var formDataHandler: ((MultipartFormData)->Void)?
-            // 储存路径
-            public var destination = DownloadRequest.suggestedDownloadDestination(
-                for: .cachesDirectory,
-                in: .userDomainMask,
-                options: .removePreviousFile
-            )
-            // 上传&下载进度
-            public var progressHandler: ((Progress) -> Void)?
-            
-            // 可以自定义请求标示
-            public var identifier: String?
-            // 是否开启请求的缓存（默认不开启）
-            public var isCache: Bool = false
-            // 缓存时效
-            public var cacheTimeOut: TimeInterval?
-            // 请求的响应者（请求开始的时候会关闭这个响应者的响应链，防止重复请求）
-            public var sender: UIControl?
-        }
+    class NetworkKit {    
         
         // 创建一个请求时就会对应的创建组请求的数据
         public lazy var session = RequestSession()
@@ -157,10 +193,10 @@ public extension FunFreedom {
                     
                     // 处理结果
                     switch response.result {
-                    case let .success(response):
+                    case .success(_):
                         success(data: data)
                         
-                    case let .failure(error):
+                    case .failure(let error):
                         
                         failure(error: error)
                         
@@ -172,18 +208,18 @@ public extension FunFreedom {
             // 下载任务
             if let downloadRequest = request as? DownloadRequest {
                 downloadRequest.responseData { (response) in
-                    if let result = resultHandler {
+//                    if let result = resultHandler {
                         // 内部回调
                         switch response.result {
-                        case let .success(data):
+                        case .success(_):
                             
                             success(data: response.fileURL?.dataRepresentation)
-                        case let .failure(error):
+                        case .failure(let error):
                             
                             failure(error: error)
                         }
                         
-                    }
+//                    }
                 }
                 
             }
@@ -292,6 +328,18 @@ public extension FunFreedom.NetworkKit {
         session.sender = sender
         return self
     }
+    
+    func destinationURL(_ destinationURL: URL?) -> Self {
+        session.destination = {temporaryURL, response in
+//            weak var weakSelf = self
+//            let directoryURL = destinationURL
+            let url = destinationURL?.appendingPathComponent(response.suggestedFilename!) ?? temporaryURL
+
+            return (url, .removePreviousFile)
+        }
+        
+        return self
+    }
 }
 
 
@@ -321,6 +369,7 @@ public extension FunFreedom.NetworkKit {
 extension Session {
     static let sessionManager: Session = {
         let configuration = URLSessionConfiguration.default
+        configuration.headers = .default
         configuration.timeoutIntervalForRequest = 15
         return Session(configuration: configuration)
         

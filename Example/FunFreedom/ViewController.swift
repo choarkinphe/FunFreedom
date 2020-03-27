@@ -82,13 +82,16 @@ class ViewController: UIViewController {
 //                formatData.append(imageData, withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
 //            }.progress { (progress) in
 //                print(progress)
-//            }.upload()
+//            }.upload { (result) in
+//                print(result.data)
+//            }
             
-            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/Music/music1.mp3").method(.get).progress { (progress) in
+            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").method(.get).progress { (progress) in
                 print(progress)
-            }.download { (result) in
+            }.mutli_download({ (result) in
                 print(result.data)
-            }
+            })
+
         }
     }
     @IBAction func request(_ sender: Any) {
