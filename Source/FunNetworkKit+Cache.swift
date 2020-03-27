@@ -9,20 +9,20 @@
 import Foundation
 public extension FunFreedom.NetworkKit {
     
-    func cache_request(session: FunFreedom.RequestSession, response: Data?) {
-        FunFreedom.networkManager.request_cache.cache_request(session: session, response: response)
+    func cache_request(element: FunFreedom.NetworkKit.RequestElement, response: Data?) {
+        FunFreedom.networkManager.request_cache.cache_request(element, response: response)
     }
     
-    func remove_request(session: FunFreedom.RequestSession) {
-        FunFreedom.networkManager.request_cache.remove_request(session: session)
+    func remove_request(element: FunFreedom.NetworkKit.RequestElement) {
+        FunFreedom.networkManager.request_cache.remove_request(element)
     }
     
     func remove_request(identifier: String?) {
         FunFreedom.networkManager.request_cache.remove_request(identifier: identifier)
     }
     
-    func load_request(session: FunFreedom.RequestSession) -> Data? {
-        return FunFreedom.networkManager.request_cache.load_request(session: session)
+    func load_request(element: FunFreedom.NetworkKit.RequestElement) -> Data? {
+        return FunFreedom.networkManager.request_cache.load_request(element)
     }
     
     
@@ -30,20 +30,20 @@ public extension FunFreedom.NetworkKit {
 
 private extension FunFreedom.Cache {
     // 缓存
-    func cache_request(session: FunFreedom.RequestSession, response: Data?) {
-        guard let key_str = session.identifier else { return }
+    func cache_request(_ element: FunFreedom.NetworkKit.RequestElement, response: Data?) {
+        guard let key_str = element.identifier else { return }
         
-        cache(key: key_str, data: response, timeOut: session.cacheTimeOut)
+        cache(key: key_str, data: response, timeOut: element.cacheTimeOut)
         
-        debugPrint("cache_request=",session.urlString ?? "")
+        debugPrint("cache_request=",element.urlString ?? "")
     }
     // 按完整请求信息删除对应缓存
-    func remove_request(session: FunFreedom.RequestSession) {
-        guard let key_str = session.identifier else { return }
+    func remove_request(_ element: FunFreedom.NetworkKit.RequestElement) {
+        guard let key_str = element.identifier else { return }
         
         removeCache(key: key_str)
         
-        debugPrint("remove_request=",session.urlString ?? "")
+        debugPrint("remove_request=",element.urlString ?? "")
     }
     // 按标识符删除对应的缓存
     func remove_request(identifier: String?) {
@@ -55,12 +55,12 @@ private extension FunFreedom.Cache {
     }
     
     // 读取缓存
-    func load_request(session: FunFreedom.RequestSession) -> Data? {
-        guard let key_str = session.identifier,
+    func load_request(_ element: FunFreedom.NetworkKit.RequestElement) -> Data? {
+        guard let key_str = element.identifier,
             let cache_data = loadCache(key: key_str)
             else { return nil}
         
-        debugPrint("load_request=",session.urlString ?? "")
+        debugPrint("load_request=",element.urlString ?? "")
         
         return cache_data
     }

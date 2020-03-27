@@ -85,7 +85,7 @@ extension FunFreedom.DownloadManager: URLSessionTaskDelegate {
 
 
 public extension FunFreedom.NetworkKit {
-    
+    /*
     func mutli_download(_ completion: ResponseResult<URL>?=nil) {
         
         let sessionManager = FunFreedom.DownloadManager.default
@@ -93,18 +93,18 @@ public extension FunFreedom.NetworkKit {
         sessionManager.downloadQueue.async {
             
             
-            if let URLString = self.session.urlString {
+            if let URLString = self.element.urlString {
                 
                 do {
                     
-                    let request = try URLRequest(url: URLString, method: self.session.method, headers: self.session.headers)
+                    let request = try URLRequest(url: URLString, method: self.element.method, headers: self.element.headers)
                     
                     var task: URLSessionDownloadTask?
-                    if let resumeData = self.session.resumeData {
-                        task = sessionManager.session.downloadTask(withResumeData: resumeData)
-                    } else {
+//                    if let resumeData = self.response.resumeData {
+//                        task = sessionManager.session.downloadTask(withResumeData: resumeData)
+//                    } else {
                         task = sessionManager.session.downloadTask(with: request)
-                    }
+//                    }
                     
                     task?.resume()
                 }
@@ -123,7 +123,7 @@ public extension FunFreedom.NetworkKit {
     private func internal_response(request: DownloadRequest, resultHandler: ResponseResult<Data>?=nil) {
         
         // 请求开启关闭响应者事件
-        session.sender?.isEnabled = false
+        element.sender?.isEnabled = false
         
 //        // 开启缓存时，优先读取缓存的内容
 //        if session.isCache, let data = load_request(session: session) {
@@ -162,7 +162,7 @@ public extension FunFreedom.NetworkKit {
             }
             
             // 请求完成时打开sender事件
-            session.sender?.isEnabled = true
+            element.sender?.isEnabled = true
         }
         
         //Error handling - pop-up error message
@@ -177,11 +177,11 @@ public extension FunFreedom.NetworkKit {
                 FunFreedom.toast.message(error?.localizedDescription).showToast()
             }
             // 请求完成时打开sender事件
-            session.sender?.isEnabled = true
+            element.sender?.isEnabled = true
             
         }
-        
     }
+     */
     
     
     

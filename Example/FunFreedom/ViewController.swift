@@ -77,34 +77,35 @@ class ViewController: UIViewController {
     @IBAction func upload(_ sender: UIButton) {
         if let image = UIImage.init(named: "timg-2"), let imageData = image.jpegData(compressionQuality: 1) {
         
-//            FunFreedom.NetworkKit.hz.urlString("http://test.xoinstein.com/upload.php").body { (formatData) in
-//                //            formatData.append(UIImage.jpegData(image!), withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
-//                formatData.append(imageData, withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
-//            }.progress { (progress) in
-//                print(progress)
-//            }.upload { (result) in
-//                print(result.data)
-//            }
-            
-            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").method(.get).progress { (progress) in
+            FunFreedom.NetworkKit.hz.urlString("http://test.xoinstein.com/upload.php").body { (formatData) in
+                //            formatData.append(UIImage.jpegData(image!), withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
+                formatData.append(imageData, withName: "file", fileName: "timg-2.jpeg", mimeType: "image/jpeg")
+            }.build(.upload).progress { (progress) in
                 print(progress)
-            }.mutli_download({ (result) in
-                print(result.data)
+            }.response({ (response) in
+                print(response.data)
             })
+
+            
+//            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").method(.get).build(.download).progress { (progress) in
+//                print(progress)
+//            }.response({ (response) in
+//                print(response.fileURL)
+//            })
 
         }
     }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).request({ (result) in
-            if let data = result.data {
+        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).build(.default).response({ (response) in
+            if let data = response.data {
                 if let json = try? JSON(data: data) {
                     
                     print(json.dictionaryObject?.keys)
                 }
             }
-            
         })
+
 //            .request(BBModel.self, { (result) in
 //
 //            print(result.data)

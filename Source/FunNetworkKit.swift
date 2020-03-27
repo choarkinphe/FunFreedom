@@ -10,12 +10,116 @@ import Foundation
 import Alamofire
 // 缓存用的线程
 fileprivate let FunNetworkCachePathName = "com.funfreedom.funnetwork.cache"
-// 回调
-public typealias ResponseResult<T> = (((success: Bool, data: T?, error: Error?))->Void)
 
 public extension FunFreedom {
-    // 请求用到的所有相关信息
-    struct RequestSession {
+    
+    // 构建请求
+    class NetworkKit {
+        
+        // 创建一个请求时就会对应的创建组请求的数据
+        public lazy var element = RequestElement()
+        
+        // 请求管理器
+        private let sessionManager: Session
+        
+        public static var `default`: NetworkKit {
+            
+            let _kit = NetworkKit(sessionManager: Session.sessionManager)
+            
+            return _kit
+        }
+        
+        public init(sessionManager: Session) {
+            self.sessionManager = sessionManager
+        }
+        
+        public func build(_ type: RequestElement.RequestType) -> Responder {
+            
+            let responder = Responder(manager: self)
+            
+            if let URLString = element.urlString {
+                
+                element.requestType = type
+                
+                switch type {
+                    
+                case .default: // 创建普通请求
+                    responder.request = sessionManager.request(URLString, method: element.method, parameters: element.params, encoding: URLEncoding.default, headers: element.headers)
+                    
+                case .download: // 创建下载请求
+                    let downloadRequest = sessionManager.download(URLString, method: element.method, parameters: element.params, headers: element.headers, to: element.destination)
+                    
+                    responder.request = downloadRequest
+                    
+                case .upload: // 创建上传请求
+                    let formData = MultipartFormData(fileManager: FileManager.default)
+                    
+                    if let formDataHandler = element.formDataHandler {
+                        formDataHandler(formData)
+                    }
+                    
+                    let uploadRequest = sessionManager.upload(multipartFormData: formData, to: URLString, method: element.method, headers: element.headers)
+                    
+                    responder.request = uploadRequest
+                    
+                }
+                
+            }
+            
+            return responder
+        }
+        
+        deinit {
+            print("NetworkKit die")
+        }
+        
+    }
+    
+}
+
+// 请求&响应信息
+public extension FunFreedom.NetworkKit {
+    // 请求响应内容
+    struct RequestResponse {
+        // 上传&下载进度
+        public var progress: Progress?
+        
+        // 下载恢复文件
+        public let resumeData: Data?
+        
+        // 真实的下载请求
+        public let request: URLRequest?
+        
+        /// The server's response to the URL request.
+        public let response: HTTPURLResponse?
+        
+        // 请求结果
+        public var data: Data?
+        // 错误信息
+        public var error: Error?
+        // 下载任务的地址
+        public let fileURL: URL?
+        
+        
+        public init(request: URLRequest?,
+                    response: HTTPURLResponse?,
+                    fileURL: URL?,
+                    resumeData: Data?) {
+            self.request = request
+            self.response = response
+            self.fileURL = fileURL
+            self.resumeData = resumeData
+            
+        }
+        
+    }
+    // 请求元素
+    struct RequestElement {
+        public enum RequestType: String {
+            case `default` = "default"
+            case download = "download"
+            case upload = "upload"
+        }
         // method
         public var method: HTTPMethod = .post
         // 请求地址
@@ -28,32 +132,21 @@ public extension FunFreedom {
         public var headers: HTTPHeaders? = FunFreedom.networkManager.headers
         // body体
         public var formDataHandler: ((MultipartFormData)->Void)?
-//        // 储存路径
-//        public var destinationURL: URL? {
-//            didSet {
-//
-//            }
-//        }
+        // 储存路径
+        public var destinationURL: URL?
         fileprivate var destination = DownloadRequest.suggestedDownloadDestination(
             for: .cachesDirectory,
             in: .userDomainMask,
             options: .removePreviousFile
         )
-        // 上传&下载进度
-        public var progressHandler: ((Progress) -> Void)?
-        
-        // 请求结果
-        public var resultHandler: ResponseResult<Data>?
-        
+        // 请求类型
+        public var requestType: RequestType = .default
         // 是否开启请求的缓存（默认不开启）
         public var isCache: Bool = false
         // 缓存时效
         public var cacheTimeOut: TimeInterval?
         // 请求的响应者（请求开始的时候会关闭这个响应者的响应链，防止重复请求）
         public var sender: UIControl?
-        // 下载恢复文件
-        public var resumeData: Data?
-        
         // 可以自定义请求标示
         private var _identifier: String?
         public var identifier: String? {
@@ -80,216 +173,178 @@ public extension FunFreedom {
             set {
                 _identifier = newValue
             }
-        }    
+        }
     }
+}
+
+// 最终发出请求响应
+public extension FunFreedom.NetworkKit {
     
-    class NetworkKit {    
+    class Responder {
+        deinit {
+            print("Responder die")
+        }
+        // 请求实体
+        var request: Request?
         
-        // 创建一个请求时就会对应的创建组请求的数据
-        public lazy var session = RequestSession()
-        // 请求实例（最终的请求管理者）
-        private var sessionManager = Session.sessionManager
+        let manager: FunFreedom.NetworkKit?
         
-        public static var `default`: NetworkKit {
-            
-            let _kit = NetworkKit()
-            
-            return _kit
+        public var progressHandler: ((Progress) -> Void)?
+        
+        init(manager: FunFreedom.NetworkKit?) {
+            self.manager = manager
         }
         
-        public init() {
+        public func progress(_ a_progressHandler: ((Progress) -> Void)?) -> Self {
+            progressHandler = a_progressHandler
             
+            return self
         }
         
-        
-        // 普通请求
-        public func request(_ completion: ResponseResult<Data>?=nil) {
-
-            if let URLString = session.urlString {
-
-                let dataRequest =  sessionManager.request(URLString, method: session.method, parameters: session.params, encoding: URLEncoding.default, headers: session.headers)
-                
-                internal_response(request: dataRequest, resultHandler: completion)
-            }
-        }
-        
-        // 单上传任务
-        public func upload(_ completion: ResponseResult<Data>?=nil) {
-
-            if let URLString = session.urlString {
-                
-                let formData = MultipartFormData(fileManager: FileManager.default)
-                
-                if let formDataHandler = session.formDataHandler {
-                    formDataHandler(formData)
-                }
-                
-                let uploadRequest = sessionManager.upload(multipartFormData: formData, to: URLString, method: session.method, headers: session.headers)
-                
-                if let progressHandler = session.progressHandler {
-                    uploadRequest.uploadProgress(closure: progressHandler)
-                }
-
-                internal_response(request: uploadRequest, resultHandler: completion)
-                
-            }
-        }
-        
-        // 单下载任务
-        public func download(_ completion: ResponseResult<URL>?=nil) {
-            
-            if let URLString = session.urlString {
-                
-                let downloadRequest = sessionManager.download(URLString, method: session.method, parameters: session.params, headers: session.headers, to: session.destination)
-                
-                if let progressHandler = session.progressHandler {
-                    downloadRequest.downloadProgress(closure: progressHandler)
-                }
-                
-                internal_response(request: downloadRequest) { (result) in
-                    if let complete = completion {
-                        var filePath: URL?
-                        if let data = result.data {
-                            filePath = URL.init(dataRepresentation: data, relativeTo: nil)
-                        }
-                        complete((result.success, filePath, result.error))
-                    }
-                    
-                }
-                
-            }
-        }
-        
-        // 统一的请求结果处理
-        private func internal_response(request: Request, resultHandler: ResponseResult<Data>?=nil) {
-            
+        public func response(_ completion: ((FunFreedom.NetworkKit.RequestResponse)-> Void)?) {
+            guard let request = request, let element = manager?.element else { return }
             // 请求开启关闭响应者事件
-            session.sender?.isEnabled = false
+            element.sender?.isEnabled = false
             // 开启缓存时，优先读取缓存的内容
-            if session.isCache, let data = load_request(session: session) {
+            if element.isCache, let data = manager?.load_request(element: element) {
                 
-                if let result = resultHandler {
-                    result((true,data,nil))
+                if let result = completion {
+                    
+                    var response = FunFreedom.NetworkKit.RequestResponse(request: request.request, response: request.response, fileURL: nil, resumeData: nil)
+                    response.data = data
+                    result(response)
                 }
                 
-                session.sender?.isEnabled = true
+                element.sender?.isEnabled = true
                 // 拿到对应的缓存后直接回调，执行真正的请求
                 return
             }
             
+            
             // 普通任务（包含上传）
             if let dataRequest = request as? DataRequest {
-                
+                if let progressHandler = progressHandler {
+                    dataRequest.uploadProgress(closure: progressHandler)
+                }
                 // 开启请求任务
-                dataRequest.responseData { (response) in
-                    guard let data = response.data else {
-                        // 实际返回数据为空时，抛出异常直接退出
-                        // 内部回调
-                        if let result = resultHandler {
-                            result((false,nil,FunError.init(desc: "responseData is empty")))
+                dataRequest.responseData {[weak self] (data_response) in
+                    if let result = completion {
+                        var response = FunFreedom.NetworkKit.RequestResponse(request: request.request, response: request.response, fileURL: nil, resumeData: nil)
+                        
+                        // 处理结果
+                        switch data_response.result {
+                        case .success(_):
+                            
+                            if let data = data_response.data {
+                                response.data = data
+                                // 开启了缓存
+                                if element.isCache == true {
+                                    
+                                    self?.manager?.cache_request(element: element, response: data)
+                                }
+                            } else {
+                                response.error = FunError.init(desc: "responseData is empty")
+                            }
+                            
+                        case .failure(let error):
+                            
+                            response.error = error
+                            
+                            // 默认的错误HUD
+                            if FunFreedom.networkManager.errorHUD {
+                                FunFreedom.toast.message(error.localizedDescription).showToast()
+                            }
+                            
                         }
-                        return
+                        result(response)
                     }
                     
-                    // 处理结果
-                    switch response.result {
-                    case .success(_):
-                        success(data: data)
-                        
-                    case .failure(let error):
-                        
-                        failure(error: error)
-                        
-                    }
+                    // 请求完成时打开sender事件
+                    element.sender?.isEnabled = true
                 }
                 
             }
             
             // 下载任务
             if let downloadRequest = request as? DownloadRequest {
-                downloadRequest.responseData { (response) in
-//                    if let result = resultHandler {
+                if let progressHandler = progressHandler {
+                    downloadRequest.downloadProgress(closure: progressHandler)
+                }
+                downloadRequest.responseData { (download_response) in
+                    if let result = completion {
+                        
+                        
+                        var response = FunFreedom.NetworkKit.RequestResponse(request: request.request, response: request.response, fileURL: download_response.fileURL, resumeData: nil)
                         // 内部回调
-                        switch response.result {
+                        
+                        switch download_response.result {
                         case .success(_):
                             
-                            success(data: response.fileURL?.dataRepresentation)
+                            
+                            response.data = download_response.fileURL?.dataRepresentation
+                            
+                            
                         case .failure(let error):
                             
-                            failure(error: error)
+                            response.error = error
+                            
+                            // 默认的错误HUD
+                            if FunFreedom.networkManager.errorHUD {
+                                FunFreedom.toast.message(error.localizedDescription).showToast()
+                            }
                         }
                         
-//                    }
+                        result(response)
+                    }
+                    // 请求完成时打开sender事件
+                    element.sender?.isEnabled = true
                 }
                 
             }
             
-            // Success handling
-            func success(data : Data?) {
-                
-                // 内部回调
-                if let result = resultHandler {
-                    result((true,data,nil))
-                }
-                
-                // 开启了缓存
-                if session.isCache {
-                    
-                    cache_request(session: session, response: data)
-                }
-                // 请求完成时打开sender事件
-                session.sender?.isEnabled = true
-            }
-            
-            //Error handling - pop-up error message
-            func failure(error : Error?) {
-                
-                // 内部回调
-                if let result = resultHandler {
-                    result((false,nil,error))
-                }
-                // 默认的错误HUD
-                if FunFreedom.networkManager.errorHUD {
-                    FunFreedom.toast.message(error?.localizedDescription).showToast()
-                }
-                // 请求完成时打开sender事件
-                session.sender?.isEnabled = true
-                
-            }
-            
+        }
+    }
+}
+
+extension FunFreedom.NetworkKit {
+    
+    // 用来检测所有请求，方便处理公共事件
+    fileprivate class Monitor: EventMonitor {
+        
+        struct Static {
+            static let instance_monitor = Monitor()
+        }
+        
+        static var `default`: Monitor {
+            return Static.instance_monitor
         }
         
     }
     
 }
 
-// MARK: - 快速创建请求
+// MARK: - 快速创建请求信息
 public extension FunFreedom.NetworkKit {
-    func progress(_ progressHandler: ((Progress) -> Void)?) -> Self {
-        session.progressHandler = progressHandler
-        
-        return self
-    }
     
     func body(_ body: ((MultipartFormData) -> Void)?) -> Self {
-        session.formDataHandler = body
+        element.formDataHandler = body
         
         return self
     }
     
     func headers(_ header: HTTPHeaders?) -> Self {
-        session.headers = header
+        element.headers = header
         
         return self
     }
     
     func urlString(_ url: String?) -> Self {
-        session.urlString = url
+        element.urlString = url
         
         if let a_url = url {
             if !a_url.hasPrefix("http") {
-                if let baseURL = session.baseUrl {
-                    session.urlString = baseURL + a_url
+                if let baseURL = element.baseUrl {
+                    element.urlString = baseURL + a_url
                 }
             }
         }
@@ -299,42 +354,42 @@ public extension FunFreedom.NetworkKit {
     }
     
     func identifier(_ identifier: String?) -> Self {
-        session.identifier = identifier
+        element.identifier = identifier
         
         return self
     }
     
     func isCache(_ isCache: Bool) -> Self {
-        session.isCache = isCache
+        element.isCache = isCache
         return self
     }
     
     func cacheTimeOut(_ cacheTimeOut: TimeInterval) -> Self {
-        session.cacheTimeOut = cacheTimeOut
+        element.cacheTimeOut = cacheTimeOut
         return self
     }
     
     func params(_ params: [String: Any]?) -> Self {
-        session.params = params
+        element.params = params
         return self
     }
     
     func method(_ method: HTTPMethod) -> Self {
-        session.method = method
+        element.method = method
         return self
     }
     
     func sender(_ sender: UIControl?) -> Self {
-        session.sender = sender
+        element.sender = sender
         return self
     }
     
     func destinationURL(_ destinationURL: URL?) -> Self {
-        session.destination = {temporaryURL, response in
-//            weak var weakSelf = self
-//            let directoryURL = destinationURL
+        element.destinationURL = destinationURL
+        element.destination = { temporaryURL, response in
+            
             let url = destinationURL?.appendingPathComponent(response.suggestedFilename!) ?? temporaryURL
-
+            
             return (url, .removePreviousFile)
         }
         
@@ -371,7 +426,7 @@ extension Session {
         let configuration = URLSessionConfiguration.default
         configuration.headers = .default
         configuration.timeoutIntervalForRequest = 15
-        return Session(configuration: configuration)
+        return Session(configuration: configuration, eventMonitors: [FunFreedom.NetworkKit.Monitor.default])
         
     }()
 }

@@ -106,7 +106,7 @@ extension FunFreedom.NetworkKit {
 //    }
     
     static var hz: FunFreedom.NetworkKit {
-        let a = FunFreedom.NetworkKit()
+        let a = FunFreedom.NetworkKit.default
 //        a.delegate = a
         return a
     }
@@ -197,26 +197,26 @@ extension FunFreedom.NetworkKit {
 public extension FunFreedom.NetworkKit {
     
 
-    func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
-        
-        request { (result) in
-            
-            var model = T()
-            
-            if let data = result.data {
-                if let message = String(data: data, encoding: .utf8) {
-                    model.message = message
-                }
-                if let a_model = T.deserialize(from: String(data: data, encoding: .utf8)) {
-                    model = a_model
-                }
-            }
-            
-            model.success = result.success
-            
-            completion(model)
-        }
-    }
+//    func request_completion<T>(_ type: T.Type?, _ completion: @escaping ((T)->Void)) where T : ResponseDecodable {
+//        
+//        request { (result) in
+//            
+//            var model = T()
+//            
+//            if let data = result.data {
+//                if let message = String(data: data, encoding: .utf8) {
+//                    model.message = message
+//                }
+//                if let a_model = T.deserialize(from: String(data: data, encoding: .utf8)) {
+//                    model = a_model
+//                }
+//            }
+//            
+//            model.success = result.success
+//            
+//            completion(model)
+//        }
+//    }
     
 
     
