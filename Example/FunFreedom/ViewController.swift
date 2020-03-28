@@ -74,6 +74,20 @@ class ViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         FunFreedom.toast.dismiss()
     }
+    @IBAction func download(_ sender: UIButton) {
+        guard let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else { return }
+        FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").destinationURL(URL(fileURLWithPath: path)).method(.get).downloadResponder?.progressHandler({ (progress) in
+            print(progress)
+        }).response({
+
+        })
+        
+//        FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").method(.get).build(.download).progress { (progress) in
+//            print(progress)
+//        }.response { (response) in
+//            print(response.fileURL)
+//        }
+    }
     @IBAction func upload(_ sender: UIButton) {
         if let image = UIImage.init(named: "timg-2"), let imageData = image.jpegData(compressionQuality: 1) {
         
@@ -87,11 +101,7 @@ class ViewController: UIViewController {
             })
 
             
-//            FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").method(.get).build(.download).progress { (progress) in
-//                print(progress)
-//            }.response({ (response) in
-//                print(response.fileURL)
-//            })
+
 
         }
     }

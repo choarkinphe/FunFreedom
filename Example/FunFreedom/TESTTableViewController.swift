@@ -7,7 +7,52 @@
 //
 
 import UIKit
+import FunFreedom
 
+extension UIColor {
+    
+    static var random: UIColor {
+        return UIColor.init(red: CGFloat(arc4random_uniform(255)) / 255.0, green: CGFloat(arc4random_uniform(255)) / 255.0, blue: CGFloat(arc4random_uniform(255)) / 255.0, alpha: 1)
+    }
+    
+    func alpha(_ alpha: CGFloat) -> Self {
+        
+        withAlphaComponent(alpha)
+        
+        return self
+    }
+    
+    convenience init(r: Int, g: Int, b: Int, a: CGFloat? = nil) {
+        
+        self.init(red: CGFloat(r) / 255.0, green: CGFloat(g) / 255.0, blue: CGFloat(b) / 255.0, alpha: a ?? 1)
+
+    }
+    
+}
+
+extension UITableView {
+    func dequeueCell<T>(_ type: T.Type, reuseIdentifier: String) -> T where T: UITableViewCell {
+        
+        guard let cell = dequeueReusableCell(withIdentifier: reuseIdentifier) else {
+            
+            return T.init(style: .default, reuseIdentifier: reuseIdentifier)
+            
+        }
+        
+        return cell as! T
+    }
+    
+    func dequeueHeaderFooterView<T>(_ type: T.Type, reuseIdentifier: String) -> T where T: UITableViewHeaderFooterView {
+        
+        guard let headerFooterView = dequeueReusableHeaderFooterView(withIdentifier: reuseIdentifier) else {
+            
+            return T.init(reuseIdentifier: reuseIdentifier)
+            
+        }
+        
+        return headerFooterView as! T
+    }
+}
 class TESTTableViewController: UITableViewController {
 
     override func viewDidLoad() {
@@ -18,29 +63,35 @@ class TESTTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if section == 0 {
+            return FunFreedom.DownloadManager.default.downloadTasks.count
+        }
+        return FunFreedom.DownloadManager.default.waitTasks.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
+        let cell = tableView.dequeueCell(DownloadCell.self, reuseIdentifier: "download_cell")
+        
+//        cell.textLabel?.text =
+        cell.backgroundColor = UIColor.random
         // Configure the cell...
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -87,4 +138,8 @@ class TESTTableViewController: UITableViewController {
     }
     */
 
+    class DownloadCell: UITableViewCell {
+        
+    }
 }
+

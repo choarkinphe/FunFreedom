@@ -6,6 +6,8 @@ target 'FunFreedom_Example' do
   pod 'FunFreedom', :path => '../'
 #  pod 'Alamofire', '~>5.0.5'
   pod 'HandyJSON'
+  pod 'Hue'
+  
   target 'FunFreedom_Tests' do
     inherit! :search_paths
 

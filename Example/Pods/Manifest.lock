@@ -1,17 +1,20 @@
 PODS:
   - Alamofire (5.0.5)
-  - FunFreedom (1.7.0):
+  - FunFreedom (1.8.0):
     - Alamofire (~> 5.0.5)
   - HandyJSON (5.0.1)
+  - Hue (5.0.0)
 
 DEPENDENCIES:
   - FunFreedom (from `../`)
   - HandyJSON
+  - Hue
 
 SPEC REPOS:
   trunk:
     - Alamofire
     - HandyJSON
+    - Hue
 
 EXTERNAL SOURCES:
   FunFreedom:
@@ -19,9 +22,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
-  FunFreedom: d7b14b4924a527c94e6c8172318b151c39703a2a
+  FunFreedom: 951a2e3e0e2b3277ba3704d3a7cc4b582008ba6e
   HandyJSON: d45b8415c501e3affc59ca9762c1197ff0feb646
+  Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
 
-PODFILE CHECKSUM: d1e2c6e145046f02cf005540a38074ffc1ce4513
+PODFILE CHECKSUM: 331bb926b94d3ad367dc8feb44ac5e2a8f68426a
 
 COCOAPODS: 1.9.0

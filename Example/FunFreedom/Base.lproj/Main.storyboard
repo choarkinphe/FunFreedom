@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tKD-Ck-Wkb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tKD-Ck-Wkb">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,13 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpT-Vi-dTY">
-                                <rect key="frame" x="161" y="342" width="53" height="30"/>
-                                <state key="normal" title="request"/>
-                                <connections>
-                                    <action selector="request:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yjb-6Y-c1d"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zef-UB-NqP">
                                 <rect key="frame" x="276" y="544" width="39" height="30"/>
                                 <state key="normal" title="sheet"/>
@@ -34,29 +27,48 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ld-c5-XiR">
-                                <rect key="frame" x="239" y="194" width="32" height="30"/>
+                                <rect key="frame" x="171" y="236" width="32" height="30"/>
                                 <state key="normal" title="Next"/>
                                 <connections>
                                     <action selector="nextAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="lZN-ob-WKE"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2K-Vt-kaY">
-                                <rect key="frame" x="164" y="397" width="47" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2K-Vt-kaY">
+                                <rect key="frame" x="295" y="146" width="47" height="30"/>
                                 <state key="normal" title="upload"/>
                                 <connections>
                                     <action selector="upload:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="xXp-H5-Rvl"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H9f-iB-ivN">
+                                <rect key="frame" x="10" y="146" width="67" height="30"/>
+                                <state key="normal" title="download"/>
+                                <connections>
+                                    <action selector="download:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="z9y-ar-0wg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpT-Vi-dTY">
+                                <rect key="frame" x="10" y="544" width="53" height="30"/>
+                                <state key="normal" title="request"/>
+                                <connections>
+                                    <action selector="request:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yjb-6Y-c1d"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="NpT-Vi-dTY" secondAttribute="bottom" constant="246" id="18x-tk-JkS"/>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="NpT-Vi-dTY" secondAttribute="bottom" constant="44" id="18x-tk-JkS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Zef-UB-NqP" secondAttribute="trailing" constant="44" id="7hY-tA-udl"/>
+                            <constraint firstItem="g2K-Vt-kaY" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="H9f-iB-ivN" secondAttribute="trailing" constant="8" symbolic="YES" id="NsN-S7-ddD"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="Zef-UB-NqP" secondAttribute="bottom" constant="44" id="Q3A-gp-aeY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2Ld-c5-XiR" secondAttribute="trailing" constant="88" id="Q7D-mg-kjh"/>
-                            <constraint firstItem="NpT-Vi-dTY" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="aG6-lw-78m"/>
-                            <constraint firstItem="2Ld-c5-XiR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="150" id="gXb-bN-kMr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Ld-c5-XiR" secondAttribute="trailing" constant="156" id="Q7D-mg-kjh"/>
+                            <constraint firstItem="g2K-Vt-kaY" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="102" id="XcB-a9-VLK"/>
+                            <constraint firstItem="NpT-Vi-dTY" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" constant="-151" id="aG6-lw-78m"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="g2K-Vt-kaY" secondAttribute="trailing" constant="17" id="g0Z-G6-jVE"/>
+                            <constraint firstItem="2Ld-c5-XiR" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="192" id="gXb-bN-kMr"/>
+                            <constraint firstItem="H9f-iB-ivN" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="-6" id="kVB-ds-gRN"/>
+                            <constraint firstItem="2Ld-c5-XiR" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="qls-Nd-auv"/>
+                            <constraint firstItem="g2K-Vt-kaY" firstAttribute="baseline" secondItem="H9f-iB-ivN" secondAttribute="baseline" id="ur9-Xy-1Qm"/>
                             <constraint firstItem="Zef-UB-NqP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="za7-rX-JPy"/>
                         </constraints>
                     </view>

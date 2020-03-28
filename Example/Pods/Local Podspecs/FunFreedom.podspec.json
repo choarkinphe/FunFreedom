@@ -1,6 +1,6 @@
 {
   "name": "FunFreedom",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "summary": "FunFreedom is a develop tool",
   "swift_versions": "5.0",
   "description": "TODO: Add long description of the pod here.",
@@ -14,7 +14,7 @@
   },
   "source": {
     "git": "https://github.com/choarkinphe/FunFreedom.git",
-    "tag": "1.7.0"
+    "tag": "1.8.0"
   },
   "platforms": {
     "ios": "10.0"

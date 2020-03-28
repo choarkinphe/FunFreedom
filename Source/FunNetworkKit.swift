@@ -175,6 +175,22 @@ public extension FunFreedom.NetworkKit {
                 _identifier = newValue
             }
         }
+        
+        public var request: URLRequest? {
+            if let URLString = urlString {
+                do {
+                    
+                    let request = try URLRequest(url: URLString, method: method, headers: headers)
+                    
+                    return request
+                }
+                catch {
+                    debugPrint(error)
+                }
+            }
+            
+            return nil
+        }
     }
 }
 
