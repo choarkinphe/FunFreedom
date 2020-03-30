@@ -65,20 +65,34 @@ class TESTTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+    }
 
     // MARK: - Table view data source
-
+    private var downloadList = [String]()
+    private var waitList = [String]()
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        if let downloadTasks = FunFreedom.DownloadManager.default.downloadTasks,
+           let waitTasks = FunFreedom.DownloadManager.default.waitTasks
+        {
+            downloadList = Array(downloadTasks.keys)
+            waitList = Array(waitTasks.keys)
+        }
+        
         return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if section == 0 {
-            return FunFreedom.DownloadManager.default.downloadTasks.count
+            return downloadList.count
         }
-        return FunFreedom.DownloadManager.default.waitTasks.count
+        return waitList.count
     }
 
     
@@ -86,8 +100,27 @@ class TESTTableViewController: UITableViewController {
         let cell = tableView.dequeueCell(DownloadCell.self, reuseIdentifier: "download_cell")
         
 //        cell.textLabel?.text =
-        cell.backgroundColor = UIColor.random
+//        cell.backgroundColor = UIColor.random
         // Configure the cell...
+        if indexPath.section == 0 {
+            if let responder = FunFreedom.DownloadManager.default.downloadTasks?[downloadList[indexPath.row]] {
+            
+                if let fileName = responder.fileName {
+                    cell.textLabel?.text = fileName
+                    
+                    responder.progress { (progress) in
+                        cell.textLabel?.text = String(format: "%@: %.2f%%", fileName, progress.fractionCompleted * 100)
+                    }
+                }
+//                    .progressHandler({ (progress) in
+//
+//                })
+            }
+        } else {
+//            if let responder = FunFreedom.DownloadManager.default.downloadTasks?[waitList[indexPath.row]] {
+//            
+//            }
+        }
 
         return cell
     }

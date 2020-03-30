@@ -229,8 +229,9 @@ public extension FunFreedom {
     
 }
 
-extension String {
-    var md5:String {
+public extension String {
+    var md5: String {
+        
         let utf8 = cString(using: .utf8)
         var digest = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
         CC_MD5(utf8, CC_LONG(utf8!.count - 1), &digest)
@@ -238,4 +239,40 @@ extension String {
             
         }
     }
+}
+
+public extension Data {
+    
+    var hexString: String {
+        var t = ""
+        let ts = [UInt8](self)
+        for one in ts {
+            t.append(String.init(format: "%02x", one))
+        }
+        return t
+    }
+
+}
+
+public extension URLRequest {
+    // 拼接默认的request标识
+    var identifier: String? {
+        
+        guard let urlString = url?.absoluteString else { return nil}
+        
+        var key = urlString.md5
+        
+//        if let header = allHTTPHeaderFields, header.count > 0, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
+//            key = key + header_string
+//        }
+        
+        if let params_string = httpBody?.hexString.md5 {
+            key = key + params_string
+        }
+        
+        return key.md5
+        
+    }
+    
+    
 }

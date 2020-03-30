@@ -78,7 +78,7 @@ class ViewController: UIViewController {
         guard let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else { return }
         FunFreedom.NetworkKit.hz.urlString("http://192.168.1.17/files/PollChief_alameda_Token.zip").destinationURL(URL(fileURLWithPath: path)).method(.get).downloadResponder?.progressHandler({ (progress) in
             print(progress)
-        }).response({
+        }).response({ (fileUrl, error) in
 
         })
         
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
     }
     @IBAction func request(_ sender: Any) {
         
-        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").isCache(true).cacheTimeOut(30).build(.default).response({ (response) in
+        FunFreedom.NetworkKit.hz.urlString("t/service/cms/getTeachHomePage").params(["test":"test"]).isCache(true).cacheTimeOut(30).build(.default).response({ (response) in
             if let data = response.data {
                 if let json = try? JSON(data: data) {
                     

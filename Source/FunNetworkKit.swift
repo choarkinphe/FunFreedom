@@ -45,12 +45,14 @@ public extension FunFreedom {
                 switch type {
                     
                 case .default: // 创建普通请求
-                    responder.request = sessionManager.request(URLString, method: element.method, parameters: element.params, encoding: URLEncoding.default, headers: element.headers)
+                    let dataRequest = sessionManager.request(URLString, method: element.method, parameters: element.params, encoding: URLEncoding.default, headers: element.headers)
+                    element.request = try? dataRequest.convertible.asURLRequest()
+                    responder.request = dataRequest
                     
                 case .download: // 创建下载请求
                     let downloadRequest = sessionManager.download(URLString, method: element.method, parameters: element.params, headers: element.headers, to: element.destination)
-                    
-                    responder.request = downloadRequest
+                    element.request = try? downloadRequest.request
+//                    responder.request = downloadRequest.DownloadRequest.Downloadable.downloadable.request.asURLRequest()
                     
                 case .upload: // 创建上传请求
                     let formData = MultipartFormData(fileManager: FileManager.default)
@@ -60,12 +62,14 @@ public extension FunFreedom {
                     }
                     
                     let uploadRequest = sessionManager.upload(multipartFormData: formData, to: URLString, method: element.method, headers: element.headers)
-                    
+                    element.request = try? uploadRequest.convertible.asURLRequest()
                     responder.request = uploadRequest
                     
                 }
                 
             }
+            
+//            element.request = responder.request?.request
             
             return responder
         }
@@ -153,20 +157,8 @@ public extension FunFreedom.NetworkKit {
         public var identifier: String? {
             get {
                 guard let identifier = _identifier else {
-                    
-                    guard let url = urlString else { return nil}
-                    var key = url
-                    
-                    if let header = headers, let data = try? JSONSerialization.data(withJSONObject: header, options: []), let header_string = String(data: data, encoding: String.Encoding.utf8) {
-                        key = key + header_string
-                    }
-                    
-                    if let params = params, let data = try? JSONSerialization.data(withJSONObject: params, options: []), let params_string = String(data: data, encoding: String.Encoding.utf8) {
-                        key = key + params_string
-                    }
-                    
-                    return key
-                    
+
+                    return request?.identifier
                 }
                 
                 return identifier
@@ -176,21 +168,7 @@ public extension FunFreedom.NetworkKit {
             }
         }
         
-        public var request: URLRequest? {
-            if let URLString = urlString {
-                do {
-                    
-                    let request = try URLRequest(url: URLString, method: method, headers: headers)
-                    
-                    return request
-                }
-                catch {
-                    debugPrint(error)
-                }
-            }
-            
-            return nil
-        }
+        public var request: URLRequest?
     }
 }
 
@@ -220,6 +198,7 @@ public extension FunFreedom.NetworkKit {
         
         public func response(_ completion: ((FunFreedom.NetworkKit.RequestResponse)-> Void)?) {
             guard let request = request, let element = manager?.element else { return }
+            
             // 请求开启关闭响应者事件
             element.sender?.isEnabled = false
             // 开启缓存时，优先读取缓存的内容
