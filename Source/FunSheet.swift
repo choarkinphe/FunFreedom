@@ -486,7 +486,7 @@ public extension FunFreedom.Sheet {
         public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell: ActionCell = tableView.dequeueReusableCell(withIdentifier: ActionCell.reuseID) as! ActionCell
             if let action = actions?[indexPath.row] {
-                
+                action.index = indexPath.row
                 cell.title = action.title
                 
                 if config.selectType == .multi {
@@ -511,7 +511,7 @@ public extension FunFreedom.Sheet {
             if config.selectType == .single {
                 if let action = actions?[indexPath.row] {
                     
-                    action.index = indexPath.row
+                    
                     
                     if let actionHandler = handler {
                         
@@ -524,6 +524,7 @@ public extension FunFreedom.Sheet {
             } else if config.selectType == .multi {
                 
                 if let action = actions?[indexPath.row] {
+                    
                     if action.isSelected {
                         action.isSelected = false
                     } else {

@@ -57,8 +57,8 @@ public extension FunFreedom {
         }
         
         private lazy var timer: Timer = {
-            // 开启一个周期为1s的计时器
-            let timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(checkTask(timer:)), userInfo: nil, repeats: true)
+            // 开启一个周期为5分钟的计时器（没5分钟主动监测一次任务状态）
+            let timer = Timer.scheduledTimer(timeInterval: 300, target: self, selector: #selector(checkTask(timer:)), userInfo: nil, repeats: true)
             RunLoop.current.add(timer, forMode: .default)
             
             return timer
@@ -89,18 +89,16 @@ public extension FunFreedom {
             return allTasks[State.finish.rawValue]
         }
         // 所有任务
-        fileprivate lazy var allTasks: [String: [String: FunFreedom.DownloadManager.Responder]] = {
-            var allTasks = [String: [String: FunFreedom.DownloadManager.Responder]]()
-            
-            allTasks[State.wait.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
-            allTasks[State.download.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
-            allTasks[State.finish.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
-            
-            return allTasks
-        }()
+        fileprivate var allTasks: [String: [String: FunFreedom.DownloadManager.Responder]] {
+            didSet {
+                // 总任务列表发生变更时，检查任务状态
+                checkTask(timer: nil)
+            }
+        }
         
+        // 构造方法
         public override init() {
-            
+            // 创建默认的缓存工具
             self.cacheManager = FunCache(path: localResponderPath)
             // 缓存有效期为1000天(伪装长期有效)
             self.cacheManager.cacheTimeOut = 86400000
@@ -113,20 +111,25 @@ public extension FunFreedom {
                 self.taskMap = [String]()
             }
             
+            // 初始化任务列表
+            self.allTasks = [String: [String: FunFreedom.DownloadManager.Responder]]()
+            self.allTasks[State.wait.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
+            self.allTasks[State.download.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
+            self.allTasks[State.finish.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
+            
             super.init()
             // 获取到所有下载记录的标示后，初始化所有任务列表
             let decoder = JSONDecoder()
             self.taskMap.forEach { (identifier) in
                 if let data = self.cacheManager.loadCache(key: identifier),
                     let responder = try? decoder.decode(Responder.self, from: data) {
-                    
+                    // 读取磁盘存储的任务信息
                     self.allTasks[responder.state.rawValue]?[identifier] = responder
                 }
             }
             
             
             // 启动时先获取所有任务
-            
             self.session.getAllTasks { (tasks) in
                 tasks.forEach { (task) in
                     // 暂存异常任务，后续处理
@@ -142,7 +145,7 @@ public extension FunFreedom {
                 }
             }
             
-            // 初始化完成后先启动计时器
+            // 初始化完成后先启动计时器（主动执行第一次的任务检测）
             timer.fire()
             
         }
@@ -167,18 +170,9 @@ public extension FunFreedom {
         }
         
         // 检查本地有没有这个任务
-        public func containsTask(_ downloadTask: URLSessionDownloadTask?) -> Bool {
-            guard let identifier = downloadTask?.currentRequest?.identifier else { return false }
+        private func containsTask(_ downloadTask: URLSessionDownloadTask?) -> Bool {
             
-            if let task = downloadTasks?[identifier]?.downloadTask, task == downloadTask {
-                return true
-            }
-            
-            if let task = waitTasks?[identifier]?.downloadTask, task == downloadTask {
-                return true
-            }
-            
-            if let task = finishedTasks?[identifier]?.downloadTask, task == downloadTask {
+            if let task = getTask(identifier: downloadTask?.currentRequest?.identifier)?.downloadTask, task == downloadTask {
                 return true
             }
             
@@ -241,45 +235,48 @@ public extension FunFreedom {
         fileprivate func updateTask(resnponder: Responder, state: State? = nil) {
             guard let identifier = resnponder.request?.identifier else { return }
             
-            if !taskMap.contains(identifier) {
-                taskMap.append(identifier)
-            }
-            
-            let new_state = state ?? resnponder.state
-            
-            let new_responder = allTasks[resnponder.state.rawValue]?.removeValue(forKey: identifier) ?? resnponder
-            
-            new_responder.state = new_state
-            
-            // 获取真实的Data
-            let encoder = JSONEncoder()
-            
-            do {
-                let cacheData = try encoder.encode(new_responder)
-                // 先更新到新的任务表
-                allTasks[new_state.rawValue]?[identifier] = new_responder
-                // 存储
-                cacheManager.cache(key: identifier, data: cacheData)
+            rootQueue.async {
                 
-                if let state = state, let stateChanged = new_responder.stateChanged {
-                    DispatchQueue.main.async {
-                        stateChanged(state)
-                    }
+                
+                if !self.taskMap.contains(identifier) {
+                    self.taskMap.append(identifier)
                 }
                 
-            } catch let error {
-                debugPrint("FunDownloadManager: \(error.localizedDescription)")
+                let new_state = state ?? resnponder.state
+                
+                let new_responder = self.allTasks[resnponder.state.rawValue]?.removeValue(forKey: identifier) ?? resnponder
+                
+                new_responder.state = new_state
+                
+                // 获取真实的Data
+                let encoder = JSONEncoder()
+                
+                do {
+                    let cacheData = try encoder.encode(new_responder)
+                    // 先更新到新的任务表
+                    self.allTasks[new_state.rawValue]?[identifier] = new_responder
+                    // 存储
+                    self.cacheManager.cache(key: identifier, data: cacheData)
+                    
+                    if let state = state, let stateChanged = new_responder.stateChanged {
+                        DispatchQueue.main.async {
+                            stateChanged(state)
+                        }
+                    }
+                    
+                } catch let error {
+                    debugPrint("FunDownloadManager: \(error.localizedDescription)")
+                }
             }
         }
         
-        
-        
-        // 轮循检查任务状态
-        @objc func checkTask(timer: Timer) {
+        /// 轮循检查任务状态
+        /// - Parameter timer: 计时器（这个方法可能会由计时器唤起，用于处理异常任务）
+        @objc private  func checkTask(timer: Timer?) {
             
             if (waitTasks?.count ?? 0) + (downloadTasks?.count ?? 0) == 0 {
                 // 任务归零时暂停计时器
-                timer.fireDate = Date.distantFuture
+                timer?.fireDate = Date.distantFuture
             }
             
             rootQueue.async {
