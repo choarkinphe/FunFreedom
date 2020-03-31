@@ -73,28 +73,46 @@ class TESTTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-    private var downloadList = [String]()
-    private var waitList = [String]()
+    private var list = [[String]]()
+//    private var waitList = [String]()
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         if let downloadTasks = FunFreedom.DownloadManager.default.downloadTasks,
-           let waitTasks = FunFreedom.DownloadManager.default.waitTasks
+           let waitTasks = FunFreedom.DownloadManager.default.waitTasks,
+           let finishTasks = FunFreedom.DownloadManager.default.finishedTasks
         {
-            downloadList = Array(downloadTasks.keys)
-            waitList = Array(waitTasks.keys)
+            list = [Array(downloadTasks.keys)]
+//            list = [Array(downloadTasks.keys)]
+//            waitList = Array(waitTasks.keys)
+            list.append(Array(waitTasks.keys))
+            list.append(Array(finishTasks.keys))
         }
         
-        return 2
+        return list.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if section == 0 {
-            return downloadList.count
-        }
-        return waitList.count
+        
+        return list[section].count
     }
 
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = tableView.dequeueHeaderFooterView(UITableViewHeaderFooterView.self, reuseIdentifier: "Header")
+        switch section {
+        case 0:
+            header.textLabel?.text = "下载中"
+            case 1:
+            header.textLabel?.text = "等待中"
+            case 2:
+            header.textLabel?.text = "已完成"
+        default:
+            break
+        }
+        
+        
+        return header
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueCell(DownloadCell.self, reuseIdentifier: "download_cell")
@@ -102,27 +120,46 @@ class TESTTableViewController: UITableViewController {
 //        cell.textLabel?.text =
 //        cell.backgroundColor = UIColor.random
         // Configure the cell...
-        if indexPath.section == 0 {
-            if let responder = FunFreedom.DownloadManager.default.downloadTasks?[downloadList[indexPath.row]] {
-            
-                if let fileName = responder.fileName {
-                    cell.textLabel?.text = fileName
+//        if indexPath.section == 0 {
+        if let responder = FunFreedom.DownloadManager.default.getTask(identifier: list[indexPath.section][indexPath.row]) {
+            cell.textLabel?.text = responder.fileName ?? "等待中..."
                     
                     responder.progress { (progress) in
+                        if let fileName = responder.fileName {
+                            cell.textLabel?.text = fileName
                         cell.textLabel?.text = String(format: "%@: %.2f%%", fileName, progress.fractionCompleted * 100)
                     }
                 }
 //                    .progressHandler({ (progress) in
 //
 //                })
-            }
-        } else {
-//            if let responder = FunFreedom.DownloadManager.default.downloadTasks?[waitList[indexPath.row]] {
-//            
+            
+//            responder.complete { (url, error) in
+//                self.tableView.reloadData()
 //            }
-        }
+            
+            responder.stateChanged { (state) in
+                self.tableView.reloadData()
+            }
+            }
+//        } else {
+//            if let responder = FunFreedom.DownloadManager.default.downloadTasks?[waitList[indexPath.row]] {
+//
+//            }
+//        }
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let responder = FunFreedom.DownloadManager.default.getTask(identifier: list[indexPath.section][indexPath.row]) {
+            if let request = responder.request {
+                
+                FunFreedom.DownloadManager.default.buildResponder(request: request)?.response(nil)
+            }
+            
+            
+        }
     }
     
 

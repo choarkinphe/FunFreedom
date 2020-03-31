@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         //
         //            print(model)
         //        }
-        
+        FunFreedom.DownloadManager.default.maxDownloadCount = 3
 //        FunFreedom.alert
 //            .message(message: "message")
 //            .title(title: "title")
@@ -40,12 +40,15 @@ class ViewController: UIViewController {
     
     @IBAction func sheet(_ sender: Any) {
         
-//        FunFreedom.sheet.addActions(titles: ["A","B","C","E","F","G"]).resultActions(actions).selectType(.multi).multiHandler({ (actions) in
-//            self.actions = actions
-//        }).present()
+        FunFreedom.sheet.addActions(titles: ["Music1","Music2","Music3","Music3","Music4","Music5","Music6","Music7"]).resultActions(actions).selectType(.single).handler({ (action) in
+            let url = "http://192.168.1.17/files/Music/music\(action.index).mp3"
+            guard let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else { return }
+            FunFreedom.netwokKit.urlString(url).destinationURL(URL(fileURLWithPath: path)).method(.get).downloadResponder?.response(nil)
+            
+        }).present()
         
 //        FunFreedom.datePicker.present()
-        FunFreedom.toast.message("Loading").showActivity()
+//        FunFreedom.toast.message("Loading").showActivity()
         
     }
     

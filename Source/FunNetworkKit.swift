@@ -45,14 +45,11 @@ public extension FunFreedom {
                 switch type {
                     
                 case .default: // 创建普通请求
-                    let dataRequest = sessionManager.request(URLString, method: element.method, parameters: element.params, encoding: URLEncoding.default, headers: element.headers)
-                    element.request = try? dataRequest.convertible.asURLRequest()
-                    responder.request = dataRequest
+
+                    responder.request = sessionManager.request(URLString, method: element.method, parameters: element.params, encoding: URLEncoding.default, headers: element.headers)
                     
                 case .download: // 创建下载请求
-                    let downloadRequest = sessionManager.download(URLString, method: element.method, parameters: element.params, headers: element.headers, to: element.destination)
-                    element.request = try? downloadRequest.request
-//                    responder.request = downloadRequest.DownloadRequest.Downloadable.downloadable.request.asURLRequest()
+                    responder.request = sessionManager.download(URLString, method: element.method, parameters: element.params, headers: element.headers, to: element.destination)
                     
                 case .upload: // 创建上传请求
                     let formData = MultipartFormData(fileManager: FileManager.default)
@@ -61,15 +58,11 @@ public extension FunFreedom {
                         formDataHandler(formData)
                     }
                     
-                    let uploadRequest = sessionManager.upload(multipartFormData: formData, to: URLString, method: element.method, headers: element.headers)
-                    element.request = try? uploadRequest.convertible.asURLRequest()
-                    responder.request = uploadRequest
+                    responder.request = sessionManager.upload(multipartFormData: formData, to: URLString, method: element.method, headers: element.headers)
                     
                 }
                 
             }
-            
-//            element.request = responder.request?.request
             
             return responder
         }
@@ -168,7 +161,16 @@ public extension FunFreedom.NetworkKit {
             }
         }
         
-        public var request: URLRequest?
+        public var request: URLRequest? {
+            if let URLString = urlString {
+                let dataRequest = Session.sessionManager.request(URLString, method: method, parameters: params, encoding: URLEncoding.default, headers: headers)
+                
+                return try? dataRequest.convertible.asURLRequest()
+            }
+            
+            return nil
+            
+        }
     }
 }
 
