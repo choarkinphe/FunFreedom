@@ -9,6 +9,7 @@ import Foundation
 
 public extension UIApplication {
     
+    // 获取当前的window
     var currentWindow: UIWindow? {
         
         if let window = UIApplication.shared.keyWindow {
@@ -38,9 +39,10 @@ public extension UIApplication {
 }
 
 public extension FunFreedom {
-    
+
     class PublicTool {
         
+        // 获取当前控制器
         public static var frontController: UIViewController {
             
             let rootViewController = UIApplication.shared.currentWindow?.rootViewController
@@ -90,6 +92,8 @@ public extension FunFreedom {
     
     struct Device {
         
+        public var screenSize: CGSize
+        
         public var iPhoneXSeries: Bool = false
         
         public init() {
@@ -108,76 +112,93 @@ public extension FunFreedom {
                 }
                 
             }
+            
+            screenSize = UIScreen.main.bounds.size
         }
 
     }
 }
 
 //MARK: - findCurrentController
-fileprivate extension NSObject {
-    
-    class func currentViewController() -> UIViewController {
-        
-//        let rootViewController = UIApplication.shared.currentWindow?.rootViewController
-        
-//        return findFrontViewController(currnetVC: rootViewController!)
+public extension NSObject {
+    // 当前显示的控制器
+    class var frontController: UIViewController {
         return FunFreedom.PublicTool.frontController
     }
-    /*
-    private class func findFrontViewController(currnetVC : UIViewController) -> UIViewController {
-        
-        if currnetVC.presentedViewController != nil {
-            
-            return findFrontViewController(currnetVC: currnetVC.presentedViewController!)
-            
-        } else if currnetVC.isKind(of:UISplitViewController.self) {
-            
-            let svc = currnetVC as! UISplitViewController
-            
-            if svc.viewControllers.count > 0 {
-                
-                return findFrontViewController(currnetVC: svc.viewControllers.last!)
-                
-            }
-            
-        } else if currnetVC.isKind(of: UINavigationController.self) {
-            
-            let nvc = currnetVC as! UINavigationController
-            
-            if nvc.viewControllers.count > 0 {
-                
-                return findFrontViewController(currnetVC: nvc.topViewController!)
-                
-            }
-            
-        } else if currnetVC.isKind(of: UITabBarController.self) {
-            
-            let tvc = currnetVC as! UITabBarController
-            
-            if (tvc.viewControllers?.count)! > 0 {
-                
-                return findFrontViewController(currnetVC: tvc.selectedViewController!)
-                
-            }
-            
-        } else if currnetVC.children.count > 0 {
-            
-            for childVC in currnetVC.children {
-                
-                if currnetVC.view.subviews.contains(childVC.view) {
-                    
-                    return findFrontViewController(currnetVC: childVC)
-                }
-            }
-           
-        }
-        
-        return currnetVC
-        
-    }
-*/
+
 }
 
+public protocol FunView: class {
+    
+    var fitSize: CGSize { get }
+    
+}
+
+extension UIButton: FunView {
+    
+    public var fitSize: CGSize {
+        
+        var size = CGSize.zero
+        
+        if let image = imageView?.image {
+            size = image.size
+        }
+
+        if let titleLabel = titleLabel {
+            
+            size.width = size.width + titleLabel.fitSize.width + 8
+            
+            size.height = max(size.height, titleLabel.fitSize.height) + 8
+        }
+
+        return size
+        
+    }
+    
+}
+
+extension UILabel: FunView {
+    public var fitSize: CGSize {
+        if let attributedText = attributedText {
+            return attributedText.attributedSize(maxWidth: FunFreedom.device.screenSize.width)
+            
+            
+            
+        } else if let text = text {
+            
+            return text.textSize(font: font, maxWidth: FunFreedom.device.screenSize.width)
+            
+        }
+        
+        return .zero
+    }
+    
+    
+}
+
+extension NSAttributedString {
+    func attributedSize(maxWidth: CGFloat) -> CGSize {
+        
+        let rect = self.boundingRect(with: CGSize.init(width: maxWidth, height: CGFloat(MAXFLOAT)), options: [NSStringDrawingOptions.usesLineFragmentOrigin,NSStringDrawingOptions.usesFontLeading], context: nil)
+        
+        return rect.size
+    }
+    
+}
+
+public extension String {
+    func textSize(font: UIFont, maxWidth: CGFloat) -> CGSize {
+        return self.boundingRect(with: CGSize(width: maxWidth, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [.font: font], context: nil).size
+    }
+    
+    var localized: String {
+        return NSLocalizedString(self, tableName: nil, bundle: .main, value: "", comment: "")
+    }
+    
+}
+/*
+    方法交换
+ */
 public protocol FunSwizz: class {
     static func awake()
     static func swizzlingForClass(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector)
@@ -216,7 +237,3 @@ public extension UIApplication {
     }
     
 }
-
-
-
-

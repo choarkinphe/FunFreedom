@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  FunFreedom
+
+  Created by 肖华 on 2020/4/6.
+  Copyright © 2020 CocoaPods. All rights reserved.
+*/
+"Done" = "完成";
+"Cancel" = "取消";

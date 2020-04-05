@@ -191,13 +191,16 @@ public extension FunFreedom.Sheet {
         // 单选回调
         public var handler: FunActionSheetHandler? {
             didSet {
-                toolBar.isMultiSelector = false
+//                toolBar.isMultiSelector = false
             }
         }
         // 多选回调
         public var multiHandler: FunActionSheetMultiHandler? {
             didSet {
-                toolBar.isMultiSelector = true
+//                toolBar.isMultiSelector = true
+//                topView = toolBar
+                toolBar.doneButton.setTitle("Done".localized, for: .normal)
+                toolBar.cancelButton.setTitle("Cancel".localized, for: .normal)
             }
         }
         // 选择结果
@@ -221,6 +224,7 @@ public extension FunFreedom.Sheet {
         lazy var toolBar: FunFreedom.Sheet.ToolBar = {
             let _toolBar = FunFreedom.Sheet.ToolBar.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
             
+            _toolBar.tintColor = self.config.tintColor
             weak var weakSelf = self
             
             _toolBar.doneHandler {
@@ -246,10 +250,10 @@ public extension FunFreedom.Sheet {
             return _toolBar
         }()
         
-        public func handler(_ a_handler: @escaping FunActionSheetHandler) {
-            handler = a_handler
-            
-        }
+//        public func handler(_ a_handler: @escaping FunActionSheetHandler) {
+//            handler = a_handler
+//
+//        }
         
         public var actions: [FunFreedom.Sheet.Action]? {
             didSet {
@@ -321,13 +325,13 @@ public extension FunFreedom.Sheet {
             
             if let a_topView = topView {
                 rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: a_topView.bounds.size.height)
-                if a_topView == toolBar {
-                    a_topView.backgroundColor = .white
-                    if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
-                        rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: 8)
-                        a_topView.backgroundColor = .clear
-                    }
-                }
+//                if a_topView == toolBar {
+//                    a_topView.backgroundColor = .white
+//                    if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
+//                        rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: 8)
+//                        a_topView.backgroundColor = .clear
+//                    }
+//                }
                 
                 tableView.contentInset = UIEdgeInsets.init(top: rect_topView.size.height, left: 0, bottom: 0, right: 0)
                 
@@ -447,10 +451,10 @@ public extension FunFreedom.Sheet {
                     cell.selectionStyle = .none
                 }
                 
-                if let color = config.tintColor {
-                    cell.selectedBackgroundView?.backgroundColor = color
-                    cell.tintColor = color
-                }
+//                if let color = config.tintColor {
+                    cell.selectedBackgroundView?.backgroundColor = config.tintColor
+                    cell.tintColor = config.tintColor
+//                }
                 
                 cell.img_normal = config.normalImage
                 cell.img_selected = config.selectImage
@@ -540,35 +544,43 @@ public extension FunFreedom.Sheet {
 
 extension FunFreedom.Sheet {
     // 默认的ToolBar
-    class ToolBar: UIToolbar {
+    class ToolBar: UIView {
         
-        public var isMultiSelector = false
-        public var tipLabel = UILabel()
-        public var cancelButton = UIButton()
-        public var doneButton = UIButton()
+        public lazy var tipLabel = UILabel()
         
+        public lazy var cancelButton = UIButton()
+        
+        public lazy var doneButton = UIButton()
+        
+        override var tintColor: UIColor! {
+            didSet {
+                tipLabel.textColor = tintColor
+                
+                cancelButton.setTitleColor(tintColor, for: .normal)
+                
+                doneButton.setTitleColor(tintColor, for: .normal)
+            }
+        }
         
         public override init(frame: CGRect) {
             super.init(frame: frame)
             
             backgroundColor = .white
             
-            cancelButton.setTitleColor(UIColor.init(red: 61.0/255.0, green: 130.0/255.0, blue: 247.0/255.0, alpha: 1), for: .normal)
-            cancelButton.setTitle("Cancel", for: .normal)
-            addSubview(cancelButton)
-            cancelButton.addTarget(self, action: #selector(cancelAction(sender:)), for: .touchUpInside)
-            
-            doneButton.setTitleColor(UIColor.init(red: 61.0/255.0, green: 130.0/255.0, blue: 247.0/255.0, alpha: 1), for: .normal)
-            doneButton.setTitle("Done", for: .normal)
-            addSubview(doneButton)
-            doneButton.addTarget(self, action: #selector(doneAction(sender:)), for: .touchUpInside)
-            
             tipLabel.font = UIFont.systemFont(ofSize: 14)
             tipLabel.textColor = UIColor.init(white: 0.3, alpha: 1)
             tipLabel.textAlignment = .center
             addSubview(tipLabel)
             
+            cancelButton.setTitleColor(tintColor, for: .normal)
+            //            cancelButton.setTitle("Cancel", for: .normal)
+            addSubview(cancelButton)
+            cancelButton.addTarget(self, action: #selector(cancelAction(sender:)), for: .touchUpInside)
             
+            doneButton.setTitleColor(tintColor, for: .normal)
+            //            doneButton.setTitle("Done", for: .normal)
+            addSubview(doneButton)
+            doneButton.addTarget(self, action: #selector(doneAction(sender:)), for: .touchUpInside)
         }
         
         required public init?(coder: NSCoder) {
@@ -599,12 +611,14 @@ extension FunFreedom.Sheet {
         
         open override func layoutSubviews() {
             super.layoutSubviews()
+            cancelButton.frame = CGRect(x: 12, y: 4, width: cancelButton.fitSize.width, height: bounds.size.height - 8)
+//            cancelButton.frame = CGRect(origin: CGPoint(x: 12, y: 4), size: cancelButton.fitSize)
+//            cancelButton.center = CGPoint(x: 12.0 + cancelButton.fitSize.width / 2.0, y: center.y)
+            doneButton.frame = CGRect(x: bounds.size.width - 12 - doneButton.fitSize.width, y: 4, width: cancelButton.fitSize.width, height: bounds.size.height - 8)
+//            doneButton.frame = CGRect(origin: CGPoint(x: bounds.size.width - 12 - doneButton.fitSize.width, y: 4), size: doneButton.fitSize)
+//            doneButton.center = CGPoint(x: bounds.size.width - 12 - doneButton.fitSize.width / 2.0, y: center.y)
             
-            cancelButton.frame = CGRect.init(x: 12, y: 4, width: 66, height: 36)
-            cancelButton.isHidden = !isMultiSelector
-            doneButton.frame = CGRect.init(x: bounds.size.width - 78, y: 4, width: 66, height: 36)
-            doneButton.isHidden = !isMultiSelector
-            tipLabel.bounds = CGRect.init(x: 0, y: 0, width: bounds.size.width - 156, height: 36)
+            tipLabel.bounds = CGRect(origin: .zero, size: tipLabel.fitSize)
             tipLabel.center = center
         }
     }
@@ -637,7 +651,7 @@ public extension FunFreedom.Sheet.Controller {
         // 多选还是单选
         public var selectType: FunFreedom.Sheet.Controller.Config.SelectType = .single
         // 主题颜色
-        public var tintColor: UIColor?
+        public var tintColor: UIColor = .systemBlue
         // 选中图片
         public var selectImage: UIImage?
         // 未选中图片

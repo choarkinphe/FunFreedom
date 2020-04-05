@@ -52,19 +52,20 @@ class ViewController: UIViewController {
     
     @IBAction func sheet(_ sender: Any) {
         
-        FunFreedom.sheet.addActions(["Music0","Music1","Music2","Music3","Music4","Music5","Music6","Music7"]).resultActions(["Music2","Music3"]).selectType(.single).handler({ (result) in
-            
-            print(result)
-        })
-//            .multiHandler({ (result) in
-//            result.forEach { (action) in
-//                let url = "http://192.168.1.17/files/Music/music\(action.index).mp3"
-//                guard let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else { return }
-//                FunFreedom.netwokKit.urlString(url).destinationURL(URL(fileURLWithPath: path)).method(.get).downloadResponder?.response(nil)
-//            }
+        FunFreedom.sheet.addActions(["Music0","Music1","Music2","Music3","Music4","Music5","Music6","Music7"]).resultActions(actions).selectType(.multi)
+//            .handler({ (result) in
 //
-//            self.actions = result
+//            print(result)
 //        })
+            .multiHandler({ (result) in
+            result.forEach { (action) in
+                let url = "http://192.168.1.17/files/Music/music\(action.index).mp3"
+                guard let path = NSSearchPathForDirectoriesInDomains(.cachesDirectory, .userDomainMask, true).first else { return }
+                FunFreedom.netwokKit.urlString(url).destinationURL(URL(fileURLWithPath: path)).method(.get).downloadResponder?.response(nil)
+            }
+
+            self.actions = result
+        })
             .present()
         
 //        FunFreedom.datePicker.present()

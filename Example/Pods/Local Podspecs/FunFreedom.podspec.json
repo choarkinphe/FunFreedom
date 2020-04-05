@@ -20,6 +20,11 @@
     "ios": "10.0"
   },
   "source_files": "Source/*.swift",
+  "resource_bundles": {
+    "FunFreedom": [
+      "Source/Localizable/*"
+    ]
+  },
   "dependencies": {
     "Alamofire": [
       "~>5.0.5"
