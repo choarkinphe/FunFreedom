@@ -11,39 +11,7 @@ public typealias FunActionSheetMultiHandler = ([FunFreedom.Sheet.Action]) -> Voi
 
 public extension FunFreedom {
     
-    
     class Sheet {
-        
-        // 事件内容
-        public class Action {
-                // 事件的类型
-                public enum Style : Int {
-                    case `default`
-                    
-                    case cancel
-                    
-                    case destructive
-                }
-                // 值（唯一标示）
-                open var value: String?
-                // 标题
-                open var title: String?
-                // 是否选中
-                open var isSelected: Bool = false
-                // 类型
-                open var style: Style = .default
-                // 标号（行号）
-                open var index: Int = 0
-                // 构造方法
-                public init(title a_title: String?, value a_value: String? = nil, style a_style: Style) {
-
-                    self.title = a_title
-                    self.value = a_value
-                    self.style = a_style
-                    
-                }
-                
-            }
         
         public static var `default`: Sheet {
             
@@ -52,7 +20,7 @@ public extension FunFreedom {
         }
         
         // 事件的实际控制器
-        public lazy var sheetController = FunFreedom.Sheet.ActionController()
+        public lazy var sheetController = FunFreedom.Sheet.Controller()
         // 事件集合
         private var _actions = [FunFreedom.Sheet.Action]()
         
@@ -63,9 +31,19 @@ public extension FunFreedom {
             sheetController.config.cornerRadius = 8
         }
         
+        // 构建选择器
+        public func build(_ selectType: FunFreedom.Sheet.Controller.Config.SelectType) -> FunFreedom.Sheet.Controller {
+            let controller = FunFreedom.Sheet.Controller()
+            
+            controller.actions = _actions
+            
+            controller.config.selectType = selectType
+            
+            return controller
+        }
         
-        
-        public func present(sheetHandler a_sheetHandler: ((FunFreedom.Sheet.ActionController)->Void)?=nil) {
+        // 弹出方法
+        public func present(sheetHandler a_sheetHandler: ((FunFreedom.Sheet.Controller)->Void)?=nil) {
             
             if let handler = a_sheetHandler {
                 handler(sheetController)
@@ -98,64 +76,35 @@ public extension FunFreedom {
 // 快速构建的相关方法
 public extension FunFreedom.Sheet {
     // 添加一个事件
-    func addAction(title: String, value: String? = nil) -> Self {
-        
-        return addAction(FunFreedom.Sheet.Action(title: title, value: value, style: .default))
-    }
-    
-    func addAction(_ action: FunFreedom.Sheet.Action) -> Self {
-        _actions.append(action)
+    func addAction(_ action: FunSheetActionConvertible) -> Self {
+        _actions.append(action.asAction())
         
         return self
     }
     
     // 添加一组事件
-    func addActions(titles: [String], values: [String]? = nil) -> Self {
-        
-        for (index,title) in titles.enumerated() {
-            let action = FunFreedom.Sheet.Action(title: title, style: .default)
-            
-            if let a_values = values {
-                if index < a_values.count {
-                    action.value = a_values[index]
-                }
-            }
-            _actions.append(action)
+    func addActions(_ actions: [FunSheetActionConvertible]) -> Self {
+        for action in actions {
+            _actions.append(action.asAction())
         }
-        
-        return self
-    }
-    
-    func addActions(_ actions: [FunFreedom.Sheet.Action]) -> Self {
-        _actions.append(contentsOf: actions)
         
         return self
     }
     
     // 设置已勾选的结果
-    func resultActions(_ actions: [FunFreedom.Sheet.Action]?) -> Self {
+    func resultActions(_ actions: [FunSheetActionConvertible]?) -> Self {
+        
+        var result_actions = [FunFreedom.Sheet.Action]()
         if let actions = actions {
-            sheetController.resultActions = actions
-        }
-        
-        return self
-    }
-    func resultTitles(_ resultTitles: String?) -> Self {
-        if let resultTitles = resultTitles {
-            sheetController.resultTitles = resultTitles
-        }
-        
-        return self
-    }
-    func resultValues(_ resultValues: String?) -> Self {
-        if let resultValues = resultValues {
-            sheetController.resultValues = resultValues
+            for action in actions {
+                result_actions.append(action.asAction())
+            }
+            sheetController.resultActions = result_actions
         }
         
         return self
     }
     
-
     // 设置头部提示标语
     func setHeaderTips(_ tips: String?) -> Self {
         
@@ -199,7 +148,7 @@ public extension FunFreedom.Sheet {
     }
     
     // 设置单选、多选
-    func selectType(_ selectType: FunFreedom.Sheet.ActionController.Config.SelectType) -> Self {
+    func selectType(_ selectType: FunFreedom.Sheet.Controller.Config.SelectType) -> Self {
         
         sheetController.config.selectType = selectType
         
@@ -236,47 +185,26 @@ public extension FunFreedom.Sheet {
 
 public extension FunFreedom.Sheet {
     
-    
-    class ActionController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
-        
-        public struct Config {
-            public enum Position : Int {
-                case `default`
-                
-                case center
-                
-            }
-            
-            public enum SelectType: String {
-                case single = "single"
-                case multi = "multi"
-            }
-            public var contentInsets: UIEdgeInsets = .zero
-            public var cornerRadius: CGFloat?
-            public var position: FunFreedom.Sheet.ActionController.Config.Position = .default
-            public var selectType: FunFreedom.Sheet.ActionController.Config.SelectType = .single
-            public var tintColor: UIColor?
-            public var selectImage: UIImage?
-            public var normalImage: UIImage?
-        }
-        
+    class Controller: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
+        // 配置
         public lazy var config = Config()
-        
+        // 单选回调
         public var handler: FunActionSheetHandler? {
             didSet {
                 toolBar.isMultiSelector = false
             }
         }
+        // 多选回调
         public var multiHandler: FunActionSheetMultiHandler? {
             didSet {
                 toolBar.isMultiSelector = true
             }
         }
-        
+        // 选择结果
         public lazy var resultActions = [FunFreedom.Sheet.Action]()
-        public var resultValues: String?
-        public var resultTitles: String?
-
+        private var resultValues: String?
+        private var resultTitles: String?
+        
         public required init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
@@ -318,20 +246,20 @@ public extension FunFreedom.Sheet {
             return _toolBar
         }()
         
-        open func handler(_ a_handler: @escaping FunActionSheetHandler) {
+        public func handler(_ a_handler: @escaping FunActionSheetHandler) {
             handler = a_handler
             
         }
         
-        open var actions: [FunFreedom.Sheet.Action]? {
+        public var actions: [FunFreedom.Sheet.Action]? {
             didSet {
-                
-                guard let actions = actions else {return}
+                // 初始化actions
+                guard let actions = actions else { return }
                 var resultValues_array = self.resultValues?.components(separatedBy: ",") ?? [String]()
                 var resultTitles_array = self.resultTitles?.components(separatedBy: ",") ?? [String]()
                 
                 if resultActions.count > 0 {
-
+                    
                     for result_action in resultActions {
                         if let title = result_action.title {
                             resultTitles_array.append(title)
@@ -453,12 +381,12 @@ public extension FunFreedom.Sheet {
                     return
                 }
                 
-
+                
                 if let topView = topView {
-
+                    
                     topView.frame = .zero
                     topView.removeFromSuperview()
-
+                    
                 }
                 
                 if let a_topView = newValue {
@@ -535,31 +463,33 @@ public extension FunFreedom.Sheet {
         public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             
             if config.selectType == .single {
+                // 单选模式
                 if let action = actions?[indexPath.row] {
-                    
-                    
-                    
+
                     if let actionHandler = handler {
-                        
+                        // 直接给出回调
                         actionHandler(action)
                     }
                     
                 }
                 
                 dismiss(animated: true, completion: nil)
-            } else if config.selectType == .multi {
                 
+            } else if config.selectType == .multi {
+                // 多选模式下
                 if let action = actions?[indexPath.row] {
-                    
+                    // 标记选中状态
                     if action.isSelected {
                         action.isSelected = false
                     } else {
                         action.isSelected = true
                     }
-
+                    
+                    if let cell = tableView.cellForRow(at: indexPath) as? ActionCell {
+                        cell.accessoryType = action.isSelected ? .checkmark : .none
+                    }
                 }
-                
-                tableView.reloadData()
+//                tableView.reloadData()
             }
             
         }
@@ -609,7 +539,8 @@ public extension FunFreedom.Sheet {
 }
 
 extension FunFreedom.Sheet {
-    class ToolBar: UIView {
+    // 默认的ToolBar
+    class ToolBar: UIToolbar {
         
         public var isMultiSelector = false
         public var tipLabel = UILabel()
@@ -677,6 +608,94 @@ extension FunFreedom.Sheet {
             tipLabel.center = center
         }
     }
-
+    
 }
 
+
+public extension FunFreedom.Sheet.Controller {
+    struct Config {
+        
+        // 选择器弹出位置
+        public enum Position : Int {
+            case `default`      // 默认靠底部
+            
+            case center         //居中显示
+            
+        }
+        
+        public enum SelectType: String {
+            case single = "single"
+            case multi = "multi"
+        }
+        
+        // 内边距
+        public var contentInsets: UIEdgeInsets = .zero
+        // 圆角大小
+        public var cornerRadius: CGFloat?
+        // 显示位置
+        public var position: FunFreedom.Sheet.Controller.Config.Position = .default
+        // 多选还是单选
+        public var selectType: FunFreedom.Sheet.Controller.Config.SelectType = .single
+        // 主题颜色
+        public var tintColor: UIColor?
+        // 选中图片
+        public var selectImage: UIImage?
+        // 未选中图片
+        public var normalImage: UIImage?
+    }
+}
+
+// action的生成协议
+public protocol FunSheetActionConvertible {
+    
+    func asAction() -> FunFreedom.Sheet.Action
+}
+
+// 可以直接用string去生成一个事件（只创建title）
+extension String: FunSheetActionConvertible {
+    
+    public func asAction() -> FunFreedom.Sheet.Action {
+        
+        return FunFreedom.Sheet.Action(title: self, style: .default)
+    }
+    
+}
+
+public extension FunFreedom.Sheet {
+    
+    // 事件内容
+    class Action: FunSheetActionConvertible {
+        public func asAction() -> FunFreedom.Sheet.Action {
+            
+            return self
+        }
+        
+        // 事件的类型
+        public enum Style : Int {
+            case `default`
+            
+            case cancel
+            
+            case destructive
+        }
+        // 值（唯一标示）
+        public var value: String?
+        // 标题
+        public var title: String?
+        // 是否选中
+        public var isSelected: Bool = false
+        // 类型
+        public var style: Style = .default
+        // 标号（行号）
+        public var index: Int = 0
+        // 构造方法
+        public init(title a_title: String?, value a_value: String? = nil, style a_style: Style? = .default) {
+            
+            self.title = a_title
+            self.value = a_value
+            self.style = a_style ?? .default
+            
+        }
+        
+    }
+}
