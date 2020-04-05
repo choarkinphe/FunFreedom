@@ -7,13 +7,84 @@
 
 import Foundation
 
+public extension UIApplication {
+    
+    var currentWindow: UIWindow? {
+        
+        if let window = UIApplication.shared.keyWindow {
+            return window
+        }
+        
+        if #available(iOS 13.0, *) {
+
+            for windowScene:UIWindowScene in ((UIApplication.shared.connectedScenes as? Set<UIWindowScene>)!) {
+                
+                if windowScene.activationState == .foregroundActive {
+                    
+                    return windowScene.windows.first
+                    
+                }
+                
+            }
+            
+            
+            
+        }
+        
+        return nil
+        
+    }
+    
+}
+
 public extension FunFreedom {
+    
     class PublicTool {
         
         public static var frontController: UIViewController {
             
-            return NSObject.currentViewController()
+            let rootViewController = UIApplication.shared.currentWindow?.rootViewController
+            
+            return findFrontViewController(rootViewController!)
         }
+        
+        private static func findFrontViewController(_ currnet: UIViewController) -> UIViewController {
+            
+            if let presentedController = currnet.presentedViewController {
+                
+                return findFrontViewController(presentedController)
+                
+            } else if let svc = currnet as? UISplitViewController, let next = svc.viewControllers.last {
+                
+                    
+                    return findFrontViewController(next)
+
+            } else if let nvc = currnet as? UINavigationController, let next = nvc.topViewController {
+                
+                    return findFrontViewController(next)
+                
+            } else if let tvc = currnet as? UITabBarController, let next = tvc.selectedViewController {
+                
+                
+                    return findFrontViewController(next)
+
+                
+            } else if currnet.children.count > 0 {
+                
+                for child in currnet.children {
+                    
+                    if currnet.view.subviews.contains(child.view) {
+                        
+                        return findFrontViewController(child)
+                    }
+                }
+               
+            }
+            
+            return currnet
+            
+        }
+        
         
     }
     
@@ -47,11 +118,12 @@ fileprivate extension NSObject {
     
     class func currentViewController() -> UIViewController {
         
-        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+//        let rootViewController = UIApplication.shared.currentWindow?.rootViewController
         
-        return findFrontViewController(currnetVC: rootViewController!)
+//        return findFrontViewController(currnetVC: rootViewController!)
+        return FunFreedom.PublicTool.frontController
     }
-    
+    /*
     private class func findFrontViewController(currnetVC : UIViewController) -> UIViewController {
         
         if currnetVC.presentedViewController != nil {
@@ -103,7 +175,7 @@ fileprivate extension NSObject {
         return currnetVC
         
     }
-
+*/
 }
 
 public protocol FunSwizz: class {
@@ -126,8 +198,9 @@ public extension FunSwizz {
         }
     }
 }
-fileprivate class NothingToSeeHere {
-    static func harmlessFunction() {
+
+public extension UIApplication {
+    private static let runOnce: Void = {
         let typeCount = Int(objc_getClassList(nil, 0))
         let types = UnsafeMutablePointer<AnyClass>.allocate(capacity: typeCount)
         let autoreleasingTypes = AutoreleasingUnsafeMutablePointer<AnyClass>(types)
@@ -136,16 +209,12 @@ fileprivate class NothingToSeeHere {
             (types[index] as? FunSwizz.Type)?.awake()
         }
         types.deallocate()
-    }
-}
-public extension UIApplication {
-    private static let runOnce: Void = {
-        NothingToSeeHere.harmlessFunction()
     }()
     override var next: UIResponder? {
         UIApplication.runOnce
         return super.next
     }
+    
 }
 
 

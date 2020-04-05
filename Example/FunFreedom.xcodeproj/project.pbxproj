@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		40B9E86F9BED53535FD00BEB /* Pods_FunFreedom_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E297D165D98D6C9C6CE6537 /* Pods_FunFreedom_Tests.framework */; };
 		49141A19242891EF00E8D7BC /* TESTTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49141A18242891EF00E8D7BC /* TESTTableViewController.swift */; };
+		4956B9CA2436130B00BD50B9 /* Pods_FunFreedom_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4956B9C92436130B00BD50B9 /* Pods_FunFreedom_Example.framework */; };
 		49663F6F23F150EB00F75468 /* WKWebView+Fun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49663F6E23F150EB00F75468 /* WKWebView+Fun.swift */; };
 		49663F7123F154C200F75468 /* TESTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49663F7023F154C200F75468 /* TESTViewController.swift */; };
 		49663F7323F1557300F75468 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 49663F7223F1557300F75468 /* index.html */; };
@@ -19,7 +20,6 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		7F6604B0DE746AD6DFEF8BA2 /* Pods_FunFreedom_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8E994D30D4CCDB185260AFB /* Pods_FunFreedom_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +37,9 @@
 		49141A18242891EF00E8D7BC /* TESTTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TESTTableViewController.swift; sourceTree = "<group>"; };
 		49141A1A2428B79000E8D7BC /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49141A1C2428B80700E8D7BC /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4943524B243586BD00EC7AE0 /* FunFreedom_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FunFreedom_Example.entitlements; sourceTree = "<group>"; };
+		4956B9C7243612DF00BD50B9 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_FunFreedom_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4956B9C92436130B00BD50B9 /* Pods_FunFreedom_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_FunFreedom_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		49663F6E23F150EB00F75468 /* WKWebView+Fun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WKWebView+Fun.swift"; sourceTree = "<group>"; };
 		49663F7023F154C200F75468 /* TESTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TESTViewController.swift; sourceTree = "<group>"; };
 		49663F7223F1557300F75468 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
@@ -68,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F6604B0DE746AD6DFEF8BA2 /* Pods_FunFreedom_Example.framework in Frameworks */,
+				4956B9CA2436130B00BD50B9 /* Pods_FunFreedom_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +89,8 @@
 		024E374715D2EE50B328A249 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4956B9C92436130B00BD50B9 /* Pods_FunFreedom_Example.framework */,
+				4956B9C7243612DF00BD50B9 /* Pods_FunFreedom_Example.framework */,
 				497EE1F32428B93E0014574F /* Alamofire.framework */,
 				497EE1F12428B8AA0014574F /* Alamofire.framework */,
 				49141A1C2428B80700E8D7BC /* Alamofire.framework */,
@@ -110,6 +115,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				4943524B243586BD00EC7AE0 /* FunFreedom_Example.entitlements */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for FunFreedom */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -343,6 +349,8 @@
 				"${BUILT_PRODUCTS_DIR}/FunFreedom/FunFreedom.framework",
 				"${BUILT_PRODUCTS_DIR}/HandyJSON/HandyJSON.framework",
 				"${BUILT_PRODUCTS_DIR}/Hue/Hue.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -350,6 +358,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FunFreedom.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/HandyJSON.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hue.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -520,6 +530,7 @@
 			baseConfigurationReference = 691B17E4AA037CD8D4ECF498 /* Pods-FunFreedom_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FunFreedom_Example.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RYCBLDQ5JD;
@@ -531,8 +542,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -541,6 +554,7 @@
 			baseConfigurationReference = ECA5C6C0E281235CDC9CF1E2 /* Pods-FunFreedom_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = FunFreedom_Example.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RYCBLDQ5JD;
@@ -552,8 +566,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

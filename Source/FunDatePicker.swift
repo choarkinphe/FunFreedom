@@ -165,7 +165,7 @@ public extension FunFreedom {
         }
         
         open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.currentWindow?.rootViewController
             let coverView = UIView.init(frame: UIScreen.main.bounds)
             coverView.backgroundColor = UIColor.init(white: 0, alpha: 0.35)
             

@@ -153,9 +153,17 @@ class TESTTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let responder = FunFreedom.DownloadManager.default.getTask(identifier: list[indexPath.section][indexPath.row]) {
+            if responder.state == .wait || responder.state == .dormancy {
             if let request = responder.request {
                 
                 FunFreedom.DownloadManager.default.buildResponder(request: request)?.response(nil)
+            }
+            } else if responder.state == .download {
+                // 暂停任务
+                responder.suspend()
+            } else if responder.state == .finish {
+                // 移除任务
+                responder.remove(sameAsFile: true)
             }
             
             

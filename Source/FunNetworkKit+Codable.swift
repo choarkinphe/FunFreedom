@@ -7,9 +7,9 @@
 
 import Foundation
 
-public extension FunFreedom.NetworkKit {
+public extension FunFreedom.NetworkKit.Responder {
     
-//    func request<T>(_ type: T.Type?, _ completion: @escaping ResponseResult<T?>) where T: Codable {
+//    func request<T>(_ type: T.Type?, _ completion: @escaping Responder<T?>) where T: Codable {
 //        
 //        request { (result) in
 //            if let data = result.data {

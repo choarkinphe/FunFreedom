@@ -192,8 +192,7 @@ public extension FunFreedom {
                 }
             }
             
-            
-            var rootViewController = from ?? UIApplication.shared.keyWindow?.rootViewController
+            var rootViewController = from ?? UIApplication.shared.currentWindow?.rootViewController
             
             if let presentedViewController = rootViewController?.presentedViewController {
                 rootViewController = presentedViewController

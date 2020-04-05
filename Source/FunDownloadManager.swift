@@ -15,10 +15,22 @@ public extension FunFreedom {
     class DownloadManager: NSObject {
         // 任务状态
         public enum State: String, Codable {
-            case unknow = "unknow"
-            case wait = "wait"
-            case download = "download"
-            case finish = "finish"
+            case unknow = "unknow"          // 未知
+            case wait = "wait"              // 等待
+            case download = "download"      // 下载中
+            case finish = "finish"          // 已完成
+            case dormancy = "dormancy"      // 休眠
+            case removed = "removed"        // 已移除
+            
+            public var key: String {
+                switch self {
+                case .dormancy: // dormancy实际上也是等待中的任务，只不过他不会自动启动
+                    return State.wait.rawValue
+                default:
+                    return self.rawValue
+                }
+            }
+            
         }
         
         struct Static {
@@ -78,15 +90,15 @@ public extension FunFreedom {
         
         // 下载中的任务列表
         public var downloadTasks: [String: FunFreedom.DownloadManager.Responder]? {
-            return allTasks[State.download.rawValue]
+            return allTasks[State.download.key]
         }
         // 等待列队（错误，异常终止的都会加入到等待队列）
         public var waitTasks: [String: FunFreedom.DownloadManager.Responder]? {
-            return allTasks[State.wait.rawValue]
+            return allTasks[State.wait.key]
         }
         // 下载完成的列表
         public var finishedTasks: [String: FunFreedom.DownloadManager.Responder]? {
-            return allTasks[State.finish.rawValue]
+            return allTasks[State.finish.key]
         }
         // 所有任务
         fileprivate var allTasks: [String: [String: FunFreedom.DownloadManager.Responder]] {
@@ -113,9 +125,9 @@ public extension FunFreedom {
             
             // 初始化任务列表
             self.allTasks = [String: [String: FunFreedom.DownloadManager.Responder]]()
-            self.allTasks[State.wait.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
-            self.allTasks[State.download.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
-            self.allTasks[State.finish.rawValue] = [String: FunFreedom.DownloadManager.Responder]()
+            self.allTasks[State.wait.key] = [String: FunFreedom.DownloadManager.Responder]()
+            self.allTasks[State.download.key] = [String: FunFreedom.DownloadManager.Responder]()
+            self.allTasks[State.finish.key] = [String: FunFreedom.DownloadManager.Responder]()
             
             super.init()
             // 获取到所有下载记录的标示后，初始化所有任务列表
@@ -124,7 +136,7 @@ public extension FunFreedom {
                 if let data = self.cacheManager.loadCache(key: identifier),
                     let responder = try? decoder.decode(Responder.self, from: data) {
                     // 读取磁盘存储的任务信息
-                    self.allTasks[responder.state.rawValue]?[identifier] = responder
+                    self.allTasks[responder.state.key]?[identifier] = responder
                 }
             }
             
@@ -237,27 +249,41 @@ public extension FunFreedom {
             
             rootQueue.async {
                 
-                
                 if !self.taskMap.contains(identifier) {
                     self.taskMap.append(identifier)
                 }
-                
+
                 let new_state = state ?? resnponder.state
                 
-                let new_responder = self.allTasks[resnponder.state.rawValue]?.removeValue(forKey: identifier) ?? resnponder
+                let new_responder = self.allTasks[resnponder.state.key]?.removeValue(forKey: identifier) ?? resnponder
                 
                 new_responder.state = new_state
                 
-                // 获取真实的Data
-                let encoder = JSONEncoder()
                 
                 do {
-                    let cacheData = try encoder.encode(new_responder)
-                    // 先更新到新的任务表
-                    self.allTasks[new_state.rawValue]?[identifier] = new_responder
-                    // 存储
-                    self.cacheManager.cache(key: identifier, data: cacheData)
                     
+                    if state == .removed {
+                        // 移除map
+                        if let index = self.taskMap.firstIndex(of: identifier) {
+                            self.taskMap.remove(at: index)
+                        }
+                        // 删除任务表中的数据
+                        self.allTasks[resnponder.state.key]?.removeValue(forKey: identifier)
+                        // 移除本地任务
+                        self.cacheManager.removeCache(key: identifier)
+                        
+                    } else {
+                        // 获取真实的Data
+                        let encoder = JSONEncoder()
+                        
+                        let cacheData = try encoder.encode(new_responder)
+                        // 先更新到新的任务表
+                        self.allTasks[new_state.key]?[identifier] = new_responder
+                        // 存储
+                        self.cacheManager.cache(key: identifier, data: cacheData)
+                    }
+                    
+                    // 给出任务状态变更的回调
                     if let state = state, let stateChanged = new_responder.stateChanged {
                         DispatchQueue.main.async {
                             stateChanged(state)
@@ -272,7 +298,7 @@ public extension FunFreedom {
         
         /// 轮循检查任务状态
         /// - Parameter timer: 计时器（这个方法可能会由计时器唤起，用于处理异常任务）
-        @objc private  func checkTask(timer: Timer?) {
+        @objc private func checkTask(timer: Timer?) {
             
             if (waitTasks?.count ?? 0) + (downloadTasks?.count ?? 0) == 0 {
                 // 任务归零时暂停计时器
@@ -282,7 +308,8 @@ public extension FunFreedom {
             rootQueue.async {
                 // 检查等待队列
                 self.waitTasks?.forEach { (task) in
-                    if self.isDownloadFree, !task.value.isDormancy, task.value.downloadTask != nil {
+                    // 休眠任务不可开启
+                    if self.isDownloadFree, task.value.state != .dormancy, task.value.downloadTask != nil {
                         // 更新任务状态到开启
                         self.updateTask(resnponder: task.value, state: .download)
                     }
@@ -291,17 +318,15 @@ public extension FunFreedom {
                 // 检查下载队列
                 self.downloadTasks?.forEach { (task) in
                     
-                    if let downloadTask = task.value.downloadTask, !task.value.isDormancy {
-                        // 当前任务没有休眠、且未开启时，才会执行开启
+                    if let downloadTask = task.value.downloadTask {
                         
-                            // 开启任务
-                            downloadTask.resume()
+                        // 真实任务存在，开启任务
+                        downloadTask.resume()
                         
                     } else {
                         // 丢失的任务重置成休眠
-                        task.value.isDormancy = true
                         // 任务丢失，移动到等待列表中等待重建任务
-                        self.updateTask(resnponder: task.value, state: .wait)
+                        self.updateTask(resnponder: task.value, state: .dormancy)
                     }
                 }
             }
@@ -350,14 +375,12 @@ public extension FunFreedom.DownloadManager {
         // 储存路径
         public var destinationURL: URL?
         // 是否休眠（可以永远不会自动执行下载，但是始终存在于等待队列）
-        public var isDormancy: Bool = true
+//        public var isDormancy: Bool = true
         // 任务完成/失败后的回调
         fileprivate var complete: ((URL?,Error?)->Void)?
         public func complete(_ a_complete: ((URL?,Error?)->Void)?) {
             complete = a_complete
         }
-        
-        
         
         // 任务构建方法
         public init(downloadTask: URLSessionDownloadTask?) {
@@ -365,7 +388,7 @@ public extension FunFreedom.DownloadManager {
             request = downloadTask?.currentRequest
         }
         
-        // 开始
+        // 开始任务
         public func response(_ a_complete: ((URL?,Error?)->Void)?) {
             if state == .finish { // 任务已完成的，直接终止
                 if let complete = a_complete {
@@ -375,16 +398,43 @@ public extension FunFreedom.DownloadManager {
                 return
             }
             // 关闭休眠状态，让任务可以添加到下载队列
-            isDormancy = false
-            
+//            isDormancy = false
+//            state = .wait
+            FunFreedom.DownloadManager.default.updateTask(resnponder: self, state: .wait)
             complete = a_complete
         }
         
+        /// 暂停任务
         public func suspend() {
             // 暂停任务（此时不一定能拿到任务，没有拿到的话会在checkTask循环里自动执行）
-            downloadTask?.suspend()
+            downloadTask?.cancel(byProducingResumeData: { (resumeData) in
+                self.resumeData = resumeData
+            })
             // 将任务状态调整为休眠
-            isDormancy = false
+//            isDormancy = false
+//            state = .dormancy
+            FunFreedom.DownloadManager.default.updateTask(resnponder: self, state: .dormancy)
+        }
+        
+        
+        /// 移除任务
+        /// - Parameter sameAsFile: 同时删除源文件
+        public func remove(sameAsFile: Bool? = false) {
+            // 首先取消掉这条任务
+            downloadTask?.cancel()
+            // 删除resumeData
+            resumeData = nil
+            // 删除本地文件
+            if let fileURL = fileURL {
+                do {
+                    try FileManager.default.removeItem(at: fileURL)
+                }
+                catch {
+                    debugPrint(error)
+                }
+            }
+            // 更新任务状态为删除
+            FunFreedom.DownloadManager.default.updateTask(resnponder: self, state: .removed)
         }
         
         private enum CodingKeys: String,CodingKey {
@@ -398,7 +448,7 @@ public extension FunFreedom.DownloadManager {
             case destinationURL
             case fileURL
             case fileName
-            case isDormancy
+//            case isDormancy
             case totalUnitCount
             case completedUnitCount
         }
@@ -410,7 +460,7 @@ public extension FunFreedom.DownloadManager {
                 resumeData = try? container.decode(Data.self, forKey: .resumeData)
                 destinationURL = try? container.decode(URL.self, forKey: .destinationURL)
                 fileURL = try? container.decode(URL.self, forKey: .fileURL)
-                isDormancy = (try? container.decode(Bool.self, forKey: .isDormancy)) ?? true
+//                isDormancy = (try? container.decode(Bool.self, forKey: .isDormancy)) ?? true
                 
                 progress.totalUnitCount = (try? container.decode(Int64.self, forKey: .totalUnitCount)) ?? 0
                 progress.completedUnitCount = (try? container.decode(Int64.self, forKey: .completedUnitCount)) ?? 0
@@ -463,9 +513,9 @@ extension FunFreedom.DownloadManager: URLSessionTaskDelegate, URLSessionDownload
                     // 找到对应的恢复文件，并且存储
                     responder.resumeData = resumeData
                     // 自动恢复的任务开启休眠，防止后台误启动
-                    responder.isDormancy = true
+//                    responder.state = .dormancy
                     // 加入等待列队
-                    updateTask(resnponder: responder, state: .wait)
+                    updateTask(resnponder: responder, state: .dormancy)
                 } else {
                     // 没有恢复文件的，直接报错出去
                     if let complete = responder.complete {

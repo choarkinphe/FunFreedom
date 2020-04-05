@@ -91,7 +91,7 @@ public extension FunFreedom {
             
             config.completion = completion
             
-            let targetView = config.inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.keyWindow
+            let targetView = config.inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.currentWindow
             
             targetView?.makeToast(config: config)
             
@@ -100,13 +100,13 @@ public extension FunFreedom {
         public func showActivity(_ completion: ((Bool)->Void)? = nil) {
             config.completion = completion
             
-            let targetView = config.inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.keyWindow
+            let targetView = config.inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.currentWindow
             
             targetView?.makeToastActivity(config: config)
         }
         
         public func dismiss(inView: UIView? = nil) {
-            let targetView = inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.keyWindow
+            let targetView = inView ?? FunFreedom.PublicTool.frontController.view ?? UIApplication.shared.currentWindow
             
             targetView?.hideToast()
             targetView?.hideToastActivity()

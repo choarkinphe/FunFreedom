@@ -6,41 +6,44 @@
 //
 
 import Foundation
-public typealias FunActionSheetHandler = (FunFreedom.ActionSheet) -> Void
-public typealias FunActionSheetMultiHandler = ([FunFreedom.ActionSheet]) -> Void
+public typealias FunActionSheetHandler = (FunFreedom.Sheet.Action) -> Void
+public typealias FunActionSheetMultiHandler = ([FunFreedom.Sheet.Action]) -> Void
+
 public extension FunFreedom {
-    class ActionSheet: NSObject {
-        
-        public enum Style : Int {
-            case `default`
-            
-            case cancel
-            
-            case destructive
-        }
-        
-        open var value: String?
-        
-        open var title: String?
-        
-        open var isSelected: Bool = false
-        
-        open var style: ActionSheet.Style = .default
-        
-        open var index: Int = 0
-        
-        public init(title a_title: String?, value a_value: String? = nil, style a_style: ActionSheet.Style) {
-            super.init()
-            
-            self.title = a_title
-            self.value = a_value
-            self.style = a_style
-            
-        }
-        
-    }
+    
     
     class Sheet {
+        
+        // 事件内容
+        public class Action {
+                // 事件的类型
+                public enum Style : Int {
+                    case `default`
+                    
+                    case cancel
+                    
+                    case destructive
+                }
+                // 值（唯一标示）
+                open var value: String?
+                // 标题
+                open var title: String?
+                // 是否选中
+                open var isSelected: Bool = false
+                // 类型
+                open var style: Style = .default
+                // 标号（行号）
+                open var index: Int = 0
+                // 构造方法
+                public init(title a_title: String?, value a_value: String? = nil, style a_style: Style) {
+
+                    self.title = a_title
+                    self.value = a_value
+                    self.style = a_style
+                    
+                }
+                
+            }
         
         public static var `default`: Sheet {
             
@@ -48,135 +51,19 @@ public extension FunFreedom {
             return sheet
         }
         
+        // 事件的实际控制器
         public lazy var sheetController = FunFreedom.Sheet.ActionController()
-        private var _actions = [FunFreedom.ActionSheet]()
+        // 事件集合
+        private var _actions = [FunFreedom.Sheet.Action]()
+        
         
         public init() {
+            // 创建sheet时，初始化构建样式
             sheetController.config.contentInsets = UIEdgeInsets.init(top: 170, left: 0, bottom: 0, right: 0)
             sheetController.config.cornerRadius = 8
         }
         
         
-        public func addAction(title: String, value: String? = nil) -> Self {
-            
-            return addActions(FunFreedom.ActionSheet.init(title: title, value: value, style: .default))
-        }
-        
-        public func addActions(titles: [String], values: [String]? = nil) -> Self {
-            
-            for (index,title) in titles.enumerated() {
-                let action = FunFreedom.ActionSheet.init(title: title, style: .default)
-                
-                if let a_values = values {
-                    if index < a_values.count {
-                        action.value = a_values[index]
-                    }
-                }
-                _actions.append(action)
-            }
-            
-            return self
-        }
-        
-        public func resultActions(_ actions: [FunFreedom.ActionSheet]?) -> Self {
-            if let actions = actions {
-                sheetController.resultActions = actions
-            }
-            
-            return self
-        }
-        public func resultTitles(_ resultTitles: String?) -> Self {
-            if let resultTitles = resultTitles {
-                sheetController.resultTitles = resultTitles
-            }
-            
-            return self
-        }
-        public func resultValues(_ resultValues: String?) -> Self {
-            if let resultValues = resultValues {
-                sheetController.resultValues = resultValues
-            }
-            
-            return self
-        }
-        
-        public func addActions(_ action: FunFreedom.ActionSheet) -> Self {
-            _actions.append(action)
-            
-            return self
-        }
-        
-        public func addActions(_ actions: [FunFreedom.ActionSheet]) -> Self {
-            _actions.append(contentsOf: actions)
-            
-            return self
-        }
-        
-        public func setHeaderTips(_ tips: String?) -> Self {
-            
-//            let header = FunFreedom.ActionSheetHeader.init(title: headerTitle, detail: headerDetail)
-            sheetController.toolBar.tipLabel.text = tips
-            
-            return self
-        }
-        
-        public func setHeaderView(_ headerView: UIView) -> Self {
-            
-            sheetController.topView = headerView
-            
-            return self
-        }
-        
-        
-        public func handler(_ handler: @escaping FunActionSheetHandler) -> Self {
-            sheetController.handler = handler
-            return self
-        }
-        
-        public func multiHandler(_ multiHandler: @escaping FunActionSheetMultiHandler) -> Self {
-            sheetController.multiHandler = multiHandler
-            return self
-        }
-        
-        public func contentInsets(_ contentInsets: UIEdgeInsets) -> Self {
-            sheetController.config.contentInsets = contentInsets
-            return self
-        }
-        
-        public func cornerRadius(_ cornerRadius: CGFloat) -> Self {
-            
-            sheetController.config.cornerRadius = cornerRadius
-            
-            return self
-        }
-        
-        public func selectType(_ selectType: FunFreedom.Sheet.ActionConfig.SelectType) -> Self {
-            
-            sheetController.config.selectType = selectType
-            
-            return self
-        }
-        
-        public func tintColor(_ tintColor: UIColor) -> Self {
-            
-            sheetController.config.tintColor = tintColor
-            
-            return self
-        }
-        
-        public func selectImage(_ selectImage: UIImage) -> Self {
-            
-            sheetController.config.selectImage = selectImage
-            
-            return self
-        }
-        
-        public func normalImage(_ normalImage: UIImage) -> Self {
-            
-            sheetController.config.normalImage = normalImage
-            
-            return self
-        }
         
         public func present(sheetHandler a_sheetHandler: ((FunFreedom.Sheet.ActionController)->Void)?=nil) {
             
@@ -186,7 +73,7 @@ public extension FunFreedom {
             
             sheetController.actions = _actions
             
-            var rootViewController = UIApplication.shared.keyWindow?.rootViewController
+            var rootViewController = UIApplication.shared.currentWindow?.rootViewController
             if let presentedViewController = rootViewController?.presentedViewController {
                 rootViewController = presentedViewController
             }
@@ -208,46 +95,185 @@ public extension FunFreedom {
     }
 }
 
+// 快速构建的相关方法
+public extension FunFreedom.Sheet {
+    // 添加一个事件
+    func addAction(title: String, value: String? = nil) -> Self {
+        
+        return addAction(FunFreedom.Sheet.Action(title: title, value: value, style: .default))
+    }
+    
+    func addAction(_ action: FunFreedom.Sheet.Action) -> Self {
+        _actions.append(action)
+        
+        return self
+    }
+    
+    // 添加一组事件
+    func addActions(titles: [String], values: [String]? = nil) -> Self {
+        
+        for (index,title) in titles.enumerated() {
+            let action = FunFreedom.Sheet.Action(title: title, style: .default)
+            
+            if let a_values = values {
+                if index < a_values.count {
+                    action.value = a_values[index]
+                }
+            }
+            _actions.append(action)
+        }
+        
+        return self
+    }
+    
+    func addActions(_ actions: [FunFreedom.Sheet.Action]) -> Self {
+        _actions.append(contentsOf: actions)
+        
+        return self
+    }
+    
+    // 设置已勾选的结果
+    func resultActions(_ actions: [FunFreedom.Sheet.Action]?) -> Self {
+        if let actions = actions {
+            sheetController.resultActions = actions
+        }
+        
+        return self
+    }
+    func resultTitles(_ resultTitles: String?) -> Self {
+        if let resultTitles = resultTitles {
+            sheetController.resultTitles = resultTitles
+        }
+        
+        return self
+    }
+    func resultValues(_ resultValues: String?) -> Self {
+        if let resultValues = resultValues {
+            sheetController.resultValues = resultValues
+        }
+        
+        return self
+    }
+    
+
+    // 设置头部提示标语
+    func setHeaderTips(_ tips: String?) -> Self {
+        
+        sheetController.toolBar.tipLabel.text = tips
+        
+        return self
+    }
+    
+    // 修改头部视图
+    func setHeaderView(_ headerView: UIView) -> Self {
+        
+        sheetController.topView = headerView
+        
+        return self
+    }
+    
+    // 单选的回调
+    func handler(_ handler: @escaping FunActionSheetHandler) -> Self {
+        sheetController.handler = handler
+        return self
+    }
+    
+    // 多选的回调
+    func multiHandler(_ multiHandler: @escaping FunActionSheetMultiHandler) -> Self {
+        sheetController.multiHandler = multiHandler
+        return self
+    }
+    
+    // 内边距
+    func contentInsets(_ contentInsets: UIEdgeInsets) -> Self {
+        sheetController.config.contentInsets = contentInsets
+        return self
+    }
+    
+    // 圆角
+    func cornerRadius(_ cornerRadius: CGFloat) -> Self {
+        
+        sheetController.config.cornerRadius = cornerRadius
+        
+        return self
+    }
+    
+    // 设置单选、多选
+    func selectType(_ selectType: FunFreedom.Sheet.ActionController.Config.SelectType) -> Self {
+        
+        sheetController.config.selectType = selectType
+        
+        return self
+    }
+    
+    // 设置主题颜色
+    func tintColor(_ tintColor: UIColor) -> Self {
+        
+        sheetController.config.tintColor = tintColor
+        
+        return self
+    }
+    
+    // 设置选中样式的icon
+    func selectImage(_ selectImage: UIImage) -> Self {
+        
+        sheetController.config.selectImage = selectImage
+        
+        return self
+    }
+    
+    // 未选中样式的icon
+    func normalImage(_ normalImage: UIImage) -> Self {
+        
+        sheetController.config.normalImage = normalImage
+        
+        return self
+    }
+}
+
 
 
 
 public extension FunFreedom.Sheet {
-    struct ActionConfig {
-        public enum Position : Int {
-            case `default`
-            
-            case center
-            
-        }
-        
-        public enum SelectType: Int {
-            case single
-            case multi
-        }
-        public var contentInsets: UIEdgeInsets = .zero
-        public var cornerRadius: CGFloat?
-        public var position: FunFreedom.Sheet.ActionConfig.Position = .default
-        public var selectType: FunFreedom.Sheet.ActionConfig.SelectType = .single
-        public var tintColor: UIColor?
-        public var selectImage: UIImage?
-        public var normalImage: UIImage?
-    }
+    
     
     class ActionController: UIViewController,UIGestureRecognizerDelegate,UITableViewDelegate,UITableViewDataSource {
-        open lazy var config = FunFreedom.Sheet.ActionConfig()
         
-        open var handler: FunActionSheetHandler? {
+        public struct Config {
+            public enum Position : Int {
+                case `default`
+                
+                case center
+                
+            }
+            
+            public enum SelectType: String {
+                case single = "single"
+                case multi = "multi"
+            }
+            public var contentInsets: UIEdgeInsets = .zero
+            public var cornerRadius: CGFloat?
+            public var position: FunFreedom.Sheet.ActionController.Config.Position = .default
+            public var selectType: FunFreedom.Sheet.ActionController.Config.SelectType = .single
+            public var tintColor: UIColor?
+            public var selectImage: UIImage?
+            public var normalImage: UIImage?
+        }
+        
+        public lazy var config = Config()
+        
+        public var handler: FunActionSheetHandler? {
             didSet {
                 toolBar.isMultiSelector = false
             }
         }
-        open var multiHandler: FunActionSheetMultiHandler? {
+        public var multiHandler: FunActionSheetMultiHandler? {
             didSet {
                 toolBar.isMultiSelector = true
             }
         }
         
-        public lazy var resultActions = [FunFreedom.ActionSheet]()
+        public lazy var resultActions = [FunFreedom.Sheet.Action]()
         public var resultValues: String?
         public var resultTitles: String?
 
@@ -297,7 +323,7 @@ public extension FunFreedom.Sheet {
             
         }
         
-        open var actions: [FunFreedom.ActionSheet]? {
+        open var actions: [FunFreedom.Sheet.Action]? {
             didSet {
                 
                 guard let actions = actions else {return}
@@ -405,7 +431,7 @@ public extension FunFreedom.Sheet {
         }
         
         open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-            let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+            let rootViewController = UIApplication.shared.currentWindow?.rootViewController
             let coverView = UIView.init(frame: UIScreen.main.bounds)
             coverView.backgroundColor = UIColor.init(white: 0, alpha: 0.35)
             
@@ -446,7 +472,7 @@ public extension FunFreedom.Sheet {
             
         }
         
-        open lazy var tableView: UITableView = {
+        private lazy var tableView: UITableView = {
             let _tableView = UITableView.init(frame: UIScreen.main.bounds, style: .plain)
             _tableView.delegate = self
             _tableView.dataSource = self
@@ -537,34 +563,6 @@ public extension FunFreedom.Sheet {
             }
             
         }
-        
-//        private let FunActionSheetCellReuseID = "FunActionSheetCellReuseID"
-//        private class FunActionSheetCell: UITableViewCell {
-//            var title: String? {
-//                didSet {
-//                    if let text = title {
-//                        textLabel?.text = text
-//
-//                    }
-//
-//                }
-//            }
-//
-//            override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//                super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
-//
-//                textLabel?.textColor = UIColor.darkText
-//                textLabel?.font = UIFont.systemFont(ofSize: 15)
-//                textLabel?.numberOfLines = 0
-//
-//            }
-//
-//            required init?(coder aDecoder: NSCoder) {
-//                fatalError("init(coder:) has not been implemented")
-//            }
-//
-//        }
-        
         private class ActionCell: UITableViewCell {
             
             static let reuseID = "FunAction.ActionCell.ReuseID"
