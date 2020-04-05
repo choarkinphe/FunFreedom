@@ -197,8 +197,7 @@ public extension FunFreedom.Sheet {
         // 多选回调
         public var multiHandler: FunActionSheetMultiHandler? {
             didSet {
-//                toolBar.isMultiSelector = true
-//                topView = toolBar
+                // 多选样式时，设置按钮标题
                 toolBar.doneButton.setTitle("Done".localized, for: .normal)
                 toolBar.cancelButton.setTitle("Cancel".localized, for: .normal)
             }
@@ -225,6 +224,7 @@ public extension FunFreedom.Sheet {
             let _toolBar = FunFreedom.Sheet.ToolBar.init(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 44))
             
             _toolBar.tintColor = self.config.tintColor
+            _toolBar.backgroundColor = self.tableView.backgroundColor
             weak var weakSelf = self
             
             _toolBar.doneHandler {
@@ -325,13 +325,17 @@ public extension FunFreedom.Sheet {
             
             if let a_topView = topView {
                 rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: a_topView.bounds.size.height)
-//                if a_topView == toolBar {
+                if a_topView == toolBar {
 //                    a_topView.backgroundColor = .white
 //                    if !toolBar.isMultiSelector, toolBar.tipLabel.text == nil {
 //                        rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: 8)
 //                        a_topView.backgroundColor = .clear
 //                    }
-//                }
+                    if multiHandler == nil, toolBar.tipLabel.text == nil { // 单选状态，并且没有标题时
+                        rect_topView = CGRect.init(x: config.contentInsets.left, y: rect_tableView.origin.y, width: contentW, height: max(8, config.cornerRadius ?? 0))
+                        a_topView.backgroundColor = .clear
+                    }
+                }
                 
                 tableView.contentInset = UIEdgeInsets.init(top: rect_topView.size.height, left: 0, bottom: 0, right: 0)
                 
@@ -517,7 +521,11 @@ public extension FunFreedom.Sheet {
                 super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
                 selectedBackgroundView = UIView()
                 selectedBackgroundView?.backgroundColor = .clear
-                textLabel?.textColor = UIColor.darkText
+                if #available(iOS 13.0, *) {
+                    textLabel?.textColor = UIColor.label
+                } else {
+                    textLabel?.textColor = UIColor.darkText
+                }
                 textLabel?.font = UIFont.systemFont(ofSize: 15)
                 textLabel?.numberOfLines = 0
                 
@@ -565,7 +573,7 @@ extension FunFreedom.Sheet {
         public override init(frame: CGRect) {
             super.init(frame: frame)
             
-            backgroundColor = .white
+//            backgroundColor = .white
             
             tipLabel.font = UIFont.systemFont(ofSize: 14)
             tipLabel.textColor = UIColor.init(white: 0.3, alpha: 1)
